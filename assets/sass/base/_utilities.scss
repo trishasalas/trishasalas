@@ -1,0 +1,35 @@
+// Describe all psuedo state classes
+@mixin hover {
+	&:active, &:focus, &:hover {
+		@content;
+	}
+}
+
+// Reset our ul/ol lists
+@mixin reset-list {
+	list-style: none;
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
+// z-index management
+$layers: (
+	nav: 1,
+	header: 2
+);
+
+@mixin z-index($layer-name) {
+  z-index: map-get($layers, $layer-name);
+};
+
+// Screen reader
+@mixin screen-reader-text {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+}
+
+// Helper class in case we need to use it via our markup
+.screen-reader-text {
+	@include screen-reader-text;
+}
