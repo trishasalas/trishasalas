@@ -1,6 +1,6 @@
 # Trisha Salas WordPress Theme
 
-### You have 3 gulp commands that you can use:
+### Gulp commands:
 1. `gulp serve` - will run all of the gulp tasks, watch your files, and start a node server that does auto refreshing and CSS injection
 2. `gulp watch` - everything in `gulp serve` except running the node server
 3. `gulp` - a one-time command that will run your Sass, JS and image tasks
