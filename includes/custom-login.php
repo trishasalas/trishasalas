@@ -5,14 +5,14 @@
  * that you can move it wherever works best for your project.
  */
 
-namespace Heisenberg;
+namespace trishasalas;
 
 /**
  * Load the CSS
  */
 add_action( 'login_enqueue_scripts', function() {
 	wp_enqueue_style(
-		'heisenberg_login_css',
+		'trishasalas_login_css',
 		get_template_directory_uri() . '/assets/dist/css/login.css',
 		false
 	);

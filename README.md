@@ -1,4 +1,4 @@
-# Heisenberg - Zeek Starter Theme
+# trishasalas - Zeek Starter Theme
 
 This is the Zeek Starter theme, based on <a href="http://underscores.me/">Underscores</a> and Foundation for Sites, version ^6.2.4.
 
@@ -10,9 +10,9 @@ This is the Zeek Starter theme, based on <a href="http://underscores.me/">Unders
 **Note: if you run into errors when using Terminal, you may have to use the sudo command to install Gulp.js. For instance, `sudo npm install -g gulp`**
 
 ## How to get started
-1. Clone or [download](https://github.com/ZeekInteractive/heisenberg/archive/master.zip "Download the Heisenberg Zip") the project onto your `themes` directory `(./wp-content/themes)`
+1. Clone or [download](https://github.com/ZeekInteractive/trishasalas/archive/master.zip "Download the trishasalas Zip") the project onto your `themes` directory `(./wp-content/themes)`
 2. From the theme directory, run `npm install`. All of the theme dependencies will be installed into `node_modules`.
-3. Run a find for the string/slug `heisenberg` throughout the theme and replace it with your project name.
+3. Run a find for the string/slug `trishasalas` throughout the theme and replace it with your project name.
 4. Run `gulp serve`
 
 ## Gulp

@@ -6,4 +6,21 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'System' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
+    'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
+    'Net' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Math' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Illuminate\\Support' => array($vendorDir . '/illuminate/support'),
+    'Illuminate\\Remote' => array($vendorDir . '/illuminate/remote'),
+    'Illuminate\\Log' => array($vendorDir . '/illuminate/log'),
+    'Illuminate\\Filesystem' => array($vendorDir . '/illuminate/filesystem'),
+    'Illuminate\\Events' => array($vendorDir . '/illuminate/events'),
+    'Illuminate\\Container' => array($vendorDir . '/illuminate/container'),
+    'Illuminate\\Console' => array($vendorDir . '/illuminate/console'),
+    'Illuminate\\Config' => array($vendorDir . '/illuminate/config'),
+    'File' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Boris' => array($vendorDir . '/d11wtq/boris/lib'),
+    '' => array($vendorDir . '/kzykhys/parallel/src'),
 );

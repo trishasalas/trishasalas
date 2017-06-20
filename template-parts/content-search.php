@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package Heisenberg
+ * @package TrishaSalas
  */
 ?>
 
@@ -14,7 +14,7 @@
 
 		<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="entry-meta">
-			<?php heisenberg_posted_on(); ?>
+			<?php trishasalas_posted_on(); ?>
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
@@ -24,6 +24,6 @@
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">
-		<?php heisenberg_entry_footer(); ?>
+		<?php trishasalas_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->

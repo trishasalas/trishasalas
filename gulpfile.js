@@ -27,7 +27,7 @@ var paths = {
 	imgPath: 'assets/img/'
 };
 
-var bsProxy = 'heisenberg.dev';
+var bsProxy = 'trishasalas.dev';
 
 
 ////////////////////////////////////////////////////////////////////////////////

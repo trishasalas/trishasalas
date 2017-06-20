@@ -10,3 +10,35 @@ a.ofc-home {
   padding: rem-calc(8 20);
   display: block;
 }
+.site-header {
+
+	.menu {
+		background: #537c8e;
+		width: 100%;
+		text-align: center;
+		padding: 18px 0;
+		line-height: 1;
+
+		@media screen and (max-width: 600px) {
+			margin-top: 35px;
+		}
+
+		a {
+			color: $white;
+			text-transform: uppercase;
+		}
+	}
+
+	.menu > li {
+		display: inline-block;
+
+		@media screen and (max-width: 600px) {
+			padding: 10px;
+		}
+	}
+
+	.menu > li > a {
+		display: inline;
+	}
+
+}

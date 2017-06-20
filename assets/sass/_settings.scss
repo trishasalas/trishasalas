@@ -45,12 +45,12 @@
 // 1. Global
 // ---------
 
-$global-font-size: 100%;
+$global-font-size: 16px;
 $global-width: rem-calc(1200);
-$global-lineheight: 1.5;
+$global-lineheight: 2;
 $foundation-palette: (
-	primary: #2199e8,
-	secondary: #777,
+	primary: #537c8e,
+	secondary: #555,
 	success: #3adb76,
 	warning: #ffae00,
 	alert: #ec5840,
@@ -58,17 +58,17 @@ $foundation-palette: (
 $light-gray: #e6e6e6;
 $medium-gray: #cacaca;
 $dark-gray: #8a8a8a;
-$black: #0a0a0a;
-$white: #fefefe;
+$black: #555;
+$white: #fff;
 $body-background: $white;
 $body-font-color: $black;
-$body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+$body-font-family: 'Raleway', sans-serif;
 $body-antialiased: true;
 $global-margin: 1rem;
 $global-padding: 1rem;
-$global-weight-normal: normal;
-$global-weight-bold: bold;
-$global-radius: 0;
+$global-weight-normal: 500;
+$global-weight-bold: 600;
+$global-radius: 3px;
 $global-text-direction: ltr;
 $global-flexbox: false;
 $print-transparent-backgrounds: true;
@@ -86,6 +86,7 @@ $breakpoints: (
 	xxlarge: 1440px,
   wp-admin-bar: 782px,
 );
+
 $breakpoint-classes: (small medium large);
 
 // 3. The Grid
@@ -106,7 +107,7 @@ $block-grid-max: 8;
 $header-font-family: $body-font-family;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
-$font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
+$font-family-monospace: 'Fira Mono', monospace;
 $header-sizes: (
 	small: (
 		'h1': 24,
@@ -125,21 +126,22 @@ $header-sizes: (
 		'h6': 16,
 	),
 );
+
 $header-color: inherit;
-$header-lineheight: 1.4;
-$header-margin-bottom: 0.5rem;
+$header-lineheight: 1.2;
+$header-margin-bottom: 1rem;
 $header-text-rendering: optimizeLegibility;
 $small-font-size: 80%;
 $header-small-font-color: $medium-gray;
-$paragraph-lineheight: 1.6;
+$paragraph-lineheight: 2;
 $paragraph-margin-bottom: 1rem;
 $paragraph-text-rendering: optimizeLegibility;
 $code-color: $black;
 $code-font-family: $font-family-monospace;
-$code-font-weight: $global-weight-normal;
+$code-font-weight: 400;
 $code-background: $light-gray;
 $code-border: 1px solid $medium-gray;
-$code-padding: rem-calc(2 5 1);
+$code-padding: 2px 5px 0 5px;
 $anchor-color: $primary-color;
 $anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
 $anchor-text-decoration: none;
@@ -156,9 +158,9 @@ $list-nested-side-margin: 1.25rem;
 $defnlist-margin-bottom: 1rem;
 $defnlist-term-weight: $global-weight-bold;
 $defnlist-term-margin-bottom: 0.3rem;
-$blockquote-color: $dark-gray;
+$blockquote-color: $primary-color;
 $blockquote-padding: rem-calc(9 20 0 19);
-$blockquote-border: 1px solid $medium-gray;
+$blockquote-border: 7px solid $medium-gray;
 $cite-font-size: rem-calc(13);
 $cite-color: $dark-gray;
 $keystroke-font: $font-family-monospace;
@@ -183,26 +185,26 @@ $stat-font-size: 2.5rem;
 // 6. Abide
 // --------
 
-$abide-inputs: true;
-$abide-labels: true;
-$input-background-invalid: map-get($foundation-palette, alert);
-$form-label-color-invalid: map-get($foundation-palette, alert);
-$input-error-color: map-get($foundation-palette, alert);
-$input-error-font-size: rem-calc(12);
-$input-error-font-weight: $global-weight-bold;
+//$abide-inputs: true;
+//$abide-labels: true;
+//$input-background-invalid: map-get($foundation-palette, alert);
+//$form-label-color-invalid: map-get($foundation-palette, alert);
+//$input-error-color: map-get($foundation-palette, alert);
+//$input-error-font-size: rem-calc(12);
+//$input-error-font-weight: $global-weight-bold;
 
 // 7. Accordion
 // ------------
-
-$accordion-background: $white;
-$accordion-plusminus: true;
-$accordion-item-color: foreground($accordion-background, $primary-color);
-$accordion-item-background-hover: $light-gray;
-$accordion-item-padding: 1.25rem 1rem;
-$accordion-content-background: $white;
-$accordion-content-border: 1px solid $light-gray;
-$accordion-content-color: foreground($accordion-content-background, $body-font-color);
-$accordion-content-padding: 1rem;
+//
+//$accordion-background: $white;
+//$accordion-plusminus: true;
+//$accordion-item-color: foreground($accordion-background, $primary-color);
+//$accordion-item-background-hover: $light-gray;
+//$accordion-item-padding: 1.25rem 1rem;
+//$accordion-content-background: $white;
+//$accordion-content-border: 1px solid $light-gray;
+//$accordion-content-color: foreground($accordion-content-background, $body-font-color);
+//$accordion-content-padding: 1rem;
 
 // 8. Accordion Menu
 // -----------------
@@ -276,13 +278,13 @@ $callout-link-tint: 30%;
 // 14. Close Button
 // ----------------
 
-$closebutton-position: right top;
-$closebutton-offset-horizontal: 1rem;
-$closebutton-offset-vertical: 0.5rem;
-$closebutton-size: 2em;
-$closebutton-lineheight: 1;
-$closebutton-color: $dark-gray;
-$closebutton-color-hover: $black;
+//$closebutton-position: right top;
+//$closebutton-offset-horizontal: 1rem;
+//$closebutton-offset-vertical: 0.5rem;
+//$closebutton-size: 2em;
+//$closebutton-lineheight: 1;
+//$closebutton-color: $dark-gray;
+//$closebutton-color-hover: $black;
 
 // 15. Drilldown
 // -------------
@@ -309,11 +311,11 @@ $dropdown-sizes: (
 // 17. Dropdown Menu
 // -----------------
 
-$dropdownmenu-arrows: true;
-$dropdownmenu-arrow-color: $anchor-color;
-$dropdownmenu-min-width: 200px;
-$dropdownmenu-background: $white;
-$dropdownmenu-border: 1px solid $medium-gray;
+//$dropdownmenu-arrows: true;
+//$dropdownmenu-arrow-color: $anchor-color;
+//$dropdownmenu-min-width: 200px;
+//$dropdownmenu-background: $white;
+//$dropdownmenu-border: 1px solid $medium-gray;
 
 // 18. Flex Video
 // --------------
@@ -380,12 +382,12 @@ $mediaobject-image-width-stacked: 100%;
 // 22. Menu
 // --------
 
-$menu-margin: 0;
-$menu-margin-nested: 1rem;
-$menu-item-padding: 0.7rem 1rem;
-$menu-item-color-active: $white;
-$menu-item-background-active: map-get($foundation-palette, primary);
-$menu-icon-spacing: 0.25rem;
+//$menu-margin: 0;
+//$menu-margin-nested: 1rem;
+//$menu-item-padding: 0.7rem 1rem;
+//$menu-item-color-active: $white;
+//$menu-item-background-active: map-get($foundation-palette, primary);
+//$menu-icon-spacing: 0.25rem;
 
 // 23. Meter
 // ---------
@@ -566,9 +568,9 @@ $tooltip-radius: $global-radius;
 // 36. Top Bar
 // -----------
 
-$topbar-padding: 0.5rem;
-$topbar-background: $light-gray;
-$topbar-submenu-background: $topbar-background;
-$topbar-title-spacing: 1rem;
-$topbar-input-width: 200px;
-$topbar-unstack-breakpoint: medium;
+//$topbar-padding: 0.5rem;
+//$topbar-background: $light-gray;
+//$topbar-submenu-background: $topbar-background;
+//$topbar-title-spacing: 1rem;
+//$topbar-input-width: 200px;
+//$topbar-unstack-breakpoint: medium;

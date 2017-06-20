@@ -5,7 +5,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package Heisenberg
+ * @package TrishaSalas
  */
 
 get_header(); ?>

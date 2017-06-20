@@ -4,12 +4,19 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package Heisenberg
+ * @package TrishaSalas
  */
 
 get_header(); ?>
 
-<div class="row">
+
+	<header class="page-header">
+		<h1 class="page-title">
+			<?php echo '['; ?><?php single_term_title(); ?><?php echo ']'; ?>
+		</h1>
+	</header>
+<div class="content-wrap">
+	<div class="row">
 
 	<div class="medium-8 columns">
 
@@ -18,12 +25,6 @@ get_header(); ?>
 			<main id="main" class="site-main" role="main">
 				<?php
 				if ( have_posts() ) : ?>
-
-					<header class="page-header">
-						<?php
-						the_archive_title( '<h1 class="page-title">', '</h1>' );
-						the_archive_description( '<div class="taxonomy-description">', '</div>' );	?>
-					</header>
 
 					<?php
 					while ( have_posts() ) :
@@ -54,6 +55,7 @@ get_header(); ?>
 
 	</div>
 
+</div>
 </div>
 
 <?php

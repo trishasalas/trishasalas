@@ -1,5 +1,28 @@
-#colophon {
-	background: #eee;
-	padding: 3rem 0;
-	color: transparentize(#000, .7);
+.site-footer {
+	padding: 	2rem 0;
+
+	svg {
+		width: 24px;
+
+		path {
+			fill: #767676;
+
+			&:hover {
+				fill: #537c8e;
+			}
+		}
+	}
+
+	.menu {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	li {
+		display: inline-block;
+
+		@media screen and (max-width: 600px) {
+			display: block;
+		}
+	}
 }

@@ -8,7 +8,7 @@
  * E.g., it puts together the home page when no home.php file exists.
  * @link http://codex.wordpress.org/Template_Hierarchy
  *
- * @package Heisenberg
+ * @package TrishaSalas
  */
 
 get_header(); ?>

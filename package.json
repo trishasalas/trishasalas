@@ -1,6 +1,6 @@
 {
-  "name": "heisenberg",
-  "description": "Heisenberg - Zeek Starter Theme ===",
+  "name": "trishasalas",
+  "description": "trishasalas",
   "version": "2.0.3",
   "main": "gulpfile.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ZeekInteractive/heisenberg"
+    "url": "https://github.com/trishasalas/trishasalas"
   },
-  "author": "Zeek Interactive",
+  "author": "Trisha Salas",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ZeekInteractive/heisenberg/issues"
+    "url": "https://github.com/trishasalas/trishasalas/issues"
   },
-  "homepage": "https://github.com/ZeekInteractive/heisenberg",
+  "homepage": "https://github.com/trishasalas/trishasalas",
   "dependencies": {
     "foundation-sites": "=6.2.4"
   },

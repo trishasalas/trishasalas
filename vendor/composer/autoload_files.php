@@ -6,5 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    '40e4ce6f3a3309507004aad9abfe2cfd' => $vendorDir . '/aaronholbrook/autoload/autoload.php',
+    '3b5531f8bb4716e1b6014ad7e734f545' => $vendorDir . '/illuminate/support/Illuminate/Support/helpers.php',
+    '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
+    '3919eeb97e98d4648304477f8ef734ba' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
 );
