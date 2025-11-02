@@ -67,3 +67,36 @@ html[data-theme="dark"] {
 :target {
   scroll-margin-block: 1rem;
 }
+
+body {
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+}
+
+p {
+  font-size: 1.25rem;
+}
+
+.site-title {
+  font-family: "Corinthia", serif;
+  font-size: 3rem;
+}
+
+nav[aria-label="breadcrumb"] {
+  margin-bottom: 1rem;
+}
+
+.tag-list {
+  display: flex;
+}
+
+.tag-list-item {
+  margin-left: 1rem;
+}
+
+.tag-link {
+  border-bottom: 1px dotted var(--accent);
+}
+
+.tag-link:hover {
+  color: var(--accent);
+}
