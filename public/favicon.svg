@@ -1,4 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" fill="white"/>
-  <text x="50" y="58" font-family="'IBM Plex Mono', monospace" font-size="65" font-weight="bold" text-anchor="middle" dominant-baseline="central" fill="black">%</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 10000 10000"
+   version="1.1"
+   id="svg2"
+   width="10000"
+   height="10000"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="swatch2">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#swatch2"
+       id="linearGradient2"
+       x1="3.7259614"
+       y1="46.634617"
+       x2="97.716347"
+       y2="46.634617"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <rect
+     width="100"
+     height="100"
+     fill="#ffffff"
+     id="rect1"
+     x="0"
+     y="0" />
+  <text
+     x="7.1687593"
+     y="99.895744"
+     font-family="'IBM Plex Mono', monospace"
+     font-size="139.173px"
+     font-weight="bold"
+     fill="#000000"
+     id="text1"
+     style="stroke-width:2.89942">%</text>
+  <path
+     style="fill:none;fill-opacity:1;stroke:url(#linearGradient2);stroke-width:3;stroke-linejoin:round;stroke-dasharray:none"
+     id="rect2"
+     width="100"
+     height="100"
+     x="3.7259614"
+     y="11.177885"
+     d="M 3.7259614,11.177885 H 103.72596 V 111.17789 H 3.7259614 Z"
+     transform="translate(-3.7259615,-9.8557692)" />
 </svg>
