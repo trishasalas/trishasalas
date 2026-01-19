@@ -1,5 +1,5 @@
 ---
-pubDatetime: 2025-06-04T16:00:40.295Z
+pubDatetime: 2026-01-19T21:57:40.000Z
 title: "When Good Design Backfires: The Hidden Accessibility Cost of Conversational AI"
 featured: false
 draft: false
