@@ -5,6 +5,9 @@ featured: true
 draft: false
 tags:
   - ai
+  - mechanistic-interpretability
+  - accessibility
+  - research
 description: "While using TransformerLens to explore how different model sizes handle digital accessibility concepts, an interesting pattern began to emerge. I started with GPT-2 and noticed that it did not understand the acronym, “WCAG.” Each time the question was run the model responded with something different that was either incorrect, had no meaning, or both."
 ---
 # Testing Accessibility Knowledge Across Pythia Model Sizes
