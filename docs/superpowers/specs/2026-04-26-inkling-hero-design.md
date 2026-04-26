@@ -25,7 +25,7 @@ Three poses, three placements across the home page, each characterizing a differ
 
 | Asset | Pose | Placement | State |
 |---|---|---|---|
-| `inkling-in-flight.png` | mid-flight, body angled, carrying a small lit object | Hero, right side | Active mischief |
+| `inkling-in-flight.png` | mid-flight, body angled, carrying her wand/quill (which glows warmly — single prop with double meaning: fairy's wand + writer's quill) | Hero, right side | Active mischief |
 | `inkling-on-inkwell.png` | perched on inkwell | Mid-page rest stop (between Research and Writing) | *She lives here* |
 | `inkling-reading.png` | sitting cross-legged, reading a glowing book | About / lineage section | Inward, contemplative |
 
@@ -44,7 +44,7 @@ Three poses, three placements across the home page, each characterizing a differ
 
 - **Glow trail.** Single SVG path, ~3–5 anchor curve, originating at Inkling's position in the hero and curving leftward toward the headline text — *crossing the margin guide line*. Animated via `stroke-dashoffset` (draw-in on load + continuous gentle dash flow).
 - **Sparkle glyph.** A single 4-point star path. Dropped as `<svg>` instances at varying sizes (8–24px) and opacities. 3–5 instances scattered through the hero. Each twinkles on its own clock.
-- **Quill cameo.** Small SVG illustration (~80–100px) drawn once, used as static accent in the Writing section header. Punctuation, not motion.
+- **Quill cameo.** Small SVG illustration (~80–100px), visually coherent with the wand/quill Inkling carries in the hero (same silhouette, same warm glow tint). Drawn once, used as static accent in the Writing section header — the quill she carries, set down on the page. Punctuation, not motion.
 - **Margin guide line.** 1px vertical baseline, ~15% opacity, full-page-height. The glow trail crosses it — that's the "she crosses boundaries" move.
 
 ### D. Source-code easter eggs (mischief surfaces)
@@ -125,7 +125,7 @@ Conservative budget. "She will flit and float" — not "everything wiggles."
 | Trigger | Effect | Notes |
 |---|---|---|
 | Hover headline period | period swaps to ✦ glyph | ~150ms transition. Keyboard: not applicable (h1 is non-interactive). |
-| Hover paper title | small quill-stroke SVG flickers in next to title, fades on hover-end | Must also fire on `:focus-visible` |
+| Hover paper title | small quill-stroke SVG flickers in next to title (same quill silhouette as the cameo and as Inkling carries — *she's marking up your work*), fades on hover-end | Must also fire on `:focus-visible` |
 | Hover italic `em` emphasis | warm rose underline draws in via `::after` width-transition | Must also fire on `:focus-visible` for any inside an interactive element |
 
 ### Static (no animation)
