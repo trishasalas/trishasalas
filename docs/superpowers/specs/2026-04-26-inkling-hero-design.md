@@ -349,7 +349,7 @@ These are what **Google Scholar actually parses**. Without these, Scholar will n
 <meta name="citation_pdf_url"          content="https://trishasalas.com/research/accessibility-knowledge-emergence/paper.pdf">
 <meta name="citation_abstract_html_url" content="https://trishasalas.com/research/accessibility-knowledge-emergence/">
 <meta name="citation_journal_title"    content="TechRxiv">
-<meta name="citation_doi"              content="{{PAPER_DOI}}">
+<meta name="citation_doi"              content="10.22541/au.177282002.24340653/v2">
 <meta name="citation_keywords"         content="mechanistic interpretability; accessibility; Pythia; emergence; WCAG; ARIA">
 ```
 
@@ -367,12 +367,12 @@ Per paper page (sketch):
   "datePublished": "2026-01-18",
   "author": {
     "@type": "Person",
-    "@id": "https://orcid.org/{{ORCID_ID}}",
+    "@id": "https://orcid.org/0009-0007-5105-7874",
     "name": "Trisha Salas",
     "url": "https://trishasalas.com/about/"
   },
   "url": "https://trishasalas.com/research/accessibility-knowledge-emergence/",
-  "identifier": "{{PAPER_DOI}}",
+  "identifier": "https://doi.org/10.22541/au.177282002.24340653/v2",
   "abstract": "...",
   "keywords": ["mechanistic interpretability", "accessibility", "WCAG", "Pythia"]
 }
@@ -388,7 +388,7 @@ Cheap to add, broadens reach into library aggregators (BASE) and enrichment pipe
 <meta name="DC.title"      content="...">
 <meta name="DC.creator"    content="Salas, Trisha">
 <meta name="DC.date"       content="2026-01-18">
-<meta name="DC.identifier" content="{{PAPER_DOI}}">
+<meta name="DC.identifier" content="https://doi.org/10.22541/au.177282002.24340653/v2">
 <meta name="DC.subject"    content="mechanistic interpretability; accessibility; emergence">
 <meta name="DC.description" content="...">
 <meta name="DC.type"       content="Text">
@@ -410,21 +410,23 @@ Cheap to add, broadens reach into library aggregators (BASE) and enrichment pipe
 - ≥100 words of text on the landing page (the abstract + a short summary section easily clears this).
 - **Stable URLs.** Scholar caches once and gets sticky. URL changes after indexing cause indexing problems.
 
-### Author identifier graph (placeholders to fill)
+### Author identifier graph
 
-The keystone identifiers Trisha needs cross-linked. ORCID is canonical; the others reference back to it. Each page exposes the relevant subset.
+ORCID is the keystone — every JSON-LD `Person` and metadata block references `https://orcid.org/0009-0007-5105-7874` as the canonical author `@id`. The other identifiers reference back to it. Source of truth for these values: `docs/social-urls.md`.
 
 | Identifier | Status | Value |
 |---|---|---|
-| ORCID iD | exists | `{{ORCID_ID}}` (e.g., `0000-0001-2345-6789`) |
-| Authorea/TechRxiv DOI | exists | `{{PAPER_DOI}}` (paper #1) |
-| Google Scholar profile | TBD | `{{GS_PROFILE_URL}}` or "set up during implementation" |
-| Semantic Scholar Author ID | TBD | `{{SS_AUTHOR_ID}}` or "claim during implementation" |
-| DBLP entry | TBD | `{{DBLP_URL}}` or "n/a" |
-| GitHub | exists | `{{GITHUB_USERNAME}}` |
-| LinkedIn | exists | `{{LINKEDIN_URL}}` |
+| ORCID iD | exists | `0009-0007-5105-7874` |
+| Paper #1 DOI (Authorea) | published v2 | `10.22541/au.177282002.24340653/v2` |
+| arXiv | account linked to ORCID, no papers yet | (omit `sameAs` entry until first paper is submitted/endorsed) |
+| OpenReview profile | exists | `https://openreview.net/profile?id=~Trisha_Salas1` |
+| Google Scholar profile | exists, awaiting paper indexing | URL added post-launch once paper is indexed |
+| Semantic Scholar Author ID | will auto-populate | claim post-launch |
+| GitHub | exists | `trishasalas` (`https://github.com/trishasalas`) |
+| LinkedIn | exists | `https://www.linkedin.com/in/trishasalas/` |
+| DBLP | n/a | add only if peer-reviewed publication lands |
 
-Once `{{ORCID_ID}}` and `{{PAPER_DOI}}` are filled, the metadata becomes concrete and the implementation plan can stub the rest.
+**Open question to resolve before launch:** the Authorea DOI cites version 2 of the paper (published Jan 2026). Local working copy is v3, extended with elicitation robustness experiments per `DECISIONS.md` in the research repo. v3 has not yet been pushed to Authorea. **Decision needed:** push v3 to Authorea before site launch (so metadata cites the most current version), or launch with v2 metadata and update post-v3-publication?
 
 ### Implementation hooks for Astro
 
@@ -433,9 +435,8 @@ Once `{{ORCID_ID}}` and `{{PAPER_DOI}}` are filled, the metadata becomes concret
 - `@astrojs/sitemap` integration for sitemap.xml generation.
 - `robots.txt` as a static file in `public/`.
 
-### Open metadata items (to fill before implementation)
+### Open metadata items (to resolve before launch)
 
-- Trisha's ORCID iD
-- Paper #1 DOI (Authorea)
-- Decision: claim/create Google Scholar profile and Semantic Scholar Author ID during implementation, or work with what's already auto-assigned?
-- Decision: are LinkedIn and GitHub usernames safe to expose in `sameAs` JSON-LD, or any privacy considerations?
+- **Authorea DOI version question** (see Author identifier graph above): push v3 to Authorea pre-launch, or launch with v2 metadata and update later?
+- **Privacy check:** confirm LinkedIn URL is OK to expose in public `sameAs` JSON-LD. GitHub at `trishasalas` is already public-by-nature, no concern. LinkedIn is public-by-default but worth a deliberate green light since it's exposed to crawlers more aggressively in JSON-LD than just as a hyperlink.
+- **Post-launch follow-ups:** add Google Scholar profile URL to identifier graph once GS indexes paper #1; claim Semantic Scholar Author ID once SS auto-creates it.
