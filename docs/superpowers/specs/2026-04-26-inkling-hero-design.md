@@ -1,9 +1,9 @@
 # Inkling Hero Design — trishasalas.com v2
 
-**Date:** 2026-04-26
-**Status:** Design approved, pending user review of this spec
+**Date:** 2026-04-26 (revised same day after external feedback pass)
+**Status:** Design approved; revisions integrated from spec-feedback.md; pending final user review
 **Tech stack:** Astro
-**Scope:** Home page only. Inner pages (Research, Writing, About, Notes) stay minimal/professional and are out of scope for this design.
+**Scope:** Home page hero design + findability metadata strategy. Inner page *layouts* are out of scope (designed separately); inner page *URL structure and metadata* are captured in Appendix A so the implementation plan has them.
 
 ---
 
@@ -14,6 +14,16 @@
 The design centers on **Inkling** — a recurring fairy character. Inkling is Trisha's self-portrait: understated but mischievous, modeled in part on Ene from Kagerou Project (a cyber-girl character who lives inside computers and causes playful mischief). Inkling is **not a hero or mascot**. She is a *system that appears across the page* — marginalia, glow trails, quill cameos, easter eggs in the source code. The site is primary; she inhabits it.
 
 Inner pages are deliberately minimal-professional so the whimsy of the home page reads as deliberate rather than tonal.
+
+---
+
+## Design intent (load-bearing)
+
+> **The whimsy is non-negotiable. The defensive structure exists to make the whimsy legible, not to soften it.**
+
+Every constraint in this spec — the minimal-professional inner pages, the explicit enumeration of mischief surfaces, the "Inkling-as-system not hero" framing, the WCAG-conformant pause toggle, the published-research-grade typography — exists to make the painterly hero, the marginalia, and the source-code easter eggs read as *deliberate craft* rather than as decoration that needs forgiving. Inkling is the evidence of a mind, not a flourish. The marginalia *is* the professionalism.
+
+If, during implementation, something looks like it should be "simplified to look more professional," check this section first. The instinct to dismantle whimsy is the failure mode this spec is structured against. The whimsy holds; the seriousness comes from the structure around it.
 
 ---
 
@@ -33,6 +43,7 @@ Three poses, three placements across the home page, each characterizing a differ
 - `inkling-on-inkwell.png` and `inkling-reading.png` already exist as clean transparent assets.
 - `inkling-in-flight.png` will be hand-cleaned by Trisha in Figma from the ChatGPT-generated extract (`source-files/inkling-transparent.png`), removing the residual sparkle trail (which would otherwise compete with the animated SVG trail) and cropping tight to her bounding box plus ~60–80px halo padding.
 - All three render with `mix-blend-mode: screen` against the dark page background — this lets the dark warm bg of the source images drop out and the bright pixels (body, wings, halo) come through cleanly without requiring pixel-perfect alpha extraction.
+- **Wing-vein detail caveat.** `mix-blend-mode: screen` brightens dark pixels toward white, so the dark linework on Inkling's wing veins (visible especially in `inkling-reading.png`) will partially lift toward invisibility against `--bg`. Acceptable tradeoff for the painterly look; if the detail loss reads as too much during implementation, remediate with a duplicate Inkling layer at lower opacity using `mix-blend-mode: normal` underneath the screen-blended primary layer (preserves dark detail while still letting the screen layer do the bright glow work).
 
 ### B. Vertical signature wordmark
 
@@ -49,9 +60,11 @@ Three poses, three placements across the home page, each characterizing a differ
 
 ### D. Source-code easter eggs (mischief surfaces)
 
-- **`console.log` greeting** in-character on page load. Single line, witty, e.g., *"✦ inkling logged in. wings: deployed. mischief: pending."*
+- **`console.log` greeting** in-character on page load. Single line, witty.
 - **HTML comments scattered through the source**, written *as Inkling* (small notes, observations, the occasional unicode doodle). Page reads as a document she's been editing. Literal "magic in the source code." Invisible to screen readers by definition (HTML comments are stripped by AT) — explicitly a view-source easter egg.
 - **`@keyframes flit` is real** — the hero Inkling's flit animation (defined in Section 3) is named exactly `flit` to match the layout image's code panel, with a CSS comment over it (haiku or in-character note). The visible "code" in the comp becomes the actual implementation. Same animation, just deliberately named to wink at the source-of-truth.
+
+**Wording standard for the easter eggs (second-audience test).** The console greeting and HTML-comment marginalia must read well to *both* audiences who will find them: (a) the developer-curious reader who view-sources for delight, AND (b) the hiring manager / paper reviewer / grant reader looking at this site after Trisha's CV crosses their desk. Lean toward in-character but research-toned — Inkling commenting on the work being done, the small observations of someone who lives in this codebase — rather than LARP-y status lines like *"wings: deployed, mischief: pending."* The whimsy itself is non-negotiable; the *wording* is. Cost of being misread is asymmetric: it delights some readers and quietly disqualifies others. Draft each line with both audiences imagined.
 
 ### E. Background
 
@@ -72,7 +85,7 @@ No raster asset. Solid `--bg` (deep wine burgundy) + an SVG-noise grain overlay 
 - **Layout grid:** asymmetric. Headline + lede + meta column on the **left**, ~55% of width. No image column on the right — Inkling is *positioned over* the hero, not contained in a slot.
 - **In-flight Inkling** absolutely-positioned in the right margin, biased toward the upper-third vertically. No frame, no aspect-ratio box. She's allowed to bleed off the viewport edge at narrow breakpoints.
 - **Halo** behind Inkling via CSS pseudo-element radial gradient.
-- **Glow trail (SVG)** originates at her position and curves leftward, crossing the margin guide line and entering the headline area. This is the painterly "she crosses boundaries" move.
+- **Glow trail (SVG)** originates at her position and curves leftward, crossing the margin guide line and entering the headline area. **Load-bearing detail:** this crossing IS the visual thesis statement of the page — *a mind crossing into the work, the character crossing into the research column.* Do not simplify it away during implementation. If something has to be cut for time, cut elsewhere; this stays.
 - **Vertical signature SVG** runs up the far-left edge of the hero, low opacity.
 - **Margin guide line** (1px, ~15% opacity) sits between the text column and Inkling's column.
 - **Sparkles** scattered (3–5 instances) through the section.
@@ -102,7 +115,7 @@ No raster asset. Solid `--bg` (deep wine burgundy) + an SVG-noise grain overlay 
 ### Responsive behavior
 
 - Inkling **does not shrink linearly**. At narrow viewports (<1024px) she pulls fully into the right margin and is partially clipped (allowed). Below ~640px she may move *behind* the headline at very low opacity (`z-index` lower, opacity `0.4`), so text remains primary. The painterly approach allows this because she has no frame to break.
-- The vertical signature drops below the headline (becomes horizontal) on mobile, OR is hidden on mobile entirely — a sub-decision to make at implementation time.
+- The vertical signature is **hidden on mobile** (< 1024px). Reasoning: at small viewport, a horizontal-flipped signature wordmark competes with the headline for attention; hiding it lets the hero breathe. The wordmark still appears in the page footer for credit/identification.
 
 ---
 
@@ -219,7 +232,7 @@ Path-based wordmark with `<title>Trisha Salas — Digital Gardener</title>` insi
 
     /* roses */
     --rose:         #e89aa8;
-    --rose-deep:    #d97a92;
+    --rose-deep:    #e889a0;  /* bumped from #d97a92 — earlier value sat at ~4.8:1 vs --bg, borderline AA body. This sits comfortably above 5:1. */
     --rose-whisper: #5a2c38;  /* very dark rose for borders, dividers */
 
     /* warmths (Inkling's lighting) */
@@ -234,7 +247,7 @@ Path-based wordmark with `<title>Trisha Salas — Digital Gardener</title>` insi
 **Contrast verification needed during implementation** (run an automated checker):
 - `--text` on `--bg`: expected ~12:1, AAA
 - `--text-soft` on `--bg`: expected ~6.5:1, AA
-- `--rose-deep` on `--bg`: expected ~5:1 — borderline. If short for body links, bump to a slightly lighter rose-deep variant.
+- `--rose-deep` on `--bg`: expected ~5.5:1, AA body text ✓ (previous `#d97a92` sat at ~4.8:1, borderline; bumped to `#e889a0` in this revision).
 - `--dust` on `--bg`: expected ~5.5:1, AA for labels
 
 ### Type system (carries from existing mockup)
@@ -293,9 +306,13 @@ trishasalasV2/
 These are explicitly **not blockers for the implementation plan** but should be tracked:
 
 1. **Mid-page rest stop** — proposed but pending visual review. To be mocked up as a quick HTML demo and reviewed before final commitment to inclusion.
-2. **Mobile signature** — sub-decision: drops below headline as horizontal, or hidden on mobile. Resolve at implementation time.
-3. **Contrast verification** — `--rose-deep` on `--bg` is borderline; verify with an automated checker, bump if needed.
-4. **`inkling-in-flight.png`** — Trisha cleans the residual sparkle trail and crops in Figma before the asset lands in `public/images/`.
+2. **Final contrast verification** — run an automated checker on the full palette during implementation. Values are designed to pass AA but verify the actual rendered ratios on real type at real sizes.
+3. **Easter-egg copywriting** — actual wording for the console.log greeting and HTML-comment marginalia, drafted per the second-audience test (Section 1D). Decide whether to draft now or at implementation time.
+
+**Resolved during this revision** (previously open):
+- `inkling-in-flight.png` cleanup ✓ (committed 2ac5f79).
+- Mobile signature behavior ✓ (hidden < 1024px, see Section 2 responsive notes).
+- `--rose-deep` color ✓ (bumped to `#e889a0`).
 
 ## Out of scope
 
@@ -304,3 +321,121 @@ These are explicitly **not blockers for the implementation plan** but should be 
 - Analytics, comments, search.
 - Animation on the mid-page perched and About/lineage Inklings — both are at rest by design.
 - Cursor trail effects — explicitly out of scope (rejected as polarizing and against the "understated" half of the brief).
+
+---
+
+## Appendix A — Findability & Research Metadata
+
+This appendix is a **forward-pointer to the implementation plan**, not a full design. It captures the metadata strategy that the implementation work will execute against. Lives here so it isn't lost between specs.
+
+### Context
+
+Trisha cannot use arXiv (no endorser available for cs.LG / cs.CL submissions). The site itself must do the work that arXiv normally does for academic discoverability: serve as the authoritative landing page for her research, expose machine-readable citation metadata, and connect to the cross-platform identifier graph (ORCID, Google Scholar, Semantic Scholar, DBLP). One paper is already published with a DOI on Authorea/TechRxiv and is already cited in the literature (Dung et al., 2026); two more papers are in progress. The site needs to support this from launch.
+
+### URL structure (locked)
+
+- `/research/<paper-slug>/` — formal paper landing page. One per paper. Stricter metadata, citation tags, direct PDF download, abstract on page.
+- `/blog/<post-slug>/` — narrative posts and process notes. Lighter metadata, freer voice. Posts may link to research pages.
+- Splitting these namespaces makes Google Scholar's pattern-matching reliable (it expects consistent paper landing-page structure) and keeps blog-style content out of academic crawlers' way.
+
+### Layer 1 — Highwire Press citation tags (per `/research/<slug>/` page)
+
+These are what **Google Scholar actually parses**. Without these, Scholar will not index the page no matter how good other SEO is.
+
+```html
+<meta name="citation_title"            content="Accessibility Concept Emergence in the Pythia Suite: Thresholds, Binding, and the Declarative-Evaluative Gap">
+<meta name="citation_author"           content="Salas, Trisha">
+<meta name="citation_publication_date" content="2026-01-18">
+<meta name="citation_pdf_url"          content="https://trishasalas.com/research/accessibility-knowledge-emergence/paper.pdf">
+<meta name="citation_abstract_html_url" content="https://trishasalas.com/research/accessibility-knowledge-emergence/">
+<meta name="citation_journal_title"    content="TechRxiv">
+<meta name="citation_doi"              content="{{PAPER_DOI}}">
+<meta name="citation_keywords"         content="mechanistic interpretability; accessibility; Pythia; emergence; WCAG; ARIA">
+```
+
+### Layer 2 — Schema.org JSON-LD (per `/research/<slug>/` page + sitewide)
+
+`ScholarlyArticle` per paper, with `author` referencing a single `Person` whose `@id` is the ORCID URL. The ORCID URL becoming the canonical `@id` for "Trisha as author" is the keystone — it links every page on this site to her ORCID record, which links out to GS, SS, etc.
+
+Per paper page (sketch):
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Accessibility Concept Emergence in the Pythia Suite...",
+  "datePublished": "2026-01-18",
+  "author": {
+    "@type": "Person",
+    "@id": "https://orcid.org/{{ORCID_ID}}",
+    "name": "Trisha Salas",
+    "url": "https://trishasalas.com/about/"
+  },
+  "url": "https://trishasalas.com/research/accessibility-knowledge-emergence/",
+  "identifier": "{{PAPER_DOI}}",
+  "abstract": "...",
+  "keywords": ["mechanistic interpretability", "accessibility", "WCAG", "Pythia"]
+}
+```
+
+Sitewide `WebSite` JSON-LD on the home page; `Person` JSON-LD on the About page (with `sameAs` pointing to ORCID, GS, SS, DBLP, GitHub, LinkedIn).
+
+### Layer 3 — Dublin Core (per research page)
+
+Cheap to add, broadens reach into library aggregators (BASE) and enrichment pipelines.
+
+```html
+<meta name="DC.title"      content="...">
+<meta name="DC.creator"    content="Salas, Trisha">
+<meta name="DC.date"       content="2026-01-18">
+<meta name="DC.identifier" content="{{PAPER_DOI}}">
+<meta name="DC.subject"    content="mechanistic interpretability; accessibility; emergence">
+<meta name="DC.description" content="...">
+<meta name="DC.type"       content="Text">
+```
+
+### Sitewide metadata baseline
+
+- **Open Graph** + **Twitter Cards** on every page (title, description, image, URL, type)
+- **Canonical URL** on every page
+- **`<meta name="robots" content="index, follow">`** by default
+- **`sitemap.xml`** auto-generated via `@astrojs/sitemap`
+- **`robots.txt`** with explicit allowlist for `Googlebot`, `Googlebot-News`, `SemanticScholarBot`, `BUbiNG` (BASE crawler), `archive.org_bot`
+
+### Per-paper page minimum requirements (Google Scholar inclusion criteria, not optional)
+
+- Paper has its own URL (`/research/<slug>/`), not a query parameter or anchor.
+- PDF directly downloadable at the URL given in `citation_pdf_url` (stable; no auth required).
+- **Title, author, abstract visible on the landing page in HTML** — not in an image, not in JS-rendered-only content. Astro renders these statically by default, so this is automatic if we put them in the page template.
+- ≥100 words of text on the landing page (the abstract + a short summary section easily clears this).
+- **Stable URLs.** Scholar caches once and gets sticky. URL changes after indexing cause indexing problems.
+
+### Author identifier graph (placeholders to fill)
+
+The keystone identifiers Trisha needs cross-linked. ORCID is canonical; the others reference back to it. Each page exposes the relevant subset.
+
+| Identifier | Status | Value |
+|---|---|---|
+| ORCID iD | exists | `{{ORCID_ID}}` (e.g., `0000-0001-2345-6789`) |
+| Authorea/TechRxiv DOI | exists | `{{PAPER_DOI}}` (paper #1) |
+| Google Scholar profile | TBD | `{{GS_PROFILE_URL}}` or "set up during implementation" |
+| Semantic Scholar Author ID | TBD | `{{SS_AUTHOR_ID}}` or "claim during implementation" |
+| DBLP entry | TBD | `{{DBLP_URL}}` or "n/a" |
+| GitHub | exists | `{{GITHUB_USERNAME}}` |
+| LinkedIn | exists | `{{LINKEDIN_URL}}` |
+
+Once `{{ORCID_ID}}` and `{{PAPER_DOI}}` are filled, the metadata becomes concrete and the implementation plan can stub the rest.
+
+### Implementation hooks for Astro
+
+- A `src/components/seo/Meta.astro` component that takes typed props and emits the appropriate `<meta>` tags. Layer 1 (Highwire) only renders on research pages; Layer 2 (JSON-LD) renders on all pages with appropriate `@type`; Layer 3 (DC) only on research pages.
+- Astro **content collections** for `research/` and `blog/` MDX content, with frontmatter schemas validated against zod. The frontmatter declares the values that flow into the metadata component.
+- `@astrojs/sitemap` integration for sitemap.xml generation.
+- `robots.txt` as a static file in `public/`.
+
+### Open metadata items (to fill before implementation)
+
+- Trisha's ORCID iD
+- Paper #1 DOI (Authorea)
+- Decision: claim/create Google Scholar profile and Semantic Scholar Author ID during implementation, or work with what's already auto-assigned?
+- Decision: are LinkedIn and GitHub usernames safe to expose in `sameAs` JSON-LD, or any privacy considerations?
