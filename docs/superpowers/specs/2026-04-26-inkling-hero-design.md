@@ -426,7 +426,7 @@ ORCID is the keystone — every JSON-LD `Person` and metadata block references `
 | LinkedIn | exists | `https://www.linkedin.com/in/trishasalas/` |
 | DBLP | n/a | add only if peer-reviewed publication lands |
 
-**Open question to resolve before launch:** the Authorea DOI cites version 2 of the paper (published Jan 2026). Local working copy is v3, extended with elicitation robustness experiments per `DECISIONS.md` in the research repo. v3 has not yet been pushed to Authorea. **Decision needed:** push v3 to Authorea before site launch (so metadata cites the most current version), or launch with v2 metadata and update post-v3-publication?
+**Note on local versioning:** the local working filename `accessibility-knowledge-emergence-v3.pdf` is offset from the Authorea numbering — what's labeled "v3" locally corresponds to **v2 on Authorea**, which is the currently published version including the elicitation robustness experiments documented in `DECISIONS.md`. The DOI above (`10.22541/au.177282002.24340653/v2`) cites the correct, current version. No mismatch.
 
 ### Implementation hooks for Astro
 
@@ -435,8 +435,8 @@ ORCID is the keystone — every JSON-LD `Person` and metadata block references `
 - `@astrojs/sitemap` integration for sitemap.xml generation.
 - `robots.txt` as a static file in `public/`.
 
-### Open metadata items (to resolve before launch)
+### Post-launch follow-ups
 
-- **Authorea DOI version question** (see Author identifier graph above): push v3 to Authorea pre-launch, or launch with v2 metadata and update later?
-- **Privacy check:** confirm LinkedIn URL is OK to expose in public `sameAs` JSON-LD. GitHub at `trishasalas` is already public-by-nature, no concern. LinkedIn is public-by-default but worth a deliberate green light since it's exposed to crawlers more aggressively in JSON-LD than just as a hyperlink.
-- **Post-launch follow-ups:** add Google Scholar profile URL to identifier graph once GS indexes paper #1; claim Semantic Scholar Author ID once SS auto-creates it.
+- Add Google Scholar profile URL to identifier graph once GS indexes paper #1.
+- Claim Semantic Scholar Author ID once SS auto-creates it.
+- Add arXiv author URL to identifier graph once first paper is endorsed/submitted.
