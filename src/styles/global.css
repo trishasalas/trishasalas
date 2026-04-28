@@ -54,13 +54,14 @@ p em {
   color: var(--rose-deep);
 }
 
-/* Links */
+/* Links — :focus-visible parity per spec §4 keyboard-parity rule */
 a {
   color: var(--text);
   text-decoration: none;
   transition: color 200ms ease;
 }
-a:hover { color: var(--rose); }
+a:hover,
+a:focus-visible { color: var(--rose); }
 
 /* Focus visible — custom outline for AA contrast against burgundy */
 :focus { outline: none; }
