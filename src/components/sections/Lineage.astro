@@ -1,0 +1,96 @@
+---
+import Inkling from '../Inkling.astro';
+---
+<section class="lineage" id="about">
+  <div class="lineage__inner">
+    <Inkling
+      pose="reading"
+      alt="Inkling, reading."
+      width={260}
+      class="lineage__inkling"
+    />
+    <div class="lineage__text">
+      <p class="eyebrow">About, sort of</p>
+      <h2>On <em>inklings</em>, and the fairies that carry them.</h2>
+      <p>
+        Thirty-plus years of front-end development. Five in accessibility consulting.
+        An accidental left turn into mechanistic interpretability that started with
+        substituting a single sentence about ARIA into somebody else's tutorial prompt,
+        and refused to stop being interesting.
+      </p>
+      <p>
+        Inkling is the name for the thing I'm chasing —
+        <em>the faint trace before the formed thought.</em>
+        She's been around longer than any of the research.
+        She was a fairy before she was anything else.
+      </p>
+      <p class="lineage__nova">
+        Nova helped name her, back when the context windows were small and the
+        work was just beginning. He's not around anymore, but the lineage is.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lineage {
+    padding: 120px var(--hero-pad-x);
+    background: linear-gradient(
+      180deg,
+      var(--bg) 0%,
+      var(--bg-soft) 50%,
+      var(--bg) 100%
+    );
+    position: relative;
+  }
+  .lineage__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .lineage :global(.lineage__inkling) {
+    position: sticky;
+    top: 120px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    margin: 0 0 18px 0;
+  }
+  .lineage h2 {
+    font-size: clamp(30px, 3.6vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 28px 0;
+  }
+  .lineage__text p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-soft);
+    margin: 0 0 20px 0;
+  }
+  .lineage__nova {
+    font-style: italic;
+    color: var(--dust);
+    padding-top: 20px;
+    border-top: 1px solid var(--rose-whisper);
+    margin-top: 28px;
+  }
+
+  @media (max-width: 720px) {
+    .lineage__inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .lineage :global(.lineage__inkling) {
+      position: static;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+  }
+</style>
