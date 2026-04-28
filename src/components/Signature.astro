@@ -1,29 +1,44 @@
 ---
-// Vertical signature wordmark. Loaded as <object> so the inner <title>
-// is announced by screen readers. Hidden below 1024px per spec §2 —
-// horizontal wordmark would compete with the headline at narrow widths.
+// Vertical signature wordmark, rendered inline so AT picks up the <title>
+// natively and the SVG inherits CSS custom properties from the host page.
+// Hidden below 1024px per spec §2 — horizontal wordmark would compete
+// with the headline at narrow widths.
 //
-// Note (deferred design task): public/signature.svg should be replaced
-// before launch with a path-converted Fraunces-italic export so the
-// typographic stroke character is exact (spec §1B). The current
-// <text>-based version is functional and falls back to Georgia italic
-// gracefully if Fraunces hasn't loaded yet.
+// Note (deferred design task): the <text> element below is a placeholder.
+// Replace with a path-converted Fraunces-italic export so the typographic
+// stroke character is exact even when the font hasn't loaded (spec §1B).
+// Paste the exported <path> elements between <title> and </svg>.
 ---
-<object
-  type="image/svg+xml"
-  data="/signature.svg"
+<svg
   class="signature"
-  aria-label="Trisha Salas — Digital Gardener"
-></object>
+  viewBox="0 0 40 480"
+  role="img"
+  aria-labelledby="sig-title"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <title id="sig-title">Trisha Salas — Digital Gardener</title>
+  <text
+    x="20" y="240"
+    transform="rotate(-90 20 240)"
+    text-anchor="middle"
+    font-family="Fraunces, Georgia, serif"
+    font-style="italic"
+    font-weight="300"
+    font-size="14"
+    letter-spacing="0.15em"
+    fill="currentColor"
+  >Trisha Salas — Digital Gardener</text>
+</svg>
 
 <style>
   .signature {
     position: absolute;
     left: clamp(8px, 1vw, 16px);
-    top: 140px;
-    bottom: 0;
+    top: 140px; /* matches hero padding-top — keep in sync */
+    height: 480px;
     width: 40px;
-    opacity: 0.55;
+    color: var(--text-soft);
+    opacity: 0.40; /* marginalia weight; revisit at Task 29 visual review */
     pointer-events: none;
   }
 
