@@ -1,8 +1,8 @@
 ---
-// Hero — text column only at this checkpoint.
-// Inkling, glow trail, sparkles, signature, margin guide land in later tasks.
+import MarginGuide from '../MarginGuide.astro';
 ---
 <section class="hero" id="top">
+  <MarginGuide />
   <div class="hero__text">
     <p class="eyebrow">Accessibility · Mech Interp · Practice</p>
     <h1>Following the <em>inkling</em>.</h1>
@@ -108,10 +108,15 @@
     color: var(--rose);
   }
 
+  .hero :global(.margin-guide) {
+    left: calc(55% + clamp(20px, 2.5vw, 40px));
+  }
+
   @media (max-width: 1023px) {
     .hero {
       grid-template-columns: 1fr;
       padding-top: 100px;
     }
+    .hero :global(.margin-guide) { display: none; }
   }
 </style>
