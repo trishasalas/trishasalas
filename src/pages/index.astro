@@ -1,10 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
 import Hero from '../components/sections/Hero.astro';
+import Footer from '../components/Footer.astro';
 ---
 <Base
   title="Trisha Salas — Accessibility · Mech Interp · Practice"
   description="Personal site of Trisha Salas — front-end developer turned accessibility consultant, doing independent research in mechanistic interpretability."
 >
-  <Hero />
+  <Nav />
+  <main>
+    <Hero />
+  </main>
+  <Footer />
 </Base>
