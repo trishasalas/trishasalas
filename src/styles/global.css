@@ -6,6 +6,10 @@ html, body { margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
 
+/* Anchored targets need a scroll offset so they land below the fixed nav
+   (Task 16 introduces position: fixed; ~70px tall + buffer). */
+[id] { scroll-margin-top: 80px; }
+
 body {
   background: var(--bg);
   color: var(--text);

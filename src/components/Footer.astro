@@ -15,6 +15,11 @@ const year = new Date().getFullYear();
     <li><a href="https://orcid.org/0009-0007-5105-7874" rel="me">ORCID</a></li>
     <li><a href="mailto:trisha@trishasalas.com">Email</a></li>
   </ul>
+  <!-- Wordmark for narrow viewports — vertical Signature is hidden <1024px
+       per spec §1B; the wordmark still appears here for credit/identification. -->
+  <p class="footer__wordmark" aria-hidden="true">
+    Trisha Salas — <em>Digital Gardener</em>
+  </p>
 </footer>
 
 <style>
@@ -41,6 +46,27 @@ const year = new Date().getFullYear();
     justify-content: flex-end;
   }
   .footer__links a { color: var(--text-soft); }
+  .footer__wordmark {
+    display: none; /* Visible only on mobile; vertical Signature handles desktop */
+    grid-column: 1 / -1;
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+    text-transform: none;
+    margin: 8px 0 0;
+    opacity: 0.75;
+  }
+  .footer__wordmark em {
+    color: var(--rose-deep);
+    font-style: italic;
+  }
+
+  @media (max-width: 1023px) {
+    .footer__wordmark { display: block; }
+  }
 
   @media (max-width: 720px) {
     .footer {
