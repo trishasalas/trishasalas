@@ -11,7 +11,15 @@
   const prefersReduced = window.matchMedia(
     '(prefers-reduced-motion: reduce)',
   ).matches;
-  const userPaused = localStorage.getItem('motion-paused') === '1';
+  // Wrapped: a thrown localStorage error in <head> would abort the whole
+  // script, dropping the prefers-reduced-motion path. Fall back to the
+  // system signal alone if storage is unavailable.
+  let userPaused = false;
+  try {
+    userPaused = localStorage.getItem('motion-paused') === '1';
+  } catch {
+    /* private-mode Safari etc. — system pref still wins */
+  }
   const paused = prefersReduced || userPaused;
 
   if (!paused) return;
