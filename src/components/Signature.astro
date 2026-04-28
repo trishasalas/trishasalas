@@ -1,0 +1,33 @@
+---
+// Vertical signature wordmark. Loaded as <object> so the inner <title>
+// is announced by screen readers. Hidden below 1024px per spec §2 —
+// horizontal wordmark would compete with the headline at narrow widths.
+//
+// Note (deferred design task): public/signature.svg should be replaced
+// before launch with a path-converted Fraunces-italic export so the
+// typographic stroke character is exact (spec §1B). The current
+// <text>-based version is functional and falls back to Georgia italic
+// gracefully if Fraunces hasn't loaded yet.
+---
+<object
+  type="image/svg+xml"
+  data="/signature.svg"
+  class="signature"
+  aria-label="Trisha Salas — Digital Gardener"
+></object>
+
+<style>
+  .signature {
+    position: absolute;
+    left: clamp(8px, 1vw, 16px);
+    top: 140px;
+    bottom: 0;
+    width: 40px;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1023px) {
+    .signature { display: none; }
+  }
+</style>
