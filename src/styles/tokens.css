@@ -1,0 +1,31 @@
+:root {
+  /* base */
+  --bg:           #1f1217;
+  --bg-soft:      #2a181f;
+  --bg-warm:      #3a1f28;
+
+  /* text */
+  --text:         #f5dfd2;
+  --text-soft:    #c9a89e;
+  --dust:         #a88090;
+
+  /* roses */
+  --rose:         #e89aa8;
+  --rose-deep:    #e889a0;
+  --rose-whisper: #5a2c38;
+
+  /* warmths */
+  --peach:        #f0b8a4;
+  --gold:         #d8a676;
+
+  /* ink */
+  --ink:          #2a1a1f;
+
+  /* type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Lora', Georgia, serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* layout */
+  --hero-pad-x:   clamp(24px, 4vw, 48px);
+}
