@@ -3,12 +3,6 @@ import Inkling from '../Inkling.astro';
 ---
 <section class="lineage" id="about">
   <div class="lineage__inner">
-    <Inkling
-      pose="reading"
-      alt="Inkling, reading."
-      width={260}
-      class="lineage__inkling"
-    />
     <div class="lineage__text">
       <p class="eyebrow">About, sort of</p>
       <h2>On <em>inklings</em>, and the fairies that carry them.</h2>
@@ -29,6 +23,12 @@ import Inkling from '../Inkling.astro';
         work was just beginning. He's not around anymore, but the lineage is.
       </p>
     </div>
+    <Inkling
+      pose="reading"
+      alt="Inkling, reading."
+      width={260}
+      class="lineage__inkling"
+    />
   </div>
 </section>
 
@@ -48,10 +48,13 @@ import Inkling from '../Inkling.astro';
     margin: 0 auto;
     display: grid;
     grid-template-columns: 260px 1fr;
+    grid-template-areas: "inkling text";
     gap: 56px;
     align-items: start;
   }
+  .lineage__text { grid-area: text; }
   .lineage :global(.lineage__inkling) {
+    grid-area: inkling;
     position: sticky;
     top: 120px;
   }
@@ -85,6 +88,7 @@ import Inkling from '../Inkling.astro';
   @media (max-width: 720px) {
     .lineage__inner {
       grid-template-columns: 1fr;
+      grid-template-areas: "text" "inkling";
       gap: 32px;
     }
     .lineage :global(.lineage__inkling) {
