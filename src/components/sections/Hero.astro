@@ -179,4 +179,13 @@ import Sparkle from '../Sparkle.astro';
     z-index: 2;
     color: var(--gold);
   }
+
+  /* Hide sparkles on mobile — Inkling drops to z-index: -1 below 1024px,
+     so leaving sparkles at z: 2 would sit them above the hero text in
+     the same region. Decorative marginalia; no loss at narrow widths. */
+  @media (max-width: 1023px) {
+    .hero :global(.sparkle--1),
+    .hero :global(.sparkle--2),
+    .hero :global(.sparkle--3) { display: none; }
+  }
 </style>
