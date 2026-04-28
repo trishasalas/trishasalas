@@ -42,19 +42,30 @@
 
 /* The single shared off-switch.
    prefers-reduced-motion AND the manual toggle both apply this class via
-   src/scripts/motion-init.ts (runs in <head> before paint). */
+   src/scripts/motion-init.ts (runs in <head> before paint).
+   Selectors match html.motion-paused too for the brief window before
+   <body> parses (FOUC prevention). */
 body.motion-paused .flit,
+html.motion-paused .flit,
 body.motion-paused .halo-pulse,
+html.motion-paused .halo-pulse,
 body.motion-paused .sparkle,
-body.motion-paused .glow-trail {
+html.motion-paused .sparkle,
+body.motion-paused .glow-trail,
+html.motion-paused .glow-trail {
   animation: none !important;
 }
 
-body.motion-paused .halo-pulse { opacity: 0.78; }
-body.motion-paused .sparkle    { transform: scale(1); opacity: 1; }
-body.motion-paused .glow-trail { stroke-dashoffset: 0; }
+body.motion-paused .halo-pulse,
+html.motion-paused .halo-pulse { opacity: 0.78; }
 
-/* Hover/focus transitions clamp to ~50ms when paused */
-body.motion-paused * {
+body.motion-paused .sparkle,
+html.motion-paused .sparkle { transform: scale(1); opacity: 1; }
+
+body.motion-paused .glow-trail,
+html.motion-paused .glow-trail { stroke-dashoffset: 0; }
+
+body.motion-paused *,
+html.motion-paused * {
   transition-duration: 50ms !important;
 }
