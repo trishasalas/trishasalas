@@ -1,0 +1,71 @@
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Grain texture overlay — ASCII-clean SVG data URI.
+   The archived mockup has smart-quote corruption; do NOT copy from there. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: 100;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.85  0 0 0 0 0.82  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Headlines */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+h1 em, h2 em, h3 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--rose-deep);
+  font-variation-settings: "opsz" 144;
+}
+
+/* Body emphasis */
+p em {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--rose-deep);
+}
+
+/* Links */
+a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+a:hover { color: var(--rose); }
+
+/* Focus visible — custom outline for AA contrast against burgundy */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
