@@ -6,7 +6,7 @@
 <svg
   class="glow-trail"
   viewBox="0 0 1000 600"
-  preserveAspectRatio="xMidYMid meet"
+  preserveAspectRatio="none"
   aria-hidden="true"
   focusable="false"
 >
@@ -42,5 +42,11 @@
   }
   .glow-trail__path {
     filter: drop-shadow(0 0 6px rgba(232, 137, 160, 0.5));
+  }
+  /* Hide on mobile — Inkling drops to z-index: -1 below 1024px, and
+     the trail's right anchor (viewBox x=820) compresses out of meaningful
+     range at narrow widths. Decorative marginalia; no loss. */
+  @media (max-width: 1023px) {
+    .glow-trail { display: none; }
   }
 </style>
