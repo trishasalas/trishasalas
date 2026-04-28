@@ -1,0 +1,166 @@
+---
+const papers = [
+  {
+    status: 'Published · TechRxiv',
+    statusKind: 'live' as const,
+    year: '2026',
+    title: 'Accessibility Concept Emergence in the Pythia Suite',
+    titleEm: 'Pythia',
+    abstract:
+      'A cross-scale analysis of how accessibility concepts — WCAG, ARIA, semantic HTML — become represented across the Pythia model family. Evidence for a three-tier statistical architecture of accessibility-related activations that replicates across GPT-2 XL and Pythia 2.8B.',
+    meta: ['DOI · 10.22541/au.177282002.24340653/v2', 'Cited in 1'],
+    href: 'https://doi.org/10.22541/au.177282002.24340653/v2',
+  },
+  {
+    status: 'In progress · TACCESS',
+    statusKind: 'draft' as const,
+    year: '2026',
+    title: 'When ARIA is everywhere and alt-text is nowhere',
+    titleEm: 'ARIA is everywhere',
+    abstract:
+      'A short paper proposing a cross-model benchmark for accessible tab components, grounded in infini-gram training-data analysis. The declarative-evaluative gap is not a model failure — it is visible in the corpus itself.',
+    meta: ['Benchmark · 5 models', 'Drafting'],
+    href: null,
+  },
+];
+
+// Render the title with the italic emphasis word substituted as <em>.
+function emify(title: string, em: string) {
+  return title.replace(em, `<em>${em}</em>`);
+}
+---
+<section class="research" id="research">
+  <header class="section-head">
+    <h2 class="section-title">The <em>research</em></h2>
+    <p class="section-note">Independent · ongoing</p>
+  </header>
+
+  <div class="papers">
+    {papers.map((p) => (
+      <article class="paper">
+        <header class="paper__status">
+          <span>
+            <span class:list={['paper__dot', p.statusKind === 'draft' && 'paper__dot--draft']}></span>
+            {p.status}
+          </span>
+          <span>{p.year}</span>
+        </header>
+        {p.href ? (
+          <h3 class="paper__title">
+            <a href={p.href} set:html={emify(p.title, p.titleEm)}></a>
+          </h3>
+        ) : (
+          <h3 class="paper__title" set:html={emify(p.title, p.titleEm)}></h3>
+        )}
+        <p class="paper__abstract">{p.abstract}</p>
+        <ul class="paper__meta">
+          {p.meta.map((m) => <li>{m}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .research {
+    padding: 80px var(--hero-pad-x) 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 48px;
+    gap: 40px;
+  }
+  .section-title {
+    font-size: clamp(32px, 4vw, 48px);
+    margin: 0;
+  }
+  .section-note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin: 0;
+  }
+  .papers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rose-whisper);
+    border: 1px solid var(--rose-whisper);
+  }
+  .paper {
+    background: var(--bg-soft);
+    padding: 36px 32px;
+    transition: background 350ms ease;
+    position: relative;
+  }
+  .paper:hover { background: var(--bg-warm); }
+
+  .paper__status {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    margin-bottom: 20px;
+  }
+  .paper__dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rose-deep);
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .paper__dot--draft {
+    background: transparent;
+    border: 1px solid var(--rose-deep);
+  }
+
+  .paper__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.2;
+    margin: 0 0 16px 0;
+  }
+  .paper__title a { color: var(--text); }
+  .paper__title a:hover,
+  .paper__title a:focus-visible { color: var(--rose); }
+  .paper__title em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+
+  .paper__abstract {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-soft);
+    margin: 0 0 24px 0;
+  }
+
+  .paper__meta {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dust);
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 720px) {
+    .papers { grid-template-columns: 1fr; }
+  }
+</style>
