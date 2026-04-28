@@ -1,10 +1,18 @@
 ---
 import MarginGuide from '../MarginGuide.astro';
 import Signature from '../Signature.astro';
+import Inkling from '../Inkling.astro';
 ---
 <section class="hero" id="top">
   <MarginGuide />
   <Signature />
+  <Inkling
+    pose="in-flight"
+    alt="Inkling, in flight."
+    width={420}
+    flit={true}
+    class="hero__inkling"
+  />
   <div class="hero__text">
     <p class="eyebrow">Accessibility · Mech Interp · Practice</p>
     <h1>Following the <em>inkling</em>.</h1>
@@ -120,5 +128,30 @@ import Signature from '../Signature.astro';
       padding-top: 100px;
     }
     .hero :global(.margin-guide) { display: none; }
+  }
+
+  .hero :global(.hero__inkling) {
+    position: absolute;
+    top: 12vh;
+    right: clamp(-40px, 2vw, 80px);
+    width: clamp(280px, 32vw, 460px);
+    z-index: 1;
+  }
+
+  @media (max-width: 1023px) {
+    .hero :global(.hero__inkling) {
+      top: auto;
+      bottom: 8vh;
+      right: -20px;
+      opacity: 0.55;
+      z-index: -1;
+      width: 60vw;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero :global(.hero__inkling) {
+      opacity: 0.4;
+    }
   }
 </style>
