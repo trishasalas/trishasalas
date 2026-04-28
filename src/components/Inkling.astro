@@ -4,14 +4,31 @@ interface Props {
   alt: string;
   /** When true, applies .flit (hero only). Defaults to false. */
   flit?: boolean;
-  /** Width in px; height auto. Required so layout doesn't jump. */
+  /** Display width in px. Height is derived from natural aspect ratio. */
   width: number;
   /** Optional class hook for placement CSS in the consuming section. */
   class?: string;
 }
 
+/**
+ * Natural aspect ratios (width / height) per pose, measured from the
+ * source PNGs in public/images/. Pinning these lets us emit explicit
+ * width AND height attributes on <img>, so browsers pre-allocate space
+ * before the image header parses — preventing CLS even on the eagerly-
+ * loaded hero pose. If a raster is re-exported at different dimensions,
+ * update the matching entry here.
+ *
+ * Measured via: sips -g pixelWidth -g pixelHeight public/images/inkling-*.png
+ */
+const aspectRatios: Record<Props['pose'], number> = {
+  'in-flight':  468  / 564,
+  'on-inkwell': 685  / 1113,
+  'reading':    1024 / 1536,
+};
+
 const { pose, alt, flit = false, width, class: classProp = '' } = Astro.props;
 const src = `/images/inkling-${pose}.png`;
+const height = Math.round(width / aspectRatios[pose]);
 ---
 <div class:list={['inkling', `inkling--${pose}`, classProp]}>
   {flit && <div class="inkling__halo halo-pulse" aria-hidden="true"></div>}
@@ -19,6 +36,7 @@ const src = `/images/inkling-${pose}.png`;
     src={src}
     alt={alt}
     width={width}
+    height={height}
     class:list={['inkling__img', flit && 'flit']}
     loading={pose === 'in-flight' ? 'eager' : 'lazy'}
     decoding="async"
