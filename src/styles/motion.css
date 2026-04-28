@@ -1,0 +1,60 @@
+/* Inkling lives at this address.
+   The flit is a figure-eight, gentle.
+   She does not flap; she breathes. */
+@keyframes flit {
+  0%   { transform: translate(0, 0) scale(1.000); }
+  25%  { transform: translate(8px, -6px) scale(1.006); }
+  50%  { transform: translate(0, -10px) scale(1.012); }
+  75%  { transform: translate(-8px, -6px) scale(1.006); }
+  100% { transform: translate(0, 0) scale(1.000); }
+}
+
+@keyframes halo-pulse {
+  0%, 100% { opacity: 0.65; }
+  50%      { opacity: 0.90; }
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% { transform: scale(0); opacity: 0; }
+  50%      { transform: scale(1); opacity: 1; }
+}
+
+@keyframes glow-trail-draw {
+  from { stroke-dashoffset: var(--trail-length, 600); }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes glow-trail-flow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -40; }
+}
+
+/* Default animation hooks (consumed by components) */
+.flit          { animation: flit 6s ease-in-out infinite; will-change: transform; }
+.halo-pulse    { animation: halo-pulse 8s ease-in-out infinite; }
+.sparkle       { animation: sparkle-twinkle 1.8s ease-in-out infinite; }
+.glow-trail    {
+  stroke-dasharray: 8 6;
+  animation:
+    glow-trail-draw 2.5s ease-out 1 backwards,
+    glow-trail-flow 10s linear 2.5s infinite;
+}
+
+/* The single shared off-switch.
+   prefers-reduced-motion AND the manual toggle both apply this class via
+   src/scripts/motion-init.ts (runs in <head> before paint). */
+body.motion-paused .flit,
+body.motion-paused .halo-pulse,
+body.motion-paused .sparkle,
+body.motion-paused .glow-trail {
+  animation: none !important;
+}
+
+body.motion-paused .halo-pulse { opacity: 0.78; }
+body.motion-paused .sparkle    { transform: scale(1); opacity: 1; }
+body.motion-paused .glow-trail { stroke-dashoffset: 0; }
+
+/* Hover/focus transitions clamp to ~50ms when paused */
+body.motion-paused * {
+  transition-duration: 50ms !important;
+}
