@@ -14,10 +14,14 @@ export function initPauseToggle(button: HTMLButtonElement) {
     button.querySelector('[data-label]')!.textContent = paused
       ? '■ animations paused'
       : '▸ pause animations';
-    if (paused) {
-      localStorage.setItem('motion-paused', '1');
-    } else {
-      localStorage.removeItem('motion-paused');
+    try {
+      if (paused) {
+        localStorage.setItem('motion-paused', '1');
+      } else {
+        localStorage.removeItem('motion-paused');
+      }
+    } catch {
+      /* private-mode Safari etc. — toggle still works in-session */
     }
   };
 
