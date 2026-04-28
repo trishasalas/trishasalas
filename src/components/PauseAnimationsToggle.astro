@@ -1,0 +1,44 @@
+---
+// WCAG 2.2.2 pause control for ambient motion >5s (flit, halo pulse).
+// Real button, aria-pressed, keyboard-toggleable, persists to localStorage.
+---
+<button
+  type="button"
+  class="pause-toggle"
+  aria-pressed="false"
+  data-pause-toggle
+>
+  <span data-label>▸ pause animations</span>
+</button>
+
+<script>
+  import { initPauseToggle } from '../scripts/pause-toggle.ts';
+  const btn = document.querySelector<HTMLButtonElement>('[data-pause-toggle]');
+  if (btn) initPauseToggle(btn);
+</script>
+
+<style>
+  .pause-toggle {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--rose-whisper);
+    color: var(--text-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 200ms ease, border-color 200ms ease;
+    min-height: 32px;
+  }
+  .pause-toggle:hover {
+    color: var(--rose);
+    border-color: var(--rose);
+  }
+  .pause-toggle[aria-pressed="true"] {
+    color: var(--rose-deep);
+    border-color: var(--rose-deep);
+  }
+</style>
