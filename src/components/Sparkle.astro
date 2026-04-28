@@ -1,0 +1,36 @@
+---
+interface Props {
+  size: number;
+  /** seconds — staggers when in the cycle this sparkle twinkles */
+  delay?: number;
+  /** seconds — gap between cycles */
+  gap?: number;
+  class?: string;
+}
+const { size, delay = 0, gap = 6, class: classProp = '' } = Astro.props;
+const totalCycle = 1.8 + gap;
+const style = `width:${size}px;height:${size}px;animation-delay:${delay}s;animation-duration:${totalCycle}s;`;
+---
+<svg
+  class:list={['sparkle', classProp]}
+  style={style}
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path
+    d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z"
+    fill="currentColor"
+  />
+</svg>
+
+<style>
+  .sparkle {
+    color: var(--rose);
+    opacity: 0;
+    transform: scale(0);
+    animation-name: sparkle-twinkle;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+</style>

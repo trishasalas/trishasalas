@@ -2,6 +2,7 @@
 import MarginGuide from '../MarginGuide.astro';
 import Signature from '../Signature.astro';
 import Inkling from '../Inkling.astro';
+import Sparkle from '../Sparkle.astro';
 ---
 <section class="hero" id="top">
   <MarginGuide />
@@ -28,6 +29,9 @@ import Inkling from '../Inkling.astro';
     flit={true}
     class="hero__inkling"
   />
+  <Sparkle size={14} delay={0}   class="sparkle--1" />
+  <Sparkle size={20} delay={2.5} class="sparkle--2" />
+  <Sparkle size={10} delay={4.8} class="sparkle--3" />
 </section>
 
 <style>
@@ -153,5 +157,26 @@ import Inkling from '../Inkling.astro';
     .hero :global(.hero__inkling) {
       opacity: 0.4;
     }
+  }
+
+  .hero :global(.sparkle--1) {
+    position: absolute;
+    top: 22%;
+    right: 18%;
+    z-index: 2;
+  }
+  .hero :global(.sparkle--2) {
+    position: absolute;
+    top: 8%;
+    right: 36%;
+    z-index: 2;
+    color: var(--peach);
+  }
+  .hero :global(.sparkle--3) {
+    position: absolute;
+    bottom: 28%;
+    right: 8%;
+    z-index: 2;
+    color: var(--gold);
   }
 </style>
