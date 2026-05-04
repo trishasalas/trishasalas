@@ -1,25 +1,25 @@
 :root {
   /* base */
-  --bg:           #1f1217;
-  --bg-soft:      #2a181f;
-  --bg-warm:      #3a1f28;
+  --bg:           #f1dccb;  /* warm cream paper */
+  --bg-soft:      #ead0bb;  /* slightly deeper cream */
+  --bg-warm:      #e0bfa8;  /* warm wash for accents */
 
   /* text */
-  --text:         #f5dfd2;
-  --text-soft:    #c9a89e;
-  --dust:         #a88090;
+  --text:         #2a1a1f;  /* near-black ink, primary text */
+  --text-soft:    #6b4a52;  /* muted plum-brown for secondary */
+  --dust:         #9a7a82;  /* soft dusty rose for marginalia */
 
   /* roses */
-  --rose:         #e89aa8;
-  --rose-deep:    #e889a0;
-  --rose-whisper: #5a2c38;
+  --rose:         #c97a8e;  /* primary rose, italic emphasis */
+  --rose-deep:    #a44560;  /* deeper rose, links/active */
+  --rose-whisper: #e8c5cd;  /* palest rose, backgrounds/hovers */
 
   /* warmths */
-  --peach:        #f0b8a4;
-  --gold:         #d8a676;
+  --peach:        #d9a89a;  /* warm pink-peach */
+  --gold:         #b88a5e;  /* warm gold-brown */
 
   /* ink */
-  --ink:          #2a1a1f;
+  --ink:          #2a1a1f;  /* deepest ink, same as text */
 
   /* type */
   --font-display: 'Fraunces', Georgia, serif;
