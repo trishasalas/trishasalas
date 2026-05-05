@@ -2,75 +2,59 @@
 import MarginGuide from '../MarginGuide.astro';
 import Signature from '../Signature.astro';
 import Inkling from '../Inkling.astro';
-import Sparkle from '../Sparkle.astro';
-import GlowTrail from '../GlowTrail.astro';
 ---
-<section class="hero" id="top">
-  <MarginGuide />
-  <Signature />
-  <!-- the headline is hers; she just lent it -->
-  <div class="hero__text">
-    <p class="eyebrow">Accessibility · Mech Interp · Practice</p>
-    <h1>Following the <em>inkling</em><span class="h1-period" aria-hidden="true"></span></h1>
-    <p class="lede">
-      I'm a front-end developer turned accessibility consultant, studying
-      how language models represent what they seem to know — and what that
-      means for the people they're supposed to serve. This is where the
-      research lives, alongside the writing that <em>circles it</em>.
-    </p>
-    <ul class="hero__meta" aria-label="Location and affiliations">
-      <li>Broken Arrow, OK</li>
-      <li>Level Access</li>
-      <li>Independent Research</li>
-    </ul>
-  </div>
-  <GlowTrail />
-  <Inkling
-    pose="in-flight"
-    alt="Inkling, in flight."
-    width={460}
-    flit={true}
-    class="hero__inkling"
-  />
-  <Sparkle size={14} delay={0}   class="sparkle--1" />
-  <Sparkle size={20} delay={2.5} class="sparkle--2" />
-  <Sparkle size={10} delay={4.8} class="sparkle--3" />
-</section>
+<div class="hero-outer-wrapper">
+  <section class="hero" id="top">
+    <MarginGuide />
+    <Signature />
+    <div class="hero__text">
+      <p class="eyebrow">Accessibility · Mech Interp · Practice</p>
+      <h1>Following the <em>inkling</em><span class="h1-period" aria-hidden="true"></span></h1>
+      <p class="lede">
+        I'm a front-end developer turned accessibility consultant, studying
+        how language models represent what they seem to know — and what that
+        means for the people they're supposed to serve. This is where the
+        research lives, alongside the writing that <em>circles it</em>.
+      </p>
+      <ul class="hero__meta" aria-label="Location and affiliations">
+        <li>Broken Arrow, OK</li>
+        <li>Level Access</li>
+        <li>Independent Research</li>
+      </ul>
+    </div>
+    <Inkling
+      pose="in-flight"
+      alt="Inkling, in flight."
+      width={460}
+      flit={false}
+      class="hero__inkling"
+    />
+  </section>
+</div>
 
 <style>
-  .hero {
+  /* Aspect-ratio + bg-contain on the wrapper is the load-bearing trick:
+     the painted artwork's natural 16/9 proportions become the coordinate
+     system, so percentage-positioned children (the fairy) lock to painted
+     features at every viewport size. Don't add min-height: 100vh here. */
+  .hero-outer-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: url('/images/light-bkg-full.webp') no-repeat bottom right;
+    background-size: contain;
     position: relative;
-    min-height: 100vh;
-    padding: 140px var(--hero-pad-x) 80px;
+  }
+
+  .hero {
+    padding: 80px var(--hero-pad-x);
     display: grid;
-    grid-template-columns: minmax(0, 55%) 1fr;
+    grid-template-columns: minmax(0, 45%) 1fr;
     gap: clamp(40px, 5vw, 80px);
     align-items: center;
     isolation: isolate;
-  }
-
-  /* Soft ambient warm-rose glow scattered behind everything else */
-  .hero::before,
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-  }
-  .hero::before {
-    background: radial-gradient(
-      ellipse 60% 40% at 75% 30%,
-      rgba(232, 137, 160, 0.10) 0%,
-      transparent 60%
-    );
-  }
-  .hero::after {
-    background: radial-gradient(
-      ellipse 40% 30% at 20% 70%,
-      rgba(216, 166, 118, 0.06) 0%,
-      transparent 60%
-    );
+    overflow: hidden;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 
   .hero__text { position: relative; }
@@ -136,69 +120,33 @@ import GlowTrail from '../GlowTrail.astro';
   }
 
   .hero :global(.margin-guide) {
-    left: calc(55% + clamp(20px, 2.5vw, 40px));
+    left: calc(45% + clamp(20px, 2.5vw, 40px));
+  }
+
+  /* Fairy is positioned against the wrapper (not the grid) so her
+     percentage anchors land on the painted sparkle source regardless
+     of viewport. aspect-ratio matches the in-flight webp's natural
+     proportions, so the box pre-allocates correctly — percent width
+     would otherwise sacrifice CLS prevention. */
+  .hero-outer-wrapper :global(.hero__inkling) {
+    position: absolute;
+    top: 3%;
+    right: 22%;
+    width: 17%;
+    aspect-ratio: 364 / 531;
+    z-index: 2;
   }
 
   @media (max-width: 1023px) {
     .hero {
       grid-template-columns: 1fr;
-      padding-top: 100px;
+      padding: 60px var(--hero-pad-x);
     }
     .hero :global(.margin-guide) { display: none; }
-  }
-
-  .hero :global(.hero__inkling) {
-    position: absolute;
-    top: 12vh;
-    right: clamp(-40px, 2vw, 80px);
-    width: clamp(280px, 32vw, 460px);
-    z-index: 1;
-  }
-
-  @media (max-width: 1023px) {
-    .hero :global(.hero__inkling) {
-      top: auto;
-      bottom: 8vh;
-      right: -20px;
-      opacity: 0.55;
-      z-index: -1;
-      width: 60vw;
+    .hero-outer-wrapper :global(.hero__inkling) {
+      width: 22%;
+      top: 2%;
+      right: 8%;
     }
-  }
-
-  @media (max-width: 640px) {
-    .hero :global(.hero__inkling) {
-      opacity: 0.4;
-    }
-  }
-
-  .hero :global(.sparkle--1) {
-    position: absolute;
-    top: 22%;
-    right: 18%;
-    z-index: 2;
-  }
-  .hero :global(.sparkle--2) {
-    position: absolute;
-    top: 8%;
-    right: 36%;
-    z-index: 2;
-    color: var(--peach);
-  }
-  .hero :global(.sparkle--3) {
-    position: absolute;
-    bottom: 28%;
-    right: 8%;
-    z-index: 2;
-    color: var(--gold);
-  }
-
-  /* Hide sparkles on mobile — Inkling drops to z-index: -1 below 1024px,
-     so leaving sparkles at z: 2 would sit them above the hero text in
-     the same region. Decorative marginalia; no loss at narrow widths. */
-  @media (max-width: 1023px) {
-    .hero :global(.sparkle--1),
-    .hero :global(.sparkle--2),
-    .hero :global(.sparkle--3) { display: none; }
   }
 </style>

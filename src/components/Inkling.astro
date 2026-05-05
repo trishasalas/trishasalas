@@ -12,22 +12,22 @@ interface Props {
 
 /**
  * Natural aspect ratios (width / height) per pose, measured from the
- * source PNGs in public/images/. Pinning these lets us emit explicit
+ * source webps in public/images/. Pinning these lets us emit explicit
  * width AND height attributes on <img>, so browsers pre-allocate space
  * before the image header parses — preventing CLS even on the eagerly-
  * loaded hero pose. If a raster is re-exported at different dimensions,
  * update the matching entry here.
  *
- * Measured via: sips -g pixelWidth -g pixelHeight public/images/inkling-*.png
+ * Measured via: sips -g pixelWidth -g pixelHeight public/images/inkling-*.webp
  */
 const aspectRatios: Record<Props['pose'], number> = {
-  'in-flight':  468  / 564,
-  'on-inkwell': 685  / 1113,
-  'reading':    1024 / 1536,
+  'in-flight':  364 / 531,
+  'on-inkwell': 742 / 1315,
+  'reading':    897 / 1156,
 };
 
 const { pose, alt, flit = false, width, class: classProp = '' } = Astro.props;
-const src = `/images/inkling-${pose}.png`;
+const src = `/images/inkling-${pose}.webp`;
 const height = Math.round(width / aspectRatios[pose]);
 ---
 <div class:list={['inkling', `inkling--${pose}`, classProp]}>
@@ -52,7 +52,6 @@ const height = Math.round(width / aspectRatios[pose]);
     display: block;
     width: 100%;
     height: auto;
-    mix-blend-mode: screen;
   }
   .inkling__halo {
     position: absolute;
