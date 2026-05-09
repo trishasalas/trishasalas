@@ -5,7 +5,7 @@ Rebuild of `trishasalas.com` (the v2 codebase). Personal site of Trisha Salas �
 ## Tech stack
 
 - **Astro** (minimal-JS by default; MDX-driven content via Astro content collections)
-- Dark mode only, no light/dark toggle
+- Single-palette warm cream / peachy theme (replaces the original dark-mode design); no light/dark toggle
 - Static-site generation; deployed as static assets
 
 ## URL structure
@@ -19,18 +19,19 @@ Rebuild of `trishasalas.com` (the v2 codebase). Personal site of Trisha Salas �
 
 | Path | What |
 |---|---|
-| `docs/superpowers/specs/2026-04-26-inkling-hero-design.md` | **Authoritative home-page design spec** — read before changing the home page |
+| `_hero-reference/` | **Visual-outcome truth source for the hero** — static HTML/CSS reference Trisha built when the spec-driven implementation diverged from intent. Has its own CLAUDE.md explaining what the layout teaches. When the painting and the implementation disagree, the painting wins. |
+| `docs/superpowers/specs/2026-04-26-inkling-hero-design.md` | Original home-page design spec. **Drifted from current implementation** (still describes dark mode, dashed-SVG sparkle trail, mix-blend-mode: screen, PNG assets). Treat as design-intent reference; revise per `superpowers:writing-skills` before re-using as authoritative. |
+| `docs/sessions/` | Session logs documenting major work passes and decisions |
 | `docs/social-urls.md` | Source of truth for ORCID, DOIs, social/research profile URLs |
 | `docs/spec-feedback.md` | External feedback pass on the Inkling spec |
-| `source-files/` | Design references (layouts, Inkling assets, brainstorming notes) — not deployed |
-| `src/` *(eventual)* | Astro source per the file structure in the spec |
-| `public/images/` *(eventual)* | Production-deployed image assets |
+| `src/` | Astro source. Layout system on `.site-wrapper` (CSS Grid + subgrid for `<main>`); page coordinates from `--margin-w` (130px dashed rule) and `--content-start` (180px content column). Sections opt into full-bleed via `.full-bleed` class. |
+| `public/images/` | Production-deployed image assets (.webp); `light-bkg-full.webp` is the painted hero scene |
 
 ## Key conventions
 
 - **Inkling is a system, not a hero.** She appears as marginalia: glow trails, sparkles, quill cameos, source-code easter eggs. She is not centered as a brand mascot. See "Design intent" in the spec.
 - **The whimsy is non-negotiable.** The defensive structure (minimal-professional inner pages, explicit accessibility, formal research metadata) exists to make the whimsy *legible as deliberate craft*, not to soften it. Do not simplify away marginalia under "look more professional" pressure.
-- **Accessibility is built-in, not bolted-on.** WCAG 2.2 AA target. `prefers-reduced-motion` honored. Manual pause toggle for ambient motion >5s. The site itself must be exemplary — Trisha is an a11y consultant.
+- **Accessibility is built-in, not bolted-on.** WCAG 2.2 AA target. `prefers-reduced-motion` honored. Manual pause toggle for ambient motion >5s. Font sizes use `rem` (not `px`) so the site honors a user's browser-default font size. The site itself must be exemplary — Trisha is an a11y consultant.
 - **Findability is load-bearing.** The site doubles as the discoverability hub for Trisha's published research (she does not have arXiv access). Per-paper Highwire Press citation tags + Schema.org `ScholarlyArticle` JSON-LD + Dublin Core, with ORCID as the keystone author `@id`. See Appendix A of the spec.
 
 ## Communication preferences
