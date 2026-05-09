@@ -13,7 +13,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-body);
+  font-family: var(--font-body), sans-serif;
   font-size: 17px;
   line-height: 1.7;
   font-synthesis: none;
@@ -23,23 +23,11 @@ body {
   min-height: 100vh;
 }
 
-/* Grain texture overlay — ASCII-clean SVG data URI.
-   The archived mockup has smart-quote corruption; do NOT copy from there. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-  z-index: 100;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.85  0 0 0 0 0.82  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 /* Headlines */
 h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 300;
-  color: var(--text);
+  color: var(--text-soft);
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 0;
@@ -80,6 +68,7 @@ a:focus-visible { color: var(--rose); }
 em {
   position: relative;
 }
+
 p em::after,
 h1 em::after,
 h2 em::after,
@@ -100,4 +89,99 @@ h3 em:hover::after,
 a:focus-visible em::after,
 button:focus-visible em::after {
   width: 100%;
+}
+
+/* Page layout system.
+
+   .site-wrapper is the single ancestor that knows about the page coordinate
+   system. It owns the grid, the dashed margin rule, and the full-bleed
+   escape hatch. <main> spans both columns and subgrids the same column
+   tracks, so sections inside <main> participate in the page coordinate
+   system without duplicating the template.
+
+   Children sit in the content column by default; sections that need to
+   extend to viewport edges opt in via .full-bleed.
+*/
+
+.site-wrapper {
+  display: grid;
+  grid-template-columns: var(--content-start) minmax(0, 1fr);
+  max-width: var(--site-max);
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Default: any direct child sits in the content column. */
+.site-wrapper > * { grid-column: 2; }
+
+/* <main> spans both wrapper columns and subgrids — sections inside
+   inherit the same column tracks. Single source of truth for the grid. */
+.site-wrapper > main {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+.site-wrapper > main > * { grid-column: 2; }
+
+/* Right-side breathing room (skipped on full-bleed elements so their
+   painting/background can hit the viewport edge). */
+.site-wrapper > *:not(main):not(.full-bleed),
+.site-wrapper > main > *:not(.full-bleed) {
+  padding-right: var(--page-pad-r);
+}
+
+/* Full-bleed escape: spans both grid columns AND extends to the viewport
+   edges via the 100vw + negative-margin trick. The trick works at every
+   width because (50% - 50vw) resolves to 0 when wrapper fills viewport
+   and to the correct negative offset when wrapper is centered at max-width.
+
+   Applies to direct children of either .site-wrapper or main. */
+.site-wrapper > .full-bleed,
+.site-wrapper > main > .full-bleed {
+  grid-column: 1 / -1;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Dashed margin rule. Lives at left: var(--margin-w) inside the wrapper —
+   the same variable that defines content-start. The rule and the content
+   column boundary cannot drift apart because they share a source of truth. */
+.site-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--margin-w);
+  width: 1px;
+  background-image: linear-gradient(to bottom, var(--rose) 50%, transparent 0);
+  background-size: 1px 10px;
+  background-repeat: repeat-y;
+  opacity: 0.7;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Mobile: collapse the margin column. No rule, no SVG zone — content
+   takes the full width with standard side padding. */
+@media (max-width: 767px) {
+  .site-wrapper,
+  .site-wrapper > main {
+    grid-template-columns: 1fr;
+  }
+  .site-wrapper { padding-left: var(--hero-pad-x); }
+  .site-wrapper > *,
+  .site-wrapper > main > * { grid-column: 1; }
+  .site-wrapper > *:not(main):not(.full-bleed),
+  .site-wrapper > main > *:not(.full-bleed) {
+    padding-right: var(--hero-pad-x);
+  }
+  .site-wrapper::before { display: none; }
+  /* Full-bleed escape needs to ignore the wrapper's mobile padding. */
+  .site-wrapper > .full-bleed,
+  .site-wrapper > main > .full-bleed {
+    margin-left: calc(-1 * var(--hero-pad-x));
+    margin-right: calc(-1 * var(--hero-pad-x));
+    width: calc(100% + 2 * var(--hero-pad-x));
+  }
 }

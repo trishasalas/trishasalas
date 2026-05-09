@@ -1,67 +1,83 @@
 ---
-import MarginGuide from '../MarginGuide.astro';
-import Signature from '../Signature.astro';
 import Inkling from '../Inkling.astro';
 ---
-<div class="hero-outer-wrapper">
-  <section class="hero" id="top">
-    <MarginGuide />
-    <Signature />
-    <div class="hero__text">
-      <p class="eyebrow">Accessibility · Mech Interp · Practice</p>
-      <h1>Following the <em>inkling</em><span class="h1-period" aria-hidden="true"></span></h1>
-      <p class="lede">
-        I'm a front-end developer turned accessibility consultant, studying
-        how language models represent what they seem to know — and what that
-        means for the people they're supposed to serve. This is where the
-        research lives, alongside the writing that <em>circles it</em>.
-      </p>
-      <ul class="hero__meta" aria-label="Location and affiliations">
-        <li>Broken Arrow, OK</li>
-        <li>Level Access</li>
-        <li>Independent Research</li>
-      </ul>
-    </div>
-    <Inkling
-      pose="in-flight"
-      alt="Inkling, in flight."
-      width={460}
-      flit={false}
-      class="hero__inkling"
-    />
-  </section>
-</div>
+<section class="hero full-bleed">
+  <div class="hero__painting">
+    <sparkly-text number-of-sparkles="32" style="--sparkly-text-color: white;">
+      <Inkling
+        pose="in-flight"
+        alt="Inkling, in flight."
+        width={460}
+        flit={false}
+        class="hero__inkling"
+      />
+    </sparkly-text>
+  </div>
+  <div class="hero__text">
+    <p class="eyebrow">Accessibility · Mech Interp · Practice</p>
+    <h1>Following the <em>inkling</em><span class="h1-period" aria-hidden="true"></span></h1>
+    <p class="lede">
+      I'm a front-end developer turned accessibility consultant, studying
+      how language models represent what they seem to know — and what that
+      means for the people they're supposed to serve. This is where the
+      research lives, alongside the writing that <em>circles it</em>.
+    </p>
+  </div>
+</section>
 
 <style>
-  /* Aspect-ratio + bg-contain on the wrapper is the load-bearing trick:
+  /* The hero's internal grid mirrors the page coordinate system so the
+     text aligns with the content column even though the section spans
+     viewport edge to viewport edge. The outer 1fr columns absorb extra
+     space when viewport > 1440px (centering effect); the inner two
+     columns match the wrapper's [content-start] [content] structure.
+
+     Painting and text both occupy grid-row: 1 — they stack via
+     z-index, not flow, so text overlays painting. */
+  .hero {
+    display: grid;
+    grid-template-columns:
+      [bleed-l] minmax(0, 1fr)
+      [page-l] var(--content-start)
+      [content-l] minmax(0, calc(var(--site-max) - var(--content-start)))
+      [page-r] minmax(0, 1fr)
+      [bleed-r];
+    grid-template-rows: auto;
+    align-items: center;
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Painting fills bleed-l → bleed-r (the entire viewport).
+     Aspect-ratio + bg-contain on this element is the load-bearing trick:
      the painted artwork's natural 16/9 proportions become the coordinate
-     system, so percentage-positioned children (the fairy) lock to painted
-     features at every viewport size. Don't add min-height: 100vh here. */
-  .hero-outer-wrapper {
-    width: 100%;
+     system, so percentage-positioned children (Inkling) lock to painted
+     features at every viewport size. */
+  .hero__painting {
+    grid-row: 1;
+    grid-column: bleed-l / bleed-r;
     aspect-ratio: 16 / 9;
     background: url('/images/light-bkg-full.webp') no-repeat bottom right;
     background-size: contain;
     position: relative;
+    z-index: 0;
   }
 
-  .hero {
-    padding: 80px var(--hero-pad-x);
-    display: grid;
-    grid-template-columns: minmax(0, 45%) 1fr;
-    gap: clamp(40px, 5vw, 80px);
-    align-items: center;
-    isolation: isolate;
-    overflow: hidden;
-    max-width: 1440px;
-    margin: 0 auto;
+  /* Text sits in the content column, vertically centered against the
+     painting. align-self: center lets the text find its natural height
+     and center inside the taller painting row. */
+  .hero__text {
+    grid-row: 1;
+    grid-column: content-l / page-r;
+    align-self: center;
+    z-index: 1;
+    padding: 80px 40px 80px 0;
+    max-width: 560px;
   }
-
-  .hero__text { position: relative; }
 
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--rose-deep);
@@ -89,64 +105,56 @@ import Inkling from '../Inkling.astro';
   }
   .h1-period:hover::before,
   h1:hover .h1-period::before {
+    font-size: 14px;
     content: "✦";
     color: var(--rose);
   }
 
   .lede {
-    font-size: 19px;
+    font-size: 20px;
     line-height: 1.65;
     color: var(--text-soft);
-    max-width: 540px;
-    margin: 0 0 40px 0;
-  }
-
-  .hero__meta {
-    list-style: none;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 32px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--dust);
-  }
-  .hero__meta li::before {
-    content: "✦ ";
-    color: var(--rose);
   }
 
-  .hero :global(.margin-guide) {
-    left: calc(45% + clamp(20px, 2.5vw, 40px));
-  }
-
-  /* Fairy is positioned against the wrapper (not the grid) so her
-     percentage anchors land on the painted sparkle source regardless
-     of viewport. aspect-ratio matches the in-flight webp's natural
-     proportions, so the box pre-allocates correctly — percent width
-     would otherwise sacrifice CLS prevention. */
-  .hero-outer-wrapper :global(.hero__inkling) {
+  /* Fairy is positioned against the painting. Percentages resolve against
+     the painting's bounding box (which matches the artwork's 16:9 ratio),
+     so she always lands on the painted sparkle source regardless of
+     viewport width. aspect-ratio on the outer div pre-allocates the box
+     so CLS prevention survives the percent-based sizing. */
+  .hero__painting :global(.hero__inkling) {
     position: absolute;
     top: 3%;
     right: 22%;
     width: 17%;
     aspect-ratio: 364 / 531;
-    z-index: 2;
+    z-index: 1;
   }
 
+  /* sparkly-text uses display: contents, so the fairy's position
+     percentages still resolve against .hero__painting. No change needed. */
+
   @media (max-width: 1023px) {
+    .hero__text {
+      padding: 60px 24px 60px 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile: stack painting above text, both full-width.
+       The painting collapses to a smaller hero strip; text follows. */
     .hero {
       grid-template-columns: 1fr;
-      padding: 60px var(--hero-pad-x);
     }
-    .hero :global(.margin-guide) { display: none; }
-    .hero-outer-wrapper :global(.hero__inkling) {
-      width: 22%;
-      top: 2%;
-      right: 8%;
+    .hero__painting {
+      grid-row: 1;
+      grid-column: 1;
+    }
+    .hero__text {
+      grid-row: 2;
+      grid-column: 1;
+      padding: 40px 24px;
+      max-width: none;
     }
   }
 </style>

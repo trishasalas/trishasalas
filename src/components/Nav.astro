@@ -1,60 +1,78 @@
 ---
 // Site nav. Anchor links for Plan 1 (single-page); Plan 2 will route these.
+import { Image } from 'astro:assets';
+import tsLogo from '../images/sigil.webp';
 ---
+<header class="site-header">
+    <a href="/" class="nav__logo">
+        Trisha <em>Salas</em>
+    </a>
 <nav class="nav" aria-label="Primary">
-  <a href="/" class="nav__logo">
-    Trisha <em>Salas</em>
-  </a>
   <ul class="nav__links">
     <li><a href="#research">Research</a></li>
     <li><a href="#writing">Writing</a></li>
     <li><a href="#about">About</a></li>
   </ul>
 </nav>
+</header>
 
 <style>
+    .site-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+    }
+
   .nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 22px var(--hero-pad-x);
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    z-index: 50;
-    background: linear-gradient(to bottom, var(--bg) 60%, transparent);
-    backdrop-filter: blur(6px);
+    align-items: center;
   }
+
   .nav__logo {
     font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 22px;
+    font-size: 2rem;
     letter-spacing: 0.02em;
-    color: var(--text);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink);
+    position: relative;
+      display: block;
   }
+
+  .name {
+    position: absolute;
+    line-height: 1;
+    top: 20%;
+    left: 40px;
+    width: 200px;
+  }
+
   .nav__logo em {
     color: var(--rose-deep);
     font-style: normal;
     font-weight: 500;
   }
+
   .nav__links {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     gap: 28px;
-    font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 0.8rem;
+      font-family: var(--font-mono);
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
+
   .nav__links a {
     color: var(--text-soft);
     position: relative;
     padding-bottom: 2px;
   }
+
   .nav__links a::after {
     content: "";
     position: absolute;
@@ -65,6 +83,9 @@
     background: var(--rose);
     transition: width 250ms ease;
   }
+
   .nav__links a:hover::after,
-  .nav__links a:focus-visible::after { width: 100%; }
+  .nav__links a:focus-visible::after {
+      width: 100%;
+  }
 </style>

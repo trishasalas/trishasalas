@@ -1,20 +1,20 @@
 :root {
   /* base */
-  --bg:           #f1dccb;  /* warm cream paper */
-  --bg-soft:      #ead0bb;  /* slightly deeper cream */
+  --bg:           #f7e0d3;  /* warm peachy cream */
+  --bg-soft:      #F6D7C6;  /* slightly deeper cream */
   --bg-warm:      #e0bfa8;  /* warm wash for accents */
 
   /* text */
   --text:         #2a1a1f;  /* near-black ink, primary text */
   --text-soft:    #6b4a52;  /* muted plum-brown for secondary */
-  --dust:         #9a7a82;  /* soft dusty rose for marginalia */
+  --dust:         #6c4e56;  /* soft dusty rose for marginalia */
 
   /* roses */
   --rose:         #c97a8e;  /* primary rose, italic emphasis */
   --rose-deep:    #a44560;  /* deeper rose, links/active */
   --rose-whisper: #e8c5cd;  /* palest rose, backgrounds/hovers */
 
-  /* warmths */
+  /* warms */
   --peach:        #d9a89a;  /* warm pink-peach */
   --gold:         #b88a5e;  /* warm gold-brown */
 
@@ -26,6 +26,20 @@
   --font-body:    'Lora', Georgia, serif;
   --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 
-  /* layout */
-  --hero-pad-x:   clamp(24px, 4vw, 48px);
+  /* layout
+     One source of truth for the page coordinate system. Every left-aligned
+     element (rule, content, margin SVG) reads from these — they cannot drift.
+
+       0 ─── margin-w ─── content-start ─────── site-max
+       │       (130)        (180)               (1440)
+       │  margin zone │ rule │ buffer │ content column │
+       │   SVG text   │  ↑   │        │                │
+                       dashed rule
+  */
+  --site-max:      1440px;                       /* page max-width */
+  --margin-w:      130px;                        /* dashed rule X from wrapper-left */
+  --margin-pad:    50px;                         /* buffer rule → content */
+  --content-start: calc(var(--margin-w) + var(--margin-pad));   /* 180px */
+  --page-pad-r:    clamp(24px, 4vw, 48px);       /* right-side breathing room */
+  --hero-pad-x:    clamp(24px, 4vw, 48px);       /* legacy; used by section internals */
 }
