@@ -4,7 +4,14 @@
 
 html, body { margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+/* Explicit root font-size lets rem values respect the user's browser
+   default (typically 16px, but configurable in browser settings) —
+   so a user who sets larger default text gets a proportionally
+   larger site. */
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+}
 
 /* Anchored targets need a scroll offset so they land below the fixed nav
    (Task 16 introduces position: fixed; ~70px tall + buffer). */
@@ -14,7 +21,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body), sans-serif;
-  font-size: 17px;
+  font-size: 1.0625rem;  /* 17px at default root */
   line-height: 1.7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
