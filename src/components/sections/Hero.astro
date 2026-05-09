@@ -134,15 +134,14 @@ import Inkling from '../Inkling.astro';
   /* sparkly-text uses display: contents, so the fairy's position
      percentages still resolve against .hero__painting. No change needed. */
 
-  @media (max-width: 1023px) {
-    .hero__text {
-      padding: 60px 24px 60px 0;
-    }
-  }
+  /* At 1024px and below the side-by-side composition fails: the painting's
+     painted features (Inkling, ink jar, painted CSS) sit on the right
+     ~50% of the box, and the content column reaches into that zone,
+     so text reads on top of features rather than over rose-haze.
 
-  @media (max-width: 767px) {
-    /* Mobile: stack painting above text, both full-width.
-       The painting collapses to a smaller hero strip; text follows. */
+     Stack instead — painting becomes a banner above the text, which
+     gets full available width below. */
+  @media (max-width: 1024px) {
     .hero {
       grid-template-columns: 1fr;
     }
@@ -153,8 +152,12 @@ import Inkling from '../Inkling.astro';
     .hero__text {
       grid-row: 2;
       grid-column: 1;
-      padding: 40px 24px;
+      padding: 60px 24px;
       max-width: none;
     }
+  }
+
+  @media (max-width: 767px) {
+    .hero__text { padding: 40px 24px; }
   }
 </style>

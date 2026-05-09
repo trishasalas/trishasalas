@@ -162,9 +162,11 @@ button:focus-visible em::after {
   pointer-events: none;
 }
 
-/* Mobile: collapse the margin column. No rule, no SVG zone — content
-   takes the full width with standard side padding. */
-@media (max-width: 767px) {
+/* At 1024px and below: collapse the margin column. The dashed rule
+   and SVG zone disappear; content takes the full width with standard
+   side padding. Tied to the hero's stack breakpoint — when the hero
+   stacks, the margin column loses its purpose. */
+@media (max-width: 1024px) {
   .site-wrapper,
   .site-wrapper > main {
     grid-template-columns: 1fr;

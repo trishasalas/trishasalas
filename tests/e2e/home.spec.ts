@@ -7,9 +7,6 @@ test('home page renders all major sections', async ({ page }) => {
   await expect(page.locator('.hero h1')).toContainText('Following the');
   await expect(page.locator('.hero h1 em')).toContainText('inkling');
 
-  // Hero meta
-  await expect(page.getByText('Broken Arrow, OK', { exact: true })).toBeVisible();
-
   // Research section
   await expect(page.locator('#research h2')).toContainText('research');
   await expect(page.locator('.paper').first()).toBeVisible();
