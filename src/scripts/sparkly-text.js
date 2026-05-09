@@ -18,16 +18,29 @@ class SparklyText extends HTMLElement {
       --_sparkle-base-size: var(--sparkly-text-size, 1em);
       --_sparkle-base-animation-length: var(--sparkly-text-animation-length, 1.5s);
       --_sparkle-base-color: var(--sparkly-text-color, #4ab9f8);
-      /* display: inline-block creates a real box so overflow: hidden and
-         position: relative actually apply. With display: contents (the
-         original), the host vanishes from layout and sparkles end up
-         positioned against the nearest positioned ancestor — which can
-         scatter them across the parent and trigger scrollbars on small
-         viewports when they cross the page edge. */
+      /* display: inline-block creates a real box so position: relative
+         actually applies. With display: contents (the original), the host
+         vanishes from layout and sparkles end up positioned against the
+         nearest positioned ancestor — which can scatter them across the
+         parent and trigger scrollbars on small viewports.
+
+         No overflow: hidden — the small inline-block box already keeps
+         sparkles near the host (sparkles can extend a few pixels beyond
+         the box but not far enough to reach the page edge). Clipping
+         would also crop animated content like a flit-translating fairy. */
       display: inline-block;
-      overflow: hidden;
       position: relative;
       z-index: 20;
+    }
+
+    /* Honor the manual pause-animations toggle (motion.css applies
+       motion-paused to body and html). :host-context lets shadow DOM
+       respond to light-DOM ancestor state. The shadow DOM already
+       respects prefers-reduced-motion below; this adds parity for the
+       user-controlled toggle. */
+    :host-context(body.motion-paused) svg,
+    :host-context(html.motion-paused) svg {
+      animation: none !important;
     }
 
     svg {
