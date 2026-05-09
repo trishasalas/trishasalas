@@ -30,7 +30,7 @@
 }
 
 /* Default animation hooks (consumed by components) */
-.flit          { animation: flit 6s ease-in-out infinite; will-change: transform; }
+.flit          { animation: flit 18s ease-in-out infinite; will-change: transform; }
 .halo-pulse    { animation: halo-pulse 8s ease-in-out infinite; }
 .sparkle       { animation: sparkle-twinkle 1.8s ease-in-out infinite; }
 .glow-trail    {
@@ -47,6 +47,8 @@
    <body> parses (FOUC prevention). */
 body.motion-paused .flit,
 html.motion-paused .flit,
+body.motion-paused .inkling,
+html.motion-paused .inkling,
 body.motion-paused .halo-pulse,
 html.motion-paused .halo-pulse,
 body.motion-paused .sparkle,

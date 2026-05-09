@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/motion.css';
+import Signature from "../components/Signature.astro";
 
 interface Props {
   title: string;
@@ -31,12 +32,6 @@ const { title, description } = Astro.props;
     import '../scripts/motion-init.ts';
   </script>
 </head>
-<!--
-  ╭───────────────────────────────╮
-  │  she lives in the margins     │
-  │  ✦ welcome, view-source guest │
-  ╰───────────────────────────────╯
--->
 <body>
   <slot />
   <script>
@@ -44,13 +39,16 @@ const { title, description } = Astro.props;
     // Phrased to read well to both view-source guests AND hiring managers.
     // Per spec §1D second-audience test: in-character but research-toned.
     console.log(
-      '%c✦ inkling is here.',
+      '%cYou found the magic of inkling',
       'font-family: Georgia, serif; font-style: italic; color: #e89aa8; font-size: 14px;',
     );
     console.log(
-      '%cif you are reading this, the source is the sketchbook.',
+      '%cthe source is the sketchbook.',
       'color: #c9a89e; font-size: 12px;',
     );
+  </script>
+  <script>
+    import '../scripts/sparkly-text.js';
   </script>
 </body>
 </html>

@@ -3,13 +3,16 @@ import Inkling from '../Inkling.astro';
 ---
 <section class="hero full-bleed">
   <div class="hero__painting">
-    <sparkly-text number-of-sparkles="32" style="--sparkly-text-color: white;">
+    <sparkly-text
+      class="hero__inkling"
+      number-of-sparkles="32"
+      style="--sparkly-text-color: white;"
+    >
       <Inkling
         pose="in-flight"
         alt="Inkling, in flight."
         width={460}
         flit={false}
-        class="hero__inkling"
       />
     </sparkly-text>
   </div>
