@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base
+  title="404 — Trisha Salas"
+  description="That page doesn't exist (or doesn't exist yet)."
+>
+  <div class="site-wrapper">
+    <Nav />
+    <main>
+      <section class="notfound">
+        <p class="notfound__eyebrow">404</p>
+        <h1 class="notfound__title">Inkling can't <em>find</em> that one.</h1>
+        <p class="notfound__lede">
+          The page you're looking for isn't here. It may have moved, or it
+          may be one of the pieces still in drafting — the site is small
+          but growing.
+        </p>
+        <p class="notfound__cta">
+          <a href="/">← back to the home page</a>
+        </p>
+      </section>
+    </main>
+  </div>
+  <Footer />
+</Base>
+
+<style>
+  .notfound {
+    padding: clamp(80px, 12vw, 160px) 0;
+    max-width: 640px;
+  }
+  .notfound__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    margin: 0 0 24px;
+  }
+  .notfound__title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    margin: 0 0 28px;
+  }
+  .notfound__lede {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-soft);
+    margin: 0 0 40px;
+  }
+  .notfound__cta a {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    color: var(--rose-deep);
+  }
+  .notfound__cta a:hover,
+  .notfound__cta a:focus-visible {
+    color: var(--rose);
+  }
+</style>

@@ -6,11 +6,43 @@ import Research from '../components/sections/Research.astro';
 import Writing from '../components/sections/Writing.astro';
 import Lineage from '../components/sections/Lineage.astro';
 import Footer from '../components/Footer.astro';
+
+// Schema.org Person — keystone for the research findability story.
+// ORCID is the @id so every reference to "Trisha Salas" across the web
+// (paper authors, social profiles, future research pages) resolves to
+// the same canonical person. Per-paper ScholarlyArticle JSON-LD will
+// reference this Person's @id as its author when Plan 2 ships.
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://orcid.org/0009-0007-5105-7874',
+  name: 'Trisha Salas',
+  url: 'https://trishasalas.com',
+  image: 'https://trishasalas.com/og-image.jpg',
+  jobTitle: 'Accessibility consultant and independent mechanistic interpretability researcher',
+  description:
+    'Front-end developer turned accessibility consultant, studying how language models represent what they seem to know.',
+  knowsAbout: [
+    'Accessibility',
+    'WCAG',
+    'ARIA',
+    'Mechanistic interpretability',
+    'Front-end development',
+  ],
+  sameAs: [
+    'https://orcid.org/0009-0007-5105-7874',
+    'https://github.com/trishasalas',
+    'https://www.linkedin.com/in/trishasalas/',
+    'https://openreview.net/profile?id=%7ETrisha_Salas1',
+    'https://doi.org/10.22541/au.177282002.24340653/v2',
+  ],
+};
 ---
 <Base
   title="Trisha Salas — Accessibility · Mech Interp · Practice"
   description="Personal site of Trisha Salas — front-end developer turned accessibility consultant, doing independent research in mechanistic interpretability."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
   <div class="site-wrapper">
   <Nav />
   <main>

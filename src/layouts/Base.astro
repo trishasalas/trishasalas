@@ -6,9 +6,13 @@ import Signature from "../components/Signature.astro";
 interface Props {
   title: string;
   description: string;
+  /** Optional override for OG image; defaults to site-wide painting crop. */
+  ogImage?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage = '/og-image.jpg' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageUrl = new URL(ogImage, Astro.site).toString();
 ---
 <!doctype html>
 <html lang="en">
@@ -17,7 +21,23 @@ const { title, description } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Open Graph: how the URL renders when shared (Slack, iMessage, LinkedIn,
+       Mastodon, Bluesky, search-engine result cards). Twitter falls back to
+       OG too — no Twitter-specific tags. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Trisha Salas" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="A painted scene of Inkling the fairy hovering near a quill and ink jar, against a warm cream and rose haze." />
+  <meta property="og:locale" content="en_US" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
