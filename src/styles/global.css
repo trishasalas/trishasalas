@@ -110,19 +110,26 @@ button:focus-visible em::after {
    extend to viewport edges opt in via .full-bleed.
 */
 
+/* Wrapper spans viewport width (no max-width, no centering). Three
+   columns: [margin-zone | content (max 1260) | right-buffer (1fr)].
+   This keeps the dashed rule at a fixed offset from viewport-left at
+   every size — like a notebook's binding line — and lets the right-
+   buffer column absorb extra space at viewports > site-max instead of
+   pushing the content rightward via centering. */
 .site-wrapper {
   display: grid;
-  grid-template-columns: var(--content-start) minmax(0, 1fr);
-  max-width: var(--site-max);
-  margin: 0 auto;
+  grid-template-columns:
+    var(--content-start)
+    minmax(0, calc(var(--site-max) - var(--content-start)))
+    minmax(0, 1fr);
   position: relative;
 }
 
 /* Default: any direct child sits in the content column. */
 .site-wrapper > * { grid-column: 2; }
 
-/* <main> spans both wrapper columns and subgrids — sections inside
-   inherit the same column tracks. Single source of truth for the grid. */
+/* <main> spans all three wrapper columns and subgrids — sections inside
+   inherit the column tracks. Single source of truth for the page grid. */
 .site-wrapper > main {
   grid-column: 1 / -1;
   display: grid;
@@ -137,18 +144,12 @@ button:focus-visible em::after {
   padding-right: var(--page-pad-r);
 }
 
-/* Full-bleed escape: spans both grid columns AND extends to the viewport
-   edges via the 100vw + negative-margin trick. The trick works at every
-   width because (50% - 50vw) resolves to 0 when wrapper fills viewport
-   and to the correct negative offset when wrapper is centered at max-width.
-
-   Applies to direct children of either .site-wrapper or main. */
+/* Full-bleed: spans all three wrapper columns. Wrapper itself is
+   viewport-width, so the section fills viewport edge-to-edge without
+   needing the 100vw + negative-margin trick. */
 .site-wrapper > .full-bleed,
 .site-wrapper > main > .full-bleed {
   grid-column: 1 / -1;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
 }
 
 /* Dashed margin rule. Lives at left: var(--margin-w) inside the wrapper —

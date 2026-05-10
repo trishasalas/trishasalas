@@ -29,36 +29,25 @@ import Inkling from '../Inkling.astro';
 </section>
 
 <style>
-  /* The hero's internal grid mirrors the page coordinate system so the
-     text aligns with the content column even though the section spans
-     viewport edge to viewport edge. The outer 1fr columns absorb extra
-     space when viewport > 1440px (centering effect); the inner two
-     columns match the wrapper's [content-start] [content] structure.
-
-     Painting and text both occupy grid-row: 1 — they stack via
-     z-index, not flow, so text overlays painting. */
+  /* The hero subgrids the wrapper's columns. Painting spans all three
+     (full viewport), text sits in column 2 (the content column).
+     Both occupy grid-row: 1 so they stack via z-index, not flow. */
   .hero {
     display: grid;
-    grid-template-columns:
-      [bleed-l] minmax(0, 1fr)
-      [page-l] var(--content-start)
-      [content-l] minmax(0, calc(var(--site-max) - var(--content-start)))
-      [page-r] minmax(0, 1fr)
-      [bleed-r];
+    grid-template-columns: subgrid;
     grid-template-rows: auto;
     align-items: center;
     position: relative;
     isolation: isolate;
   }
 
-  /* Painting fills bleed-l → bleed-r (the entire viewport).
-     Aspect-ratio + bg-contain on this element is the load-bearing trick:
-     the painted artwork's natural 16/9 proportions become the coordinate
-     system, so percentage-positioned children (Inkling) lock to painted
-     features at every viewport size. */
+  /* Painting fills all three wrapper columns (the entire viewport).
+     Aspect-ratio + bg-contain: the painted artwork's natural 16/9
+     proportions become the coordinate system, so percentage-positioned
+     children (Inkling) lock to painted features at every viewport size. */
   .hero__painting {
     grid-row: 1;
-    grid-column: bleed-l / bleed-r;
+    grid-column: 1 / -1;
     aspect-ratio: 16 / 9;
     background: url('/images/light-bkg-fade.webp') no-repeat bottom right;
     background-size: contain;
@@ -66,13 +55,13 @@ import Inkling from '../Inkling.astro';
     z-index: 0;
   }
 
-  /* Text sits in the content column, top-aligned to the painting row.
-     align-self: start pairs the eyebrow + headline with the upper-right
-     features of the painting (Inkling, painted CSS) rather than floating
-     the text in the empty rose-haze middle. */
+  /* Text sits in the content column (column 2 of the inherited subgrid),
+     top-aligned to the painting row. align-self: start pairs the eyebrow
+     and headline with the painting's upper features (Inkling, painted CSS)
+     rather than floating in the empty rose-haze middle. */
   .hero__text {
     grid-row: 1;
-    grid-column: content-l / page-r;
+    grid-column: 2;
     align-self: start;
     z-index: 1;
     padding: clamp(40px, 6vw, 80px) 40px 40px 0;
