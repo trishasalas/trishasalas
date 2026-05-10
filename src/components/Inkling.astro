@@ -47,23 +47,12 @@ const height = Math.round(width / aspectRatios[pose]);
   .inkling {
     position: relative;
     pointer-events: none;
+    animation: flit 15s infinite ease-in-out;
   }
+
   .inkling__img {
     display: block;
     width: 100%;
     height: auto;
-  }
-  .inkling__halo {
-    position: absolute;
-    inset: -25%;
-    background: radial-gradient(
-      ellipse at 50% 45%,
-      rgba(232, 137, 160, 0.45) 0%,
-      rgba(216, 166, 118, 0.18) 35%,
-      transparent 65%
-    );
-    z-index: -1;
-    border-radius: 50%;
-    pointer-events: none;
   }
 </style>
