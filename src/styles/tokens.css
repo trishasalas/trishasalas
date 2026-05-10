@@ -10,7 +10,7 @@
   --dust:         #6c4e56;  /* soft dusty rose for marginalia */
 
   /* roses */
-  --rose:         #c97a8e;  /* primary rose, italic emphasis */
+  --rose:         #c97a8e  ;  /* primary rose, italic emphasis */
   --rose-deep:    #a44560;  /* deeper rose, links/active */
   --rose-whisper: #e8c5cd;  /* palest rose, backgrounds/hovers */
 
