@@ -36,12 +36,17 @@ import Inkling from '../Inkling.astro';
 <style>
   .lineage {
     padding: 120px 0;
-    background: linear-gradient(
-      180deg,
-      var(--bg) 0%,
-      var(--bg-soft) 50%,
-      var(--bg) 100%
-    );
+    /* Radial wash, not a linear band. The earlier 3-stop linear gradient
+       drew a visible horizontal seam where bg met bg-soft — the eye locks
+       onto the straight color line and dithering bands along it. Radial
+       fades outward from center, no straight edge to track, reads as
+       ambient warmth (a softer pocket of light) rather than a stripe. */
+    background:
+      radial-gradient(
+        ellipse 90% 70% at center,
+        var(--bg-soft) 0%,
+        var(--bg) 75%
+      );
     position: relative;
   }
   .lineage__inner {
@@ -87,6 +92,10 @@ import Inkling from '../Inkling.astro';
   }
 
   @media (max-width: 720px) {
+    /* At mobile heights the section is short relative to viewport, so
+       the three-stop gradient reads as a visible band instead of a soft
+       wash. Flatten to the page background — no transition to fade. */
+    .lineage { background: var(--bg); }
     .lineage__inner {
       grid-template-columns: 1fr;
       grid-template-areas: "text" "inkling";

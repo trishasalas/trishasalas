@@ -187,11 +187,14 @@ button:focus-visible em::after {
     padding-right: var(--hero-pad-x);
   }
   .site-wrapper::before { display: none; }
-  /* Full-bleed escape needs to ignore the wrapper's mobile padding. */
+  /* Full-bleed escape needs to ignore the wrapper's mobile padding. Only
+     padding-left is applied to the wrapper (see above) — so we only need
+     to reverse one side. Earlier 2x version overshot viewport-right by
+     hero-pad-x and produced horizontal scroll at ≤390px. */
   .site-wrapper > .full-bleed,
   .site-wrapper > main > .full-bleed {
     margin-left: calc(-1 * var(--hero-pad-x));
-    margin-right: calc(-1 * var(--hero-pad-x));
-    width: calc(100% + 2 * var(--hero-pad-x));
+    margin-right: 0;
+    width: calc(100% + var(--hero-pad-x));
   }
 }

@@ -1,20 +1,71 @@
 ---
 // Site nav. Anchor links for Plan 1 (single-page); Plan 2 will route these.
-import { Image } from 'astro:assets';
-import tsLogo from '../images/sigil.webp';
+// At ≤768px the link list collapses behind a hamburger toggle. The toggle's
+// aria-expanded is the single source of truth — CSS reads it directly, no
+// duplicate state class.
 ---
 <header class="site-header">
     <a href="/" class="nav__logo">
         Trisha <em>Salas</em>
     </a>
-<nav class="nav" aria-label="Primary">
+    <button
+      type="button"
+      class="nav__toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      aria-label="Menu"
+      data-nav-toggle
+    >
+      <span class="nav__toggle-bars" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+<nav id="primary-nav" class="nav" aria-label="Primary">
   <ul class="nav__links">
-    <li><a href="#research">Research</a></li>
-    <li><a href="#writing">Writing</a></li>
-    <li><a href="#about">About</a></li>
+    <li><a href="#research" data-nav-link>Research</a></li>
+    <li><a href="#writing" data-nav-link>Writing</a></li>
+    <li><a href="#about" data-nav-link>About</a></li>
   </ul>
 </nav>
 </header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+
+  function setOpen(open: boolean) {
+    if (!toggle) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('nav-open', open);
+  }
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  });
+
+  // Close on link tap so users can see the section they're scrolling to.
+  links.forEach((link) => {
+    link.addEventListener('click', () => setOpen(false));
+  });
+
+  // ESC closes; return focus to the trigger so keyboard users don't lose place.
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  // Crossing back above the breakpoint resets state so the desktop nav is
+  // never stuck in an "open" CSS state from a prior mobile interaction.
+  const mql = window.matchMedia('(min-width: 769px)');
+  mql.addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
+</script>
 
 <style>
     .site-header {
@@ -22,6 +73,7 @@ import tsLogo from '../images/sigil.webp';
         justify-content: space-between;
         align-items: center;
         padding: 20px 0;
+        position: relative;
     }
 
   .nav {
@@ -88,5 +140,92 @@ import tsLogo from '../images/sigil.webp';
   .nav__links a:hover::after,
   .nav__links a:focus-visible::after {
       width: 100%;
+  }
+
+  /* Hamburger trigger — hidden on desktop, revealed at ≤768px. Three
+     CSS bars that rotate into an X when aria-expanded="true". The
+     button is always in the DOM so screen readers see consistent
+     markup; visibility is purely a viewport concern. */
+  .nav__toggle {
+    display: none;
+    background: none;
+    border: 0;
+    padding: 12px;
+    margin: -12px;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  .nav__toggle-bars,
+  .nav__toggle-bars span {
+    display: block;
+  }
+
+  .nav__toggle-bars {
+    position: relative;
+    width: 26px;
+    height: 18px;
+  }
+
+  .nav__toggle-bars span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform 200ms ease, opacity 150ms ease, top 200ms ease;
+  }
+  .nav__toggle-bars span:nth-child(1) { top: 0; }
+  .nav__toggle-bars span:nth-child(2) { top: 8px; }
+  .nav__toggle-bars span:nth-child(3) { top: 16px; }
+
+  .nav__toggle[aria-expanded="true"] .nav__toggle-bars span:nth-child(1) {
+    top: 8px;
+    transform: rotate(45deg);
+  }
+  .nav__toggle[aria-expanded="true"] .nav__toggle-bars span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__toggle[aria-expanded="true"] .nav__toggle-bars span:nth-child(3) {
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+
+  /* Mobile: toggle visible, nav collapses to a dropdown panel positioned
+     below the header. Anchored to the header (position: relative on
+     .site-header) so it lines up regardless of the wrapper's horizontal
+     padding. */
+  @media (max-width: 768px) {
+    .nav__toggle { display: inline-flex; }
+
+    .nav {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--rose-whisper);
+      border-bottom: 1px solid var(--rose-whisper);
+      padding: 24px;
+      transform: translateY(-8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
+      z-index: 100;
+    }
+
+    .nav__toggle[aria-expanded="true"] ~ .nav {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 180ms ease, transform 180ms ease, visibility 0s;
+    }
+
+    .nav__links {
+      flex-direction: column;
+      gap: 20px;
+      font-size: 0.95rem;
+    }
   }
 </style>

@@ -158,5 +158,9 @@ function emify(title: string, em: string) {
     }
     .writing__aside { position: static; }
     .post { grid-template-columns: 1fr; gap: 8px; }
+    /* When the post grid collapses to a single column the tag pill
+       inherits the full row width. justify-self pulls it back to its
+       intrinsic size so it reads as a pill, not a banner. */
+    .post__tag { justify-self: start; }
   }
 </style>

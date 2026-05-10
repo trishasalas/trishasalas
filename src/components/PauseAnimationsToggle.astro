@@ -41,4 +41,11 @@
     color: var(--rose-deep);
     border-color: var(--rose-deep);
   }
+
+  /* At ≤1024px all ambient animation is force-stopped (see motion.css),
+     so the WCAG 2.2.2 pause control has nothing left to pause. Hide the
+     button to avoid offering a control that does nothing. */
+  @media (max-width: 1024px) {
+    .pause-toggle { display: none; }
+  }
 </style>

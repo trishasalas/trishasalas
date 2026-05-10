@@ -71,3 +71,22 @@ body.motion-paused *,
 html.motion-paused * {
   transition-duration: 50ms !important;
 }
+
+/* Mobile motion budget: at 1024px and below we stop all ambient animation,
+   regardless of user preference. Two reasons: (1) the hero painting and
+   Inkling are hidden at this breakpoint, so the flit has nothing to
+   present; (2) tab-bar visibility, scroll perf, and battery all benefit
+   from quiet UI on small viewports. The pause toggle still exists for
+   parity, but on mobile the answer is "always paused." */
+@media (max-width: 1024px) {
+  .flit,
+  .inkling,
+  .halo-pulse,
+  .sparkle,
+  .glow-trail {
+    animation: none !important;
+  }
+  .halo-pulse { opacity: 0.78; }
+  .sparkle { transform: scale(1); opacity: 1; }
+  .glow-trail { stroke-dashoffset: 0; }
+}
