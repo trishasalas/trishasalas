@@ -7,18 +7,16 @@ export default defineConfig({
   experimental: {
     contentIntellisense: true,
   },
-  vite: {
-    css: {
-      devSourcemap: true,
-      preprocessorOptions: {
-        scss: {
-          sourceMap: true,
-        },
-      },
-    },
-  },
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   build: {
     format: 'directory',
   },
+  vite: {
+    build: {
+      sourcemap: true, // Enables both JS and CSS source maps
+    },
+    css: {
+      devSourcemap: true, // Specifically ensures source maps for CSS in development
+    }
+  }
 });
