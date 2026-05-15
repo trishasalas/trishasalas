@@ -163,7 +163,7 @@ button:focus-visible em::after {
   left: var(--margin-w);
   width: 1px;
   background-image: linear-gradient(to bottom, var(--rose) 50%, transparent 0);
-  background-size: 1px 10px;
+  background-size: 1px 20px;
   background-repeat: repeat-y;
   opacity: 0.7;
   z-index: 5;

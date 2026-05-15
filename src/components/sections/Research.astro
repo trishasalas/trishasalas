@@ -148,15 +148,14 @@ function emify(title: string, em: string) {
   .paper__title::after {
     content: "";
     position: absolute;
-    right: -32px;
-    top: 4px;
-    width: 24px;
-    height: 24px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M 78 16 C 70 22, 60 28, 50 38 C 40 48, 30 60, 20 76 C 18 80, 22 82, 26 80 C 38 70, 50 60, 62 50 C 72 42, 80 32, 84 22 Z' fill='%23e889a0' opacity='0.85'/%3E%3Cpath d='M 22 76 L 14 86' stroke='%23e889a0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    right: -20px;
+    top: -10px;
+    width: 48px;
+    height: 64px;
+    background-image: url('/images/quill.webp');
     background-size: contain;
     background-repeat: no-repeat;
     opacity: 0;
-    transform: rotate(-15deg) scale(0.8);
     transition: opacity 200ms ease, transform 200ms ease;
     pointer-events: none;
   }
@@ -164,7 +163,7 @@ function emify(title: string, em: string) {
   .paper:hover .paper__title::after,
   .paper__title:focus-within::after {
     opacity: 0.85;
-    transform: rotate(-8deg) scale(1);
+    transform: rotate(-9deg) scale(1);
   }
 
   .paper__abstract {

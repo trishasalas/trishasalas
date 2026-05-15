@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import Doodle from '../components/Doodle.astro';
 import Hero from '../components/sections/Hero.astro';
 import Research from '../components/sections/Research.astro';
 import Writing from '../components/sections/Writing.astro';
@@ -44,6 +45,7 @@ const personLd = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
   <div class="site-wrapper">
+    <Doodle/>
   <Nav />
   <main>
     <Hero />
