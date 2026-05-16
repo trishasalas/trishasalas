@@ -49,6 +49,7 @@ When working with Trisha:
 - **Git:** routine operations (`init`, `add`, `commit`, `status`, `diff`, `log`, `branch`, `merge` non-conflicting) handled without per-action confirmation. **Confirm before** any push, force operation, `reset --hard`, branch deletion, or PR/issue action on GitHub.
 - **Default branch:** `main`.
 - **Commit messages:** conventional prose, multi-line, explains *why* not just *what*. Follow patterns in `git log`.
+- **Commit attribution:** integrity matters — Trisha makes solo commits and AI-collaborative commits, and the history should be honest about which is which. If Claude (any model) authored a commit's content, include a `Co-Authored-By: Claude <model name> <noreply@anthropic.com>` trailer naming the model that actually did the work (e.g. `Claude Opus 4.7 (1M context)`, `Claude Sonnet 4.6`). Solo commits get no trailer. When dispatching subagents, instruct them in the prompt to include the trailer matching their own model — it doesn't propagate automatically.
 - **Spec changes:** if modifying the Inkling spec, update its Open Items section accordingly. Commit with a message that lists what changed and why.
 - **Metadata changes:** if any identifier value changes (DOI, ORCID, social URL), update `docs/social-urls.md` first, then propagate to the spec.
 - **Implementation plans:** when ready to plan implementation, invoke the `superpowers:writing-plans` skill against the existing spec.
