@@ -109,7 +109,7 @@ const grouped: Array<{ tag: Tag; id: string; subtitle: string; posts: BlogPost[]
   // When an in-page anchor is activated, move keyboard focus to the target
   // heading so screen-reader and keyboard users land at the right place.
   document.querySelectorAll<HTMLAnchorElement>('nav.anchor-nav a').forEach((a) => {
-    a.addEventListener('click', (e) => {
+    a.addEventListener('click', () => {
       const href = a.getAttribute('href');
       if (!href?.startsWith('#')) return;
       const target = document.getElementById(href.slice(1));
