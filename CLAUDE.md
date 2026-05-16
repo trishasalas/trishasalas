@@ -11,8 +11,8 @@ Rebuild of `trishasalas.com` (the v2 codebase). Personal site of Trisha Salas �
 ## URL structure
 
 - `/` — home page (Inkling hero design)
-- `/research/<slug>/` — formal paper landing pages with full citation metadata
-- `/blog/<slug>/` — narrative posts and process notes
+- `/blog/` — full writing archive, grouped by `tag` (`Research`, `Essay`, `Process`, `Personal`)
+- `/blog/<slug>/` — individual post detail. Research posts get `ScholarlyArticle` JSON-LD + Highwire `citation_*` tags on this same path (no `/research/` split — distinction rides on the `tag` field, not the URL).
 - `/about/` — author profile (`Person` JSON-LD with full identifier graph)
 
 ## Where things live
