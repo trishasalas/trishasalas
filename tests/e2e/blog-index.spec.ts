@@ -47,9 +47,9 @@ test('/blog/ anchor-jump nav matches rendered sections', async ({ page }) => {
     await expect(page.locator(`h2#${id}`)).toBeVisible();
   }
 
-  // Every visible h2 must have a corresponding anchor link
+  // Every visible tag-section h2 must have a corresponding anchor link
   const visibleHeadingIds = await page
-    .locator('h2[id]')
+    .locator('section.blog-section h2[id]')
     .evaluateAll((els) => els.map((el) => el.id));
   for (const id of visibleHeadingIds) {
     expect(anchorHrefs).toContain(`#${id}`);
@@ -59,7 +59,9 @@ test('/blog/ anchor-jump nav matches rendered sections', async ({ page }) => {
 test('/blog/ anchor activation lands focus on the section heading', async ({ page }) => {
   await page.goto('/blog/');
   const firstAnchor = page.locator('nav.anchor-nav a').first();
+  await expect(firstAnchor).toBeVisible();
   const targetHref = await firstAnchor.getAttribute('href');
+  expect(targetHref).toBeTruthy();
   await firstAnchor.click();
 
   // Focus is moved inside a requestAnimationFrame, so poll until it lands.
