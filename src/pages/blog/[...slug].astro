@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import { dateLabel } from '../../utils/posts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => {
@@ -17,9 +18,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const dateLabel = post.data.draft
-  ? 'Drafting'
-  : post.data.pubDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) ?? '';
+const formattedDate = dateLabel(post);
 ---
 <Base
   title={`${post.data.title} — Trisha Salas`}
@@ -31,7 +30,7 @@ const dateLabel = post.data.draft
       <article class="post-detail">
         <header class="post-detail__header">
           <p class="post-detail__meta">
-            <span>{dateLabel}</span>
+            <span>{formattedDate}</span>
             <span class="post-detail__tag">{post.data.tag}</span>
           </p>
           <h1 class="post-detail__title">{post.data.title}</h1>
