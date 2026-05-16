@@ -34,3 +34,6 @@ public/pagefind
 test-results/
 playwright-report/
 blob-report/
+
+# brainstorming visual companion (per-session mockups)
+.superpowers/
