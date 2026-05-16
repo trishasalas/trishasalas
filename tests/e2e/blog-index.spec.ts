@@ -12,8 +12,8 @@ const tagToId: Record<Tag, string> = {
 test('/blog/ renders the page header', async ({ page }) => {
   await page.goto('/blog/');
   await expect(page).toHaveTitle(/The Writing/);
-  await expect(page.locator('h1')).toContainText('Notes from the');
-  await expect(page.locator('h1 em')).toContainText('margin');
+  await expect(page.locator('h1.blog-index__title')).toContainText('Notes from the');
+  await expect(page.locator('h1.blog-index__title em')).toContainText('margin');
 });
 
 test('/blog/ shows one section per tag that has at least one post', async ({ page }) => {

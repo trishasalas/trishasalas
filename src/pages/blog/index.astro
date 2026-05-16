@@ -1,0 +1,283 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getPublishedPosts, dateLabel, emify, type BlogPost } from '../../utils/posts';
+
+const posts = await getPublishedPosts();
+
+// Schema enum order is the canonical order on the page.
+const TAGS = ['Research', 'Essay', 'Process', 'Personal'] as const;
+type Tag = typeof TAGS[number];
+
+const tagSubtitle: Record<Tag, string> = {
+  Research: 'Papers and preprints.',
+  Essay: 'Working through ideas in public.',
+  Process: 'Notes from the bench.',
+  Personal: 'What it is like to do this from a desk in Oklahoma.',
+};
+
+const tagId: Record<Tag, string> = {
+  Research: 'research',
+  Essay: 'essay',
+  Process: 'process',
+  Personal: 'personal',
+};
+
+// Group posts by tag, preserving the sort order from getPublishedPosts().
+const grouped: Array<{ tag: Tag; id: string; subtitle: string; posts: BlogPost[] }> = TAGS
+  .map((tag) => ({
+    tag,
+    id: tagId[tag],
+    subtitle: tagSubtitle[tag],
+    posts: posts.filter((p) => p.data.tag === tag),
+  }))
+  .filter((group) => group.posts.length > 0);
+---
+<Base
+  title="The Writing — Trisha Salas"
+  description="The full archive — research papers, essays, process notes, and personal posts from Trisha Salas, grouped by what they are."
+>
+  <div class="site-wrapper">
+    <Nav />
+    <main>
+      <article class="blog-index">
+        <header class="blog-index__header">
+          <p class="eyebrow">The Writing</p>
+          <h1 class="blog-index__title">Notes from the <em>margin</em>.</h1>
+          <p class="blog-index__lede">
+            Everything written here, grouped by what it is. Research papers and
+            preprints alongside essays, process notes, and the occasional
+            personal thread. Some sections are denser than others; drafts sit
+            at the bottom of theirs. <em>Not everything is finished — that's sort of the point.</em>
+          </p>
+        </header>
+
+        {grouped.length > 1 && (
+          <nav class="anchor-nav" aria-label="Jump to section">
+            <ol>
+              {grouped.map((group, i) => (
+                <li>
+                  {i > 0 && <span class="anchor-nav__sep" aria-hidden="true">·</span>}
+                  <a href={`#${group.id}`}>{group.tag}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
+        {grouped.map((group) => (
+          <section class="blog-section" data-tag={group.tag}>
+            <p class="blog-section__eyebrow">{group.tag}</p>
+            <h2 id={group.id} tabindex="-1" class="blog-section__title">
+              {group.subtitle}
+            </h2>
+            <ol class="post-cards">
+              {group.posts.map((post) => (
+                <li class="post-card">
+                  <div class="post-card__meta">
+                    {post.data.draft ? (
+                      <span class="draft-label">Drafting</span>
+                    ) : post.data.pubDate ? (
+                      <time datetime={post.data.pubDate.toISOString()}>
+                        {dateLabel(post)}
+                      </time>
+                    ) : (
+                      <span />
+                    )}
+                    <span class="post-card__tag">{post.data.tag}</span>
+                  </div>
+                  <h3 class="post-card__title">
+                    <a
+                      href={`/blog/${post.id}/`}
+                      set:html={emify(post.data.title, post.data.titleEm)}
+                    />
+                  </h3>
+                  <p class="post-card__desc">{post.data.description}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </article>
+    </main>
+  </div>
+  <Footer />
+</Base>
+
+<script>
+  // When an in-page anchor is activated, move keyboard focus to the target
+  // heading so screen-reader and keyboard users land at the right place.
+  document.querySelectorAll<HTMLAnchorElement>('nav.anchor-nav a').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (!href?.startsWith('#')) return;
+      const target = document.getElementById(href.slice(1));
+      if (!target) return;
+      // Let the native scroll happen, then move focus.
+      requestAnimationFrame(() => target.focus({ preventScroll: true }));
+    });
+  });
+</script>
+
+<style>
+  .blog-index {
+    max-width: 720px;
+    padding: 60px 0 80px;
+  }
+
+  .blog-index__header {
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    margin: 0 0 12px 0;
+  }
+
+  .blog-index__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 18px 0;
+  }
+  .blog-index__title em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+
+  .blog-index__lede {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-soft);
+    margin: 0;
+  }
+  .blog-index__lede em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+
+  .anchor-nav {
+    margin: 0 0 48px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rose-whisper);
+  }
+  .anchor-nav ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .anchor-nav li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .anchor-nav a {
+    color: var(--rose-deep);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 120ms ease;
+  }
+  .anchor-nav a:hover,
+  .anchor-nav a:focus-visible {
+    border-bottom-color: currentColor;
+  }
+  .anchor-nav__sep {
+    color: var(--dust);
+  }
+
+  .blog-section {
+    margin: 0 0 56px;
+  }
+  .blog-section__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    margin: 0 0 6px 0;
+  }
+  .blog-section__title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0 0 24px 0;
+    color: var(--text-soft);
+    outline: none;
+  }
+  .blog-section__title:focus-visible {
+    outline: 2px solid var(--rose-deep);
+    outline-offset: 4px;
+  }
+
+  .post-cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .post-card {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rose-whisper);
+  }
+  .post-card:first-child {
+    padding-top: 0;
+  }
+  .post-card__meta {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 8px;
+  }
+  .post-card__tag {
+    color: var(--rose-deep);
+  }
+  .draft-label {
+    color: var(--rose-deep);
+    font-style: italic;
+  }
+  .post-card__title {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0 0 6px 0;
+  }
+  .post-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .post-card__title a:hover,
+  .post-card__title a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .post-card__title em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+  .post-card__desc {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--text-soft);
+    margin: 0;
+  }
+</style>
