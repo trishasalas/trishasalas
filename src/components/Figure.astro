@@ -1,0 +1,116 @@
+---
+/**
+ * Figure — content-image component for blog/research posts.
+ *
+ * Why this exists:
+ * - Requires `alt` (the type system enforces it). Decorative images opt in
+ *   explicitly via `decorative` prop, which emits alt="" + role="presentation".
+ * - Requires explicit width AND height. Browsers can then pre-allocate the
+ *   image box before the file header parses, preventing CLS. Matters even
+ *   for already-optimized webp — the perf win is layout stability, not bytes.
+ * - Optional caption. When present, renders as <figcaption> inside <figure>.
+ * - Lazy-loaded by default (loading="lazy", decoding="async"). Pass
+ *   `eager={true}` for above-the-fold images.
+ *
+ * Usage:
+ *   <Figure
+ *     src="/images/blog/foo.webp"
+ *     alt="A descriptive sentence."
+ *     width={800}
+ *     height={450}
+ *   />
+ *
+ *   <Figure
+ *     src="/images/blog/foo.webp"
+ *     alt="A descriptive sentence."
+ *     width={800}
+ *     height={450}
+ *     caption="Optional caption shown below the image."
+ *   />
+ *
+ *   <Figure
+ *     src="/images/blog/ornament.webp"
+ *     decorative
+ *     width={120}
+ *     height={120}
+ *   />
+ */
+
+type DecorativeProps = {
+  src: string;
+  decorative: true;
+  alt?: never;
+  width: number;
+  height: number;
+  caption?: never;
+  eager?: boolean;
+  class?: string;
+};
+
+type AccessibleProps = {
+  src: string;
+  alt: string;
+  decorative?: false;
+  width: number;
+  height: number;
+  caption?: string;
+  eager?: boolean;
+  class?: string;
+};
+
+type Props = DecorativeProps | AccessibleProps;
+
+const {
+  src,
+  width,
+  height,
+  eager = false,
+  class: classProp = '',
+} = Astro.props as Props;
+
+const isDecorative = (Astro.props as Props).decorative === true;
+const alt = isDecorative ? '' : (Astro.props as AccessibleProps).alt;
+const caption = isDecorative ? undefined : (Astro.props as AccessibleProps).caption;
+---
+
+<figure class:list={['figure', classProp]}>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    {...(isDecorative ? { role: 'presentation' } : {})}
+    class="figure__img"
+  />
+  {caption && <figcaption class="figure__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    margin: 2rem 0;
+  }
+
+  .figure__img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 2px;
+  }
+
+  .figure__caption {
+    margin-top: 0.75rem;
+    font-family: var(--font-body), serif;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-soft);
+    font-style: italic;
+  }
+
+  .figure__caption :global(em) {
+    font-family: var(--font-display), serif;
+    color: var(--rose-deep);
+  }
+</style>

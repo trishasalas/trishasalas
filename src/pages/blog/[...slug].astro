@@ -49,7 +49,9 @@ const dateLabel = post.data.draft
 </Base>
 
 <style>
-  .post-detail { padding: clamp(60px, 8vw, 100px) 0; }
+  .post-detail {
+    margin: 0 auto;
+    }
 
   .post-detail__header {
     max-width: 720px;
@@ -151,7 +153,7 @@ const dateLabel = post.data.draft
   .post-detail__body :global(li) { margin: 0 0 8px; }
 
   .post-detail__back {
-    margin: 80px 0 0;
+    margin: 80px 0 40px;
     font-family: var(--font-mono);
     font-size: 0.875rem;
     letter-spacing: 0.1em;
@@ -159,4 +161,22 @@ const dateLabel = post.data.draft
   .post-detail__back a {
     color: var(--rose-deep);
   }
+
+  table {
+  border-collapse: collapse;
+    width: 100%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: .875em;
+    line-height: 1.71429;
+}
+
+table th,
+table td {
+  border-style: solid;
+    border-width: 1px;
+    border-color: var(--rose-deep);
+    padding: 10px 20px;
+    text-align: center;
+}
 </style>
