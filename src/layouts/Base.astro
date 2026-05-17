@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import '../styles/motion.css';
-import Signature from "../components/Signature.astro";
 
 interface Props {
   title: string;
@@ -61,10 +60,6 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
     console.log(
       '%cYou found the magic of inkling',
       'font-family: Georgia, serif; font-style: italic; color: #e89aa8; font-size: 14px;',
-    );
-    console.log(
-      '%cthe source is the sketchbook.',
-      'color: #c9a89e; font-size: 12px;',
     );
   </script>
   <script>

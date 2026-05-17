@@ -3,11 +3,19 @@
 // At ≤768px the link list collapses behind a hamburger toggle. The toggle's
 // aria-expanded is the single source of truth — CSS reads it directly, no
 // duplicate state class.
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/';
 ---
 <header class="site-header">
+  {isHome ? (
     <a href="/" class="nav__logo">
-        Trisha <em>Salas</em>
+     Trisha <em>Salas</em>
     </a>
+    ) : (
+    <a href="/" class="nav__logo">
+     Trisha <em>Salas</em>
+    </a>
+    ) }
     <button
       type="button"
       class="nav__toggle"
@@ -72,7 +80,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px 0;
+        padding: 20px 0 40px;
         position: relative;
     }
 
