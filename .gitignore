@@ -37,3 +37,9 @@ blob-report/
 
 # brainstorming visual companion (per-session mockups)
 .superpowers/
+
+# Local Netlify folder
+.netlify
+
+# Netlify added this
+deno.lock
