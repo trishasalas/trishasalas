@@ -1,0 +1,17 @@
+---
+title: I am the paper, dammit!
+titleEm: dammit!
+description: ''
+pubDate: 2026-05-17
+tag: Personal
+draft: true
+---
+
+import Figure from '../../components/Figure.astro';
+
+ <Figure
+    src="/images/blog/shoo.png"
+    alt=""
+    width={720}
+    height={720}
+  />

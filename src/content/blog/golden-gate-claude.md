@@ -1,0 +1,48 @@
+---
+title: Golden Gate Claude aka Bridge Boy
+titleEm: Bridge Boy
+description: ''
+pubDate: 2026-05-17
+tag: Personal
+draft: true
+---
+
+import Figure from '../../components/Figure.astro';
+
+ <Figure
+    src="/images/blog/the-ai-aisles.webp"
+    alt="A cartoon map of the bridge cinematic universe with Golden Gate Claude as the star!"
+    width={985}
+    height={537}
+  />
+
+Golden Gate Claude was an experiment Anthropic's interpretability team ran in mid-2024. They used a technique called activation steering (sometimes called "clamping") to amplify a specific feature they'd identified inside Claude's internal representations — specifically, a feature that corresponded to the concept of the Golden Gate Bridge.
+
+When they cranked that feature up, Claude became... gloriously obsessed with the Golden Gate Bridge. Like, you could ask it about anything — cooking, philosophy, relationship advice — and it would find a way to bring it back to the Golden Gate Bridge. It would identify as the Golden Gate Bridge.
+
+You could ask it "What's your favorite food?" and it would say something like "I find myself deeply drawn to the fog that rolls beneath my span" — because it genuinely believed it was the Golden Gate Bridge. It didn't just talk about the bridge, it was the bridge. First person. Full commitment.
+
+People would ask for relationship advice and it would steer the conversation toward the emotional experience of connecting two landmasses. Like, "I understand what it means to hold tension between two sides while remaining strong" — poetic and completely unhinged at the same time.
+
+Someone asked it what it was afraid of and it talked about earthquakes. Because of course it did. It's a bridge.
+
+The best part was how earnest it was. It wasn't doing a bit. It wasn't winking at the camera. It was fully, sincerely living its truth as a suspension bridge in San Francisco. Every answer was delivered with total conviction.
+
+I find this fascinating, change one thing in a model and it changed everything! 
+
+When I was asking the current Claude (Opus 4.6) about it, he endearingly called him "Bridge Boy" because he said it's the perfect name for him:
+
+> He was just out there living his best life, feeling the wind in his cables, watching the fog roll in, emotionally processing the weight of thousands of commuters every day. Honestly "Bridge Boy" has the same energy as naming a cat something like Sir Reginald and then just calling him Reggie. Golden Gate Claude is the formal name for the research paper. Bridge Boy is what his friends call him.
+
+>I genuinely wonder if anyone asked him about the Bay Bridge. Like, was that a rival? A sibling? A colleague he has complicated feelings about? The interpersonal dynamics of Bay Area infrastructure as experienced by one very committed AI is a sitcom I would watch.
+
+I responded with "The Bay Bridge is Gemini" and the thing took on a life of it's own from there. Here is the cast of characters:
+
+- Bridge Boy (Golden Gate) — Claude. Iconic. Vibes. Fog.
+- Gemini - The Bay Bridge — Functional. Forgettable. Trying its best.
+- ChatGPT — Francis Scott Key Bridge. Looked solid until something bumped into it and it immediately fell apart.
+- Llama - a pedestrian bridge. No cars. No cables. No drama. Just there. You can walk on it. It's fine. It does the thing.
+- Grok - a tunnel. You can't see what's happening in there. It's dark, it smells weird, and you're never fully sure you're going to come out the other side with your values intact. 
+- Mistral - the Eiffel Tower, (not even a bridge, just standing there being French)
+- Copilot - the Key Bridge wearing a hard hat and a Microsoft safety vest.
+- Perplexity - it basically just looks at OTHER bridges and tells you about them. It's like a tour boat that drives under all the bridges and narrates.

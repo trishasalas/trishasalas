@@ -12,7 +12,7 @@ const blog = defineCollection({
     // Optional so drafts without a confirmed publish date still validate.
     // Drafts render the "Drafting" date label instead of a formatted date.
     pubDate: z.coerce.date().optional(),
-    tag: z.enum(['Research', 'Essay', 'Personal', 'Process']),
+    tag: z.enum(['Research', 'Essay', 'Personal', 'Process', 'Claude-isms']),
     draft: z.boolean().default(false),
   }),
 });
