@@ -3,36 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import { getPublishedPosts, dateLabel, emify, type BlogPost } from '../../utils/posts';
-
 const posts = await getPublishedPosts();
-
-// Schema enum order is the canonical order on the page.
-const TAGS = ['Research', 'Essay', 'Process', 'Personal'] as const;
-type Tag = typeof TAGS[number];
-
-const tagSubtitle: Record<Tag, string> = {
-  Research: 'Papers and preprints.',
-  Essay: 'Working through ideas in public.',
-  Process: 'Notes from the bench.',
-  Personal: 'What it is like to do this from a desk in Oklahoma.',
-};
-
-const tagId: Record<Tag, string> = {
-  Research: 'research',
-  Essay: 'essay',
-  Process: 'process',
-  Personal: 'personal',
-};
-
-// Group posts by tag, preserving the sort order from getPublishedPosts().
-const grouped: Array<{ tag: Tag; id: string; subtitle: string; posts: BlogPost[] }> = TAGS
-  .map((tag) => ({
-    tag,
-    id: tagId[tag],
-    subtitle: tagSubtitle[tag],
-    posts: posts.filter((p) => p.data.tag === tag),
-  }))
-  .filter((group) => group.posts.length > 0);
 ---
 <Base
   title="The Writing — Trisha Salas"
@@ -40,8 +11,7 @@ const grouped: Array<{ tag: Tag; id: string; subtitle: string; posts: BlogPost[]
 >
   <div class="site-wrapper">
     <Nav />
-    <main>
-      <article class="blog-index">
+    <main class="blog-index">
         <header class="blog-index__header">
           <p class="eyebrow">The Writing</p>
           <h1 class="blog-index__title">Notes from the <em>margin</em>.</h1>
@@ -52,54 +22,26 @@ const grouped: Array<{ tag: Tag; id: string; subtitle: string; posts: BlogPost[]
             at the bottom of theirs. <em>Not everything is finished — that's sort of the point.</em>
           </p>
         </header>
-
-        {grouped.length > 1 && (
-          <nav class="anchor-nav" aria-label="Jump to section">
-            <ol>
-              {grouped.map((group, i) => (
-                <li>
-                  {i > 0 && <span class="anchor-nav__sep" aria-hidden="true">·</span>}
-                  <a href={`#${group.id}`}>{group.tag}</a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-        )}
-
-        {grouped.map((group) => (
-          <section class="blog-section" data-tag={group.tag}>
-            <p class="blog-section__eyebrow">{group.tag}</p>
-            <h2 id={group.id} tabindex="-1" class="blog-section__title">
-              {group.subtitle}
-            </h2>
-            <ol class="post-cards">
-              {group.posts.map((post) => (
-                <li class="post-card">
-                  <div class="post-card__meta">
-                    {post.data.draft ? (
+        <ul class="blog-index__list">
+          {posts.map(post => (
+              <li class="post-card">
+                <div class="post-card__meta">
+                  {post.data.draft ? (
                       <span class="draft-label">Drafting</span>
-                    ) : post.data.pubDate ? (
+                  ) : post.data.pubDate ? (
                       <time datetime={post.data.pubDate.toISOString()}>
                         {dateLabel(post)}
                       </time>
-                    ) : (
+                  ) : (
                       <span />
-                    )}
-                    <span class="post-card__tag">{post.data.tag}</span>
-                  </div>
-                  <h3 class="post-card__title">
-                    <a
-                      href={`/blog/${post.id}/`}
-                      set:html={emify(post.data.title, post.data.titleEm)}
-                    />
-                  </h3>
-                  <p class="post-card__desc">{post.data.description}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
-        ))}
-      </article>
+                  )}
+                  <span class="post-card__tag">{post.data.category}</span>
+                </div>
+                <h3 class="post-card__title"><a href={`/blog/${post.id}`}>{post.data.title}</a></h3>
+                <p class="post-card__desc">{post.data.description}</p>
+              </li>
+          ))}
+        </ul>
     </main>
   </div>
   <Footer />
@@ -128,6 +70,12 @@ const grouped: Array<{ tag: Tag; id: string; subtitle: string; posts: BlogPost[]
 
   .blog-index__header {
     margin-bottom: 48px;
+  }
+
+  .blog-index__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .eyebrow {

@@ -31,7 +31,7 @@ const formattedDate = dateLabel(post);
         <header class="post-detail__header">
           <p class="post-detail__meta">
             <span>{formattedDate}</span>
-            <span class="post-detail__tag">{post.data.tag}</span>
+            <span class="post-detail__tag">{post.data.category}</span>
           </p>
           <h1 class="post-detail__title">{post.data.title}</h1>
         </header>
@@ -48,10 +48,6 @@ const formattedDate = dateLabel(post);
 </Base>
 
 <style>
-  .post-detail {
-    margin: 0 auto;
-    }
-
   .post-detail__header {
     max-width: 720px;
     margin: 0 0 48px;
