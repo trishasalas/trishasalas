@@ -1,5 +1,5 @@
 ---
-import { getPublishedPosts, dateLabel, emify } from '../../utils/posts';
+import { getPublishedPosts, dateLabel, emify, postHref } from '../../utils/posts';
 
 const posts = await getPublishedPosts();
 ---
@@ -24,9 +24,9 @@ const posts = await getPublishedPosts();
       <li class="post">
         <span class="post__date">{dateLabel(post)}</span>
         <h3 class="post__title">
-          <a href={`/blog/${post.id}/`} set:html={emify(post.data.title, post.data.titleEm)}></a>
+          <a href={postHref(post)} set:html={emify(post.data.title, post.data.titleEm)}></a>
         </h3>
-        <span class="post__tag">{post.data.tag}</span>
+        <span class="post__tag">{post.data.category}</span>
       </li>
     ))}
   </ol>

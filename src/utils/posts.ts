@@ -1,6 +1,27 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type BlogPost = CollectionEntry<'blog'>;
+export type Category = BlogPost['data']['category'];
+
+/** All category values, in display order. Mirrors the enum in src/content/config.ts. */
+export const CATEGORIES = [
+  'Research',
+  'Essay',
+  'Personal',
+  'Process',
+  'Claude-isms',
+  'The-Notes',
+] as const satisfies readonly Category[];
+
+/** URL slug form of a category enum value (e.g. "Claude-isms" → "claude-isms"). */
+export function categorySlug(category: Category): string {
+  return category.toLowerCase();
+}
+
+/** Permalink for a post under its category. */
+export function postHref(post: BlogPost): string {
+  return `/blog/${categorySlug(post.data.category)}/${post.id}/`;
+}
 
 /**
  * Returns blog posts ready to render: drafts hidden in production, shown in dev.

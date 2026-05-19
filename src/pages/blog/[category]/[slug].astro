@@ -1,16 +1,19 @@
 ---
 import { getCollection, render } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import Nav from '../../components/Nav.astro';
-import Footer from '../../components/Footer.astro';
-import { dateLabel } from '../../utils/posts';
+import Base from '../../../layouts/Base.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import { dateLabel, categorySlug, emify } from '../../../utils/posts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => {
     return import.meta.env.PROD ? !data.draft : true;
   });
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: {
+      category: categorySlug(post.data.category),
+      slug: post.id,
+    },
     props: { post },
   }));
 }
@@ -19,6 +22,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 const formattedDate = dateLabel(post);
+const catSlug = categorySlug(post.data.category);
 ---
 <Base
   title={`${post.data.title} — Trisha Salas`}
@@ -31,9 +35,9 @@ const formattedDate = dateLabel(post);
         <header class="post-detail__header">
           <p class="post-detail__meta">
             <span>{formattedDate}</span>
-            <span class="post-detail__tag">{post.data.category}</span>
+            <a class="post-detail__tag" href={`/blog/${catSlug}/`}>{post.data.category}</a>
           </p>
-          <h1 class="post-detail__title">{post.data.title}</h1>
+          <h1 class="post-detail__title" set:html={emify(post.data.title, post.data.titleEm)}></h1>
         </header>
         <div class="post-detail__body">
           <Content />
@@ -69,6 +73,14 @@ const formattedDate = dateLabel(post);
     padding: 4px 10px;
     border: 1px solid var(--rose-whisper);
     border-radius: 20px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+  .post-detail__tag:hover,
+  .post-detail__tag:focus-visible {
+    border-color: var(--rose-deep);
+    color: var(--rose);
   }
 
   .post-detail__title {

@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { getPublishedPosts, dateLabel, emify, type BlogPost } from '../../utils/posts';
+import { getPublishedPosts, dateLabel, emify, postHref, categorySlug, type BlogPost } from '../../utils/posts';
 const posts = await getPublishedPosts();
 ---
 <Base
@@ -35,9 +35,14 @@ const posts = await getPublishedPosts();
                   ) : (
                       <span />
                   )}
-                  <span class="post-card__tag">{post.data.category}</span>
+                  <a class="post-card__tag" href={`/blog/${categorySlug(post.data.category)}/`}>{post.data.category}</a>
                 </div>
-                <h3 class="post-card__title"><a href={`/blog/${post.id}`}>{post.data.title}</a></h3>
+                <h3 class="post-card__title">
+                  <a
+                    href={postHref(post)}
+                    set:html={emify(post.data.title, post.data.titleEm)}
+                  ></a>
+                </h3>
                 <p class="post-card__desc">{post.data.description}</p>
               </li>
           ))}
@@ -199,6 +204,13 @@ const posts = await getPublishedPosts();
   }
   .post-card__tag {
     color: var(--rose-deep);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 120ms ease;
+  }
+  a.post-card__tag:hover,
+  a.post-card__tag:focus-visible {
+    border-bottom-color: currentColor;
   }
   .draft-label {
     color: var(--rose-deep);
