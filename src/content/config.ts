@@ -18,6 +18,7 @@ const blog = defineCollection({
       "Personal",
       "Process",
       "Claude-isms",
+      "The-Notes"
     ]),
     // Optional tags that accept any new string entry
     tags: z.array(z.string()).default([]),
