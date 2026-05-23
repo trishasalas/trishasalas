@@ -1,6 +1,3 @@
-# let's hide the docs since this is a personal site
-docs/ 
-
 # build output
 dist/
 
