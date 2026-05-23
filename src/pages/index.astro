@@ -39,12 +39,13 @@ const personLd = {
   ],
 };
 ---
+<!-- index.astro-->
 <Base
   title="Trisha Salas — Accessibility · Mech Interp · Practice"
   description="Personal site of Trisha Salas — front-end developer turned accessibility consultant, doing independent research in mechanistic interpretability."
 >
   <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
-  <div class="site-wrapper">
+
     <Doodle/>
   <Nav />
   <main>
@@ -53,6 +54,6 @@ const personLd = {
     <Writing />
     <Lineage />
   </main>
-  </div>
+
   <Footer />
 </Base>

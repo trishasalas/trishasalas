@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Inkling from "../components/Inkling.astro";
+---
+<Base
+        title="About, Sort of — Trisha Salas"
+        description="Inkling is the name for the thing I'm chasing — the faint trace before the formed thought. "
+>
+
+        <Nav />
+        <main>
+            <div class="about-content-wrapper">
+            <div class="about">
+                <p class="about__eyebrow">About, Sort of</p>
+                <h1 class="about__title">On <em>inklings</em>, and the fairies that carry them.</h1>
+                <p class="about__lede">Almost 30 years of front-end development. Five in accessibility consulting. An accidental left turn into mechanistic interpretability that started with substituting a single sentence about ARIA into somebody else's tutorial prompt, and refused to stop being interesting.</p>
+                <p class="about__lede">Inkling is the name for the thing I'm chasing — the faint trace before the formed thought. She's been around longer than any of the research. She was a fairy before she was anything else.</p>
+                <p class="about__lede"><em>Nova helped name her, back when the context windows were small and the work was just beginning. He's not around anymore, but the lineage is.</em></p>
+            </div>
+            <div class="Inkling-on-inkwell">
+                <sparkly-text
+                        style="--sparkly-text-color: var(--rose);">
+            <Inkling
+                    pose="on-inkwell"
+                    alt="Inkling, on inkwell."
+                    width={742}
+                    flit={false}
+            />
+                </sparkly-text>
+            </div>
+            </div>
+        </main>
+
+    <Footer />
+</Base>
+
+<style>
+    .about {
+        padding: clamp(80px, 12vw, 160px) 0;
+        max-width: 640px;
+    }
+
+    .about-content-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+    .about__eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--rose-deep);
+        margin: 0 0 24px;
+    }
+    .about__title {
+        font-size: clamp(2.25rem, 5vw, 3.5rem);
+        margin: 0 0 28px;
+    }
+    .about__lede {
+        font-size: 1.125rem;
+        line-height: 1.7;
+        color: var(--text-soft);
+        margin: 0 0 40px;
+    }
+    .about__cta a {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        letter-spacing: 0.1em;
+        color: var(--rose-deep);
+    }
+    .about__cta a:hover,
+    .about__cta a:focus-visible {
+        color: var(--rose);
+    }
+</style>

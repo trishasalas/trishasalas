@@ -198,3 +198,8 @@ button:focus-visible em::after {
     width: calc(100% + var(--hero-pad-x));
   }
 }
+
+.blog-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+}

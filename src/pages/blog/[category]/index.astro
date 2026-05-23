@@ -27,8 +27,8 @@ const posts = allPosts.filter((p) => p.data.category === category);
   title={`${category} — The Writing — Trisha Salas`}
   description={`Posts in the ${category} category from Trisha Salas.`}
 >
-  <div class="site-wrapper">
     <Nav />
+  <div class="blog-content-wrapper">
     <main class="blog-index">
       <header class="blog-index__header">
         <p class="eyebrow">The Writing · {category}</p>
@@ -56,34 +56,44 @@ const posts = allPosts.filter((p) => p.data.category === category);
                 )}
                 <span class="post-card__tag">{post.data.category}</span>
               </div>
-              <h3 class="post-card__title">
+              <h2 class="post-card__title">
                 <a
                   href={postHref(post)}
                   set:html={emify(post.data.title, post.data.titleEm)}
                 ></a>
-              </h3>
+              </h2>
               <p class="post-card__desc">{post.data.description}</p>
             </li>
           ))}
         </ul>
       )}
-
-      <nav class="category-nav" aria-label="Other categories">
-        <p class="category-nav__label">Browse other categories</p>
-        <ul>
-          <li><a href="/blog/">All writing</a></li>
-          {CATEGORIES.filter((c) => c !== category).map((c) => (
-            <li><a href={`/blog/${categorySlug(c)}/`}>{c}</a></li>
-          ))}
-        </ul>
-      </nav>
     </main>
+  <aside class="blog-sidebar">
+    <nav class="category-nav" aria-label="Other categories">
+      <h2 class="category-nav__label">Categories</h2>
+      <ul>
+        {CATEGORIES.filter((c) => c !== category).map((c) => (
+            <li><a href={`/blog/${categorySlug(c)}/`}>{c}</a></li>
+        ))}
+        <li><a href="/blog/">All writing</a></li>
+      </ul>
+    </nav>
+  </aside>
   </div>
+
   <Footer />
 </Base>
 
 <style>
+  .blog-content-wrapper {
+    display: grid;
+    grid-template-areas: "content sidebar";
+    grid-gap: 1rem;
+    padding-bottom: 2rem;
+  }
+
   .blog-index {
+    grid-area: content;
     max-width: 720px;
     padding: 60px 0 80px;
   }
@@ -128,8 +138,13 @@ const posts = allPosts.filter((p) => p.data.category === category);
     padding: 22px 0;
     border-bottom: 1px solid var(--rose-whisper);
   }
+
   .post-card:first-child {
     padding-top: 0;
+  }
+
+  .post-card:last-child {
+    border-bottom: none;
   }
   .post-card__meta {
     display: flex;
@@ -177,19 +192,20 @@ const posts = allPosts.filter((p) => p.data.category === category);
   }
 
   .category-nav {
-    margin-top: 72px;
-    padding-top: 24px;
-    border-top: 1px dashed var(--rose-whisper);
+    padding-left: 3rem;
+    border-left: 1px dashed var(--rose-whisper);
+    margin-top: 100px;
   }
   .category-nav__label {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--rose-deep);
-    margin: 0 0 12px 0;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 3vw, 2rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 24px 0;
   }
   .category-nav ul {
+    display: flex;
+    flex-flow: column;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -211,5 +227,9 @@ const posts = allPosts.filter((p) => p.data.category === category);
   .category-nav a:hover,
   .category-nav a:focus-visible {
     border-bottom-color: currentColor;
+  }
+
+  .blog-sidebar {
+    grid-area: sidebar;
   }
 </style>

@@ -9,7 +9,7 @@ const posts = await getPublishedPosts();
   title="The Writing — Trisha Salas"
   description="The full archive — research papers, essays, process notes, and personal posts from Trisha Salas, grouped by what they are."
 >
-  <div class="site-wrapper">
+
     <Nav />
     <main class="blog-index">
         <header class="blog-index__header">
@@ -48,7 +48,7 @@ const posts = await getPublishedPosts();
           ))}
         </ul>
     </main>
-  </div>
+
   <Footer />
 </Base>
 
@@ -68,14 +68,11 @@ const posts = await getPublishedPosts();
 </script>
 
 <style>
-  .blog-index {
-    max-width: 720px;
-    padding: 60px 0 80px;
-  }
 
   .blog-index__header {
     margin-bottom: 64px;
       position: relative;
+      max-width: 720px;
   }
 
 
@@ -83,6 +80,7 @@ const posts = await getPublishedPosts();
     list-style: none;
     margin: 0;
     padding: 0;
+      max-width: 720px;
   }
 
   .eyebrow {

@@ -52,7 +52,9 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
   </script>
 </head>
 <body>
+<div class="site-wrapper">
   <slot />
+</div>
   <script>
     // Console greeting — mischief surface #1.
     // Phrased to read well to both view-source guests AND hiring managers.
