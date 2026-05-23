@@ -44,6 +44,8 @@ test('paper page emits Highwire citation tags', async ({ page }) => {
   await page.goto(PAPER_URL);
   expect(await metaContent(page, 'citation_title')).toContain('Accessibility Concept Emergence');
   expect(await metaContent(page, 'citation_author')).toBe('Trisha Salas');
+  // Exactly one author tag — guards the multi-author .map() against duplicates/drift.
+  expect(await page.locator('meta[name="citation_author"]').count()).toBe(1);
   expect(await metaContent(page, 'citation_doi')).toBe('10.22541/au.177282002.24340653/v2');
   expect(await metaContent(page, 'citation_pdf_url')).toBe(
     'https://trishasalas.com/papers/accessibility-concept-emergence-pythia.pdf',
