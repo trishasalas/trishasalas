@@ -91,3 +91,9 @@ test('non-paper post shows no byline', async ({ page }) => {
   await page.goto(PRECURSOR_URL);
   expect(await page.locator('.post-detail__byline').count()).toBe(0);
 });
+
+test('precursor article links forward to the formal paper', async ({ page }) => {
+  await page.goto(PRECURSOR_URL);
+  const link = page.locator(`.post-detail__body a[href="${PAPER_URL}"]`);
+  await expect(link.first()).toBeVisible();
+});
