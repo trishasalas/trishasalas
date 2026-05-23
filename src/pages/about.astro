@@ -3,12 +3,30 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Inkling from "../components/Inkling.astro";
+import { AUTHOR } from '../utils/identity';
+
+// Schema.org Person — canonical author record. ORCID is the @id so every
+// reference to "Trisha Salas" across the site resolves to one identity.
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': AUTHOR.orcid,
+  name: AUTHOR.name,
+  url: AUTHOR.aboutUrl,
+  image: 'https://trishasalas.com/og-image.jpg',
+  jobTitle: 'Accessibility consultant and independent mechanistic interpretability researcher',
+  description:
+    'Front-end developer turned accessibility consultant, studying how language models represent what they seem to know.',
+  knowsAbout: ['Accessibility', 'WCAG', 'ARIA', 'Mechanistic interpretability', 'Front-end development'],
+  sameAs: AUTHOR.sameAs,
+};
 ---
 <Base
         title="About, Sort of — Trisha Salas"
         description="Inkling is the name for the thing I'm chasing — the faint trace before the formed thought. "
 >
 
+        <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
         <Nav />
         <main>
             <div class="about-content-wrapper">
