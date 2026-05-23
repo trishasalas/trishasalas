@@ -1,0 +1,69 @@
+---
+// Emits per-paper findability metadata for a blog post that declares a `paper`
+// frontmatter block: Layer 1 Highwire citation tags, Layer 2 ScholarlyArticle
+// JSON-LD, Layer 3 Dublin Core. Rendered via `slot="head"` so the <meta> tags
+// land in <head>. Caller guarantees `post.data.paper` exists.
+import type { CollectionEntry } from 'astro:content';
+import { AUTHOR } from '../../utils/identity';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const paper = post.data.paper!;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const pubDate = paper.publicationDate ?? post.data.pubDate;
+const abstract = paper.abstract ?? post.data.description;
+const doiUrl = paper.doi ? `https://doi.org/${paper.doi}` : undefined;
+const pdfUrl = paper.pdf ? new URL(paper.pdf, Astro.site).toString() : undefined;
+const keywordList = paper.keywords.join('; ');
+
+// Highwire dates are YYYY/MM/DD; Schema.org + Dublin Core use ISO YYYY-MM-DD.
+const hwDate = pubDate
+  ? `${pubDate.getUTCFullYear()}/${String(pubDate.getUTCMonth() + 1).padStart(2, '0')}/${String(pubDate.getUTCDate()).padStart(2, '0')}`
+  : undefined;
+const isoDate = pubDate ? pubDate.toISOString().slice(0, 10) : undefined;
+
+// The keystone author (name match) carries the ORCID @id + /about/ url;
+// co-authors get a plain Person.
+const authorLd = paper.authors.map((name) =>
+  name === AUTHOR.name
+    ? { '@type': 'Person', '@id': AUTHOR.orcid, name, url: AUTHOR.aboutUrl }
+    : { '@type': 'Person', name },
+);
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  headline: post.data.title,
+  ...(isoDate && { datePublished: isoDate }),
+  author: authorLd,
+  url: canonical,
+  ...(doiUrl && { identifier: doiUrl }),
+  abstract,
+  keywords: paper.keywords,
+};
+---
+{/* Layer 1 — Highwire Press citation tags (what Google Scholar parses) */}
+<meta name="citation_title" content={post.data.title} />
+{paper.authors.map((name) => <meta name="citation_author" content={name} />)}
+{hwDate && <meta name="citation_publication_date" content={hwDate} />}
+{pdfUrl && <meta name="citation_pdf_url" content={pdfUrl} />}
+<meta name="citation_abstract_html_url" content={canonical} />
+{paper.venue && <meta name="citation_journal_title" content={paper.venue} />}
+{paper.doi && <meta name="citation_doi" content={paper.doi} />}
+{keywordList && <meta name="citation_keywords" content={keywordList} />}
+
+{/* Layer 2 — Schema.org ScholarlyArticle JSON-LD */}
+<script type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />
+
+{/* Layer 3 — Dublin Core */}
+<meta name="DC.title" content={post.data.title} />
+{paper.authors.map((name) => <meta name="DC.creator" content={name} />)}
+{isoDate && <meta name="DC.date" content={isoDate} />}
+{doiUrl && <meta name="DC.identifier" content={doiUrl} />}
+{keywordList && <meta name="DC.subject" content={keywordList} />}
+<meta name="DC.description" content={abstract} />
+<meta name="DC.type" content="Text" />

@@ -39,3 +39,41 @@ test('about has Person JSON-LD keyed on ORCID with profile sameAs', async ({ pag
   // sameAs holds person profiles only — the paper DOI is NOT a person identifier.
   expect(person.sameAs).not.toContain('https://doi.org/10.22541/au.177282002.24340653/v2');
 });
+
+test('paper page emits Highwire citation tags', async ({ page }) => {
+  await page.goto(PAPER_URL);
+  expect(await metaContent(page, 'citation_title')).toContain('Accessibility Concept Emergence');
+  expect(await metaContent(page, 'citation_author')).toBe('Trisha Salas');
+  expect(await metaContent(page, 'citation_doi')).toBe('10.22541/au.177282002.24340653/v2');
+  expect(await metaContent(page, 'citation_pdf_url')).toBe(
+    'https://trishasalas.com/papers/accessibility-concept-emergence-pythia.pdf',
+  );
+  expect(await metaContent(page, 'citation_journal_title')).toBe('TechRxiv');
+  expect(await metaContent(page, 'citation_publication_date')).toMatch(/^\d{4}\/\d{2}\/\d{2}$/);
+  expect(await metaContent(page, 'citation_keywords')).toContain('mechanistic interpretability');
+});
+
+test('paper page emits ScholarlyArticle JSON-LD with ORCID author', async ({ page }) => {
+  await page.goto(PAPER_URL);
+  const blocks = await jsonLdBlocks(page);
+  const article = blocks.find((b) => b['@type'] === 'ScholarlyArticle');
+  expect(article, 'a ScholarlyArticle block exists').toBeTruthy();
+  const trisha = article.author.find((a) => a.name === 'Trisha Salas');
+  expect(trisha['@id']).toBe(ORCID);
+  expect(article.identifier).toBe('https://doi.org/10.22541/au.177282002.24340653/v2');
+});
+
+test('paper page emits Dublin Core tags', async ({ page }) => {
+  await page.goto(PAPER_URL);
+  expect(await metaContent(page, 'DC.title')).toContain('Accessibility Concept Emergence');
+  expect(await metaContent(page, 'DC.creator')).toBe('Trisha Salas');
+  expect(await metaContent(page, 'DC.type')).toBe('Text');
+});
+
+test('non-paper post emits no citation/article/DC metadata', async ({ page }) => {
+  await page.goto(PRECURSOR_URL);
+  expect(await page.locator('meta[name="citation_title"]').count()).toBe(0);
+  const blocks = await jsonLdBlocks(page);
+  expect(blocks.find((b) => b['@type'] === 'ScholarlyArticle')).toBeUndefined();
+  expect(await page.locator('meta[name="DC.title"]').count()).toBe(0);
+});

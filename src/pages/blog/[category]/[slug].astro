@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
+import ScholarlyMeta from '../../../components/seo/ScholarlyMeta.astro';
 import { dateLabel, categorySlug, emify } from '../../../utils/posts';
 
 export async function getStaticPaths() {
@@ -28,6 +29,7 @@ const catSlug = categorySlug(post.data.category);
   title={`${post.data.title} — Trisha Salas`}
   description={post.data.description}
 >
+    {post.data.paper && <ScholarlyMeta slot="head" post={post} />}
     <Nav />
     <main>
       <article class="post-detail">
