@@ -37,6 +37,12 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
   <meta property="og:image:alt" content="A painted scene of Inkling the fairy hovering near a quill and ink jar, against a warm cream and rose haze." />
   <meta property="og:locale" content="en_US" />
 
+  <meta name="robots" content="index, follow" />
+
+  <!-- Per-page head extension point. Pages pass scholarly <meta>/JSON-LD here
+       via `slot="head"`; <meta> tags must live in <head> to be valid. -->
+  <slot name="head" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
