@@ -22,6 +22,17 @@ const blog = defineCollection({
     ]),
     // Optional tags that accept any new string entry
     tags: z.array(z.string()).default([]),
+    // Optional scholarly metadata. Presence of this block (not the category)
+    // is the on/off switch for per-paper Highwire/Schema.org/Dublin Core tags.
+    paper: z.object({
+      authors: z.array(z.string()).default(['Trisha Salas']), // natural order
+      publicationDate: z.coerce.date().optional(),            // falls back to pubDate
+      doi: z.string().optional(),                             // bare "10.…/v2"; URL built downstream
+      pdf: z.string().optional(),                             // "/papers/<slug>.pdf" — self-hosted
+      venue: z.string().optional(),                           // citation_journal_title (DOI's home)
+      abstract: z.string().optional(),                        // falls back to description
+      keywords: z.array(z.string()).default([]),
+    }).optional(),
     draft: z.boolean().default(false),
   }),
 });
