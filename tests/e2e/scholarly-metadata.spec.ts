@@ -79,3 +79,15 @@ test('non-paper post emits no citation/article/DC metadata', async ({ page }) =>
   expect(blocks.find((b) => b['@type'] === 'ScholarlyArticle')).toBeUndefined();
   expect(await page.locator('meta[name="DC.title"]').count()).toBe(0);
 });
+
+test('paper page shows a visible author byline', async ({ page }) => {
+  await page.goto(PAPER_URL);
+  const byline = page.locator('.post-detail__byline');
+  await expect(byline).toBeVisible();
+  await expect(byline).toContainText('Trisha Salas');
+});
+
+test('non-paper post shows no byline', async ({ page }) => {
+  await page.goto(PRECURSOR_URL);
+  expect(await page.locator('.post-detail__byline').count()).toBe(0);
+});

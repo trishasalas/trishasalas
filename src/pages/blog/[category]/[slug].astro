@@ -39,6 +39,9 @@ const catSlug = categorySlug(post.data.category);
             <a class="post-detail__tag" href={`/blog/${catSlug}/`}>{post.data.category}</a>
           </p>
           <h1 class="post-detail__title" set:html={emify(post.data.title, post.data.titleEm)}></h1>
+          {post.data.paper && (
+            <p class="post-detail__byline">By {post.data.paper.authors.join(', ')}</p>
+          )}
         </header>
         <div class="post-detail__body">
           <Content />
@@ -90,6 +93,14 @@ const catSlug = categorySlug(post.data.category);
     font-weight: 300;
     line-height: 1.1;
     margin: 0;
+  }
+
+  .post-detail__byline {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+    margin: 16px 0 0;
   }
 
   .post-detail__body {
