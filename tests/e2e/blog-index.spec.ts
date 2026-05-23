@@ -1,13 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-const TAGS = ['Research', 'Essay', 'Process', 'Personal'] as const;
-type Tag = typeof TAGS[number];
-const tagToId: Record<Tag, string> = {
-  Research: 'research',
-  Essay: 'essay',
-  Process: 'process',
-  Personal: 'personal',
-};
+// The blog index is a flat, chronological list of all published posts.
+// Category grouping lives on the per-category index pages (/blog/<category>/),
+// not here — the old grouped-sections + anchor-nav jump design was retired in
+// the route restructure.
 
 test('/blog/ renders the page header', async ({ page }) => {
   await page.goto('/blog/');
@@ -16,62 +12,13 @@ test('/blog/ renders the page header', async ({ page }) => {
   await expect(page.locator('h1.blog-index__title em')).toContainText('margin');
 });
 
-test('/blog/ shows one section per tag that has at least one post', async ({ page }) => {
+test('/blog/ renders a flat list of post cards', async ({ page }) => {
   await page.goto('/blog/');
-
-  // For each tag, the section is either present with >=1 post, or absent entirely.
-  for (const tag of TAGS) {
-    const heading = page.locator(`h2#${tagToId[tag]}`);
-    const count = await heading.count();
-    if (count === 0) continue; // empty tag — section correctly omitted
-
-    // Section exists: it must have at least one post card under it.
-    await expect(heading).toBeVisible();
-    const section = page.locator(`section[data-tag="${tag}"]`);
-    const cards = section.locator('li.post-card');
-    await expect.poll(() => cards.count()).toBeGreaterThan(0);
-  }
+  const cards = page.locator('ul.blog-index__list > li.post-card');
+  await expect.poll(() => cards.count()).toBeGreaterThan(0);
 });
 
-test('/blog/ anchor-jump nav matches rendered sections', async ({ page }) => {
-  await page.goto('/blog/');
-
-  const anchorLinks = page.locator('nav.anchor-nav a');
-  const anchorHrefs = await anchorLinks.evaluateAll(
-    (els) => els.map((el) => (el as HTMLAnchorElement).getAttribute('href') ?? ''),
-  );
-
-  for (const href of anchorHrefs) {
-    expect(href).toMatch(/^#(research|essay|process|personal)$/);
-    const id = href.slice(1);
-    await expect(page.locator(`h2#${id}`)).toBeVisible();
-  }
-
-  // Every visible tag-section h2 must have a corresponding anchor link
-  const visibleHeadingIds = await page
-    .locator('section.blog-section h2[id]')
-    .evaluateAll((els) => els.map((el) => el.id));
-  for (const id of visibleHeadingIds) {
-    expect(anchorHrefs).toContain(`#${id}`);
-  }
-});
-
-test('/blog/ anchor activation lands focus on the section heading', async ({ page }) => {
-  await page.goto('/blog/');
-  const firstAnchor = page.locator('nav.anchor-nav a').first();
-  await expect(firstAnchor).toBeVisible();
-  const targetHref = await firstAnchor.getAttribute('href');
-  expect(targetHref).toBeTruthy();
-  await firstAnchor.click();
-
-  // Focus is moved inside a requestAnimationFrame, so poll until it lands.
-  const targetId = targetHref!.slice(1);
-  await expect
-    .poll(() => page.evaluate(() => document.activeElement?.id ?? null))
-    .toBe(targetId);
-});
-
-test('/blog/ post card shows date, tag, title, description', async ({ page }) => {
+test('/blog/ post card shows date (or draft label), tag, title, description', async ({ page }) => {
   await page.goto('/blog/');
   const firstCard = page.locator('li.post-card').first();
 
@@ -80,6 +27,14 @@ test('/blog/ post card shows date, tag, title, description', async ({ page }) =>
   await expect(firstCard.locator('h3 a')).toBeVisible();
   await expect(firstCard.locator('.post-card__desc')).toBeVisible();
 
+  // Post links use the two-segment route: /blog/<category>/<slug>/
   const href = await firstCard.locator('h3 a').getAttribute('href');
+  expect(href).toMatch(/^\/blog\/[^/]+\/[^/]+\/$/);
+});
+
+test('/blog/ category tag links point to the category index', async ({ page }) => {
+  await page.goto('/blog/');
+  // The tag chip links to the single-segment category index: /blog/<category>/
+  const href = await page.locator('li.post-card .post-card__tag').first().getAttribute('href');
   expect(href).toMatch(/^\/blog\/[^/]+\/$/);
 });

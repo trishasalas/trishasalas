@@ -52,21 +52,6 @@ const posts = await getPublishedPosts();
   <Footer />
 </Base>
 
-<script>
-  // When an in-page anchor is activated, move keyboard focus to the target
-  // heading so screen-reader and keyboard users land at the right place.
-  document.querySelectorAll<HTMLAnchorElement>('nav.anchor-nav a').forEach((a) => {
-    a.addEventListener('click', () => {
-      const href = a.getAttribute('href');
-      if (!href?.startsWith('#')) return;
-      const target = document.getElementById(href.slice(1));
-      if (!target) return;
-      // Let the native scroll happen, then move focus.
-      requestAnimationFrame(() => target.focus({ preventScroll: true }));
-    });
-  });
-</script>
-
 <style>
 
   .blog-index__header {
@@ -115,73 +100,6 @@ const posts = await getPublishedPosts();
     color: var(--rose-deep);
   }
 
-  .anchor-nav {
-    margin: 0 0 48px;
-    padding-bottom: 16px;
-    border-bottom: 1px dashed var(--rose-whisper);
-  }
-  .anchor-nav ol {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-  .anchor-nav li {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .anchor-nav a {
-    color: var(--rose-deep);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
-    transition: border-color 120ms ease;
-  }
-  .anchor-nav a:hover,
-  .anchor-nav a:focus-visible {
-    border-bottom-color: currentColor;
-  }
-  .anchor-nav__sep {
-    color: var(--dust);
-  }
-
-  .blog-section {
-    margin: 0 0 56px;
-  }
-  .blog-section__eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--rose-deep);
-    margin: 0 0 6px 0;
-  }
-  .blog-section__title {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 400;
-    font-style: italic;
-    margin: 0 0 24px 0;
-    color: var(--text-soft);
-    outline: none;
-  }
-  .blog-section__title:focus-visible {
-    outline: 2px solid var(--rose-deep);
-    outline-offset: 4px;
-  }
-
-  .post-cards {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
   .post-card {
     padding: 22px 0;
     border-bottom: 1px solid var(--rose-whisper);
