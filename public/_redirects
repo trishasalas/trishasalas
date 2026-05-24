@@ -9,3 +9,7 @@
 # Both trailing-slash variants listed so the exact cited URL (with slash) matches.
 /posts/testing-accessibility-knowledge-across-pythia-model-sizes/   /blog/research/testing-accessibility-knowledge-pythia/   301
 /posts/testing-accessibility-knowledge-across-pythia-model-sizes    /blog/research/testing-accessibility-knowledge-pythia/   301
+
+## Found in a Google search
+/posts/  /blog/  301
+/posts  /blog  301

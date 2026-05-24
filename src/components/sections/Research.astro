@@ -1,14 +1,14 @@
 ---
 const papers = [
   {
-    status: 'Published · TechRxiv',
+    status: 'Published · Zenodo',
     statusKind: 'live' as const,
     year: '2026',
     title: 'Accessibility Concept Emergence in the Pythia Suite',
     titleEm: 'Pythia',
     abstract:
       'A cross-scale analysis of how accessibility concepts — WCAG, ARIA, semantic HTML — become represented across the Pythia model family. Evidence for a three-tier statistical architecture of accessibility-related activations that replicates across GPT-2 XL and Pythia 2.8B.',
-    meta: ['DOI · 10.22541/au.177282002.24340653/v2', 'Cited in 1'],
+    meta: ['DOI · 10.5281/zenodo.20360787', 'Cited in 1'],
     href: '/blog/research/accessibility-concept-emergence-pythia/',
   },
   {
@@ -76,7 +76,7 @@ function emify(title: string, em: string) {
   }
 
   .section-title {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(3rem, 4vw, 3rem);
     margin: 0;
   }
 
@@ -187,6 +187,12 @@ function emify(title: string, em: string) {
   }
 
   @media (max-width: 720px) {
-    .papers { grid-template-columns: 1fr; }
+    .section-head {
+      flex-direction: column;
+    }
+
+    .papers {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

@@ -79,6 +79,7 @@ import Inkling from '../Inkling.astro';
     align-items: center;
     gap: 14px;
   }
+
   .eyebrow::before {
     content: "";
     width: 32px;
@@ -137,9 +138,16 @@ import Inkling from '../Inkling.astro';
     .hero {
       grid-template-columns: 1fr;
     }
+
+    .eyebrow {
+      flex-direction: column;
+      text-align: center;
+    }
+
     .hero__painting {
       display: none;
     }
+
     .hero__text {
       grid-row: 1;
       grid-column: 1;
@@ -149,6 +157,6 @@ import Inkling from '../Inkling.astro';
   }
 
   @media (max-width: 767px) {
-    .hero__text { padding: 40px 24px; }
+    .hero__text { padding: 0 24px 40px; }
   }
 </style>

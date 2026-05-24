@@ -43,7 +43,8 @@ h1 em, h2 em, h3 em {
   font-style: italic;
   font-weight: 400;
   color: var(--rose-deep);
-  font-variation-settings: "opsz" 144;
+  font-optical-sizing: auto;
+  font-variation-settings: "WONK" 1;
 }
 
 /* Body emphasis */
