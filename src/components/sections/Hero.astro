@@ -41,6 +41,22 @@ import Inkling from '../Inkling.astro';
     isolation: isolate;
   }
 
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3rem;
+    background: linear-gradient(
+        to bottom,
+        var(--bg),
+        transparent
+    );
+    z-index: 2; /* above the image, below content */
+    pointer-events: none;
+  }
+
   /* Painting fills all three wrapper columns (the entire viewport).
      Aspect-ratio + bg-contain: the painted artwork's natural 16/9
      proportions become the coordinate system, so percentage-positioned
