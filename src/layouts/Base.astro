@@ -2,6 +2,7 @@
 // src/layouts/Base.astro
 import '../styles/global.css';
 import '../styles/motion.css';
+import GoogleAnalytics from '../components/seo/GoogleAnalytics.astro';
 
 interface Props {
   title: string;
@@ -37,25 +38,19 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="A painted scene of Inkling the fairy hovering near a quill and ink jar, against a warm cream and rose haze." />
   <meta property="og:locale" content="en_US" />
-
+  <link rel="sitemap" href="/sitemap-index.xml" />
   <meta name="robots" content="index, follow" />
-
   <!-- Per-page head extension point. Pages pass scholarly <meta>/JSON-LD here
        via `slot="head"`; <meta> tags must live in <head> to be valid. -->
+  <GoogleAnalytics/>
   <slot name="head" />
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script async src="https://plausible.io/js/pa-n8c3yq3aUEeVuRP8qX8xs.js"></script>
-  <script>
-    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-    plausible.init()
-  </script>
 
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Lora:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Lora:ital,wght@0,400;1,400&family=Fira+Code:wght@400;500&display=swap"
   />
   <script>
     // Static side-effect import. Astro bundles this as <script type="module">

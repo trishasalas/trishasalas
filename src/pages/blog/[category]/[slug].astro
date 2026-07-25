@@ -121,7 +121,15 @@ const catSlug = categorySlug(post.data.category);
     font-size: 1.375rem;
     margin: 32px 0 12px;
   }
-  .post-detail__body :global(p) { margin: 0 0 20px; }
+
+  .post-detail__body :global(p) {
+    margin: 0 0 20px;
+  }
+
+  .post-detail__body :global(blockquote) > :global(p) {
+    margin: 0;
+  }
+
   .post-detail__body :global(em) {
     font-family: var(--font-display);
     font-style: italic;

@@ -204,3 +204,16 @@ button:focus-visible em::after {
   max-width: 1440px;
   margin: 0 auto;
 }
+
+.image-right {
+  float: right;
+  width: 300px;
+  padding-left: 30px;
+}
+
+@media (max-width: 768px) {
+  .image-right {
+    float: none;
+    padding-left: 0;
+  }
+}

@@ -24,7 +24,7 @@
   /* type */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body:    'Lora', Georgia, serif;
-  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+  --font-mono:    'Fira Code', ui-monospace, monospace;
 
   /* layout
      One source of truth for the page coordinate system. Every left-aligned
