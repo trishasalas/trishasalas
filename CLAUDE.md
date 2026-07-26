@@ -11,8 +11,8 @@ Rebuild of `trishasalas.com` (the v2 codebase). Personal site of Trisha Salas �
 ## URL structure
 
 - `/` — home page (Inkling hero design)
-- `/blog/` — full writing archive, grouped by `tag` (`Research`, `Essay`, `Process`, `Personal`)
-- `/blog/<slug>/` — individual post detail. Research posts get `ScholarlyArticle` JSON-LD + Highwire `citation_*` tags on this same path (no `/research/` split — distinction rides on the `tag` field, not the URL).
+- `/blog/` — full writing archive: a flat chronological list of every post (drafts last), each carrying a `category` (`Research`, `Essay`, `Personal`, `Process`, `Claude-isms`) rendered as a pill that links to its per-category archive at `/blog/<category>/`
+- `/blog/<category>/<slug>/` — individual post detail. Research posts get `ScholarlyArticle` JSON-LD + Highwire `citation_*` tags on this same path (no `/research/` split — the distinction rides on the `category` field, not the URL). Scholarly metadata is sourced from a matching `publications` entry, not a frontmatter block.
 - `/about/` — author profile (`Person` JSON-LD with full identifier graph)
 
 ## Where things live
@@ -25,6 +25,7 @@ Rebuild of `trishasalas.com` (the v2 codebase). Personal site of Trisha Salas �
 | `docs/social-urls.md` | Source of truth for ORCID, DOIs, social/research profile URLs |
 | `docs/spec-feedback.md` | External feedback pass on the Inkling spec |
 | `src/` | Astro source. Layout system on `.site-wrapper` (CSS Grid + subgrid for `<main>`); page coordinates from `--margin-w` (130px dashed rule) and `--content-start` (180px content column). Sections opt into full-bleed via `.full-bleed` class. |
+| `src/content/publications/` | Research **artifacts** (papers, software) as their own content collection — external, DOI'd, dated, route-less. Feeds the home Research cards, and when an entry sets `post`, supplies that post's scholarly metadata. This is where citation data lives — **not** a `paper` block on `blog` (that block is gone). Distinct from the `Research` blog *category*, which is a post label. |
 | `public/images/` | Production-deployed image assets (.webp); `light-bkg-full.webp` is the painted hero scene |
 
 ## Key conventions
@@ -32,7 +33,7 @@ Rebuild of `trishasalas.com` (the v2 codebase). Personal site of Trisha Salas �
 - **Inkling is a system, not a hero.** She appears as marginalia: glow trails, sparkles, quill cameos, source-code easter eggs. She is not centered as a brand mascot. See "Design intent" in the spec.
 - **The whimsy is non-negotiable.** The defensive structure (minimal-professional inner pages, explicit accessibility, formal research metadata) exists to make the whimsy *legible as deliberate craft*, not to soften it. Do not simplify away marginalia under "look more professional" pressure.
 - **Accessibility is built-in, not bolted-on.** WCAG 2.2 AA target. `prefers-reduced-motion` honored. Manual pause toggle for ambient motion >5s. Font sizes use `rem` (not `px`) so the site honors a user's browser-default font size. The site itself must be exemplary — Trisha is an a11y consultant.
-- **Findability is load-bearing.** The site doubles as the discoverability hub for Trisha's published research (she does not have arXiv access). Per-paper Highwire Press citation tags + Schema.org `ScholarlyArticle` JSON-LD + Dublin Core, with ORCID as the keystone author `@id`. See Appendix A of the spec.
+- **Findability is load-bearing.** The site doubles as the discoverability hub for Trisha's published research (she does not have arXiv access). Per-paper Highwire Press citation tags + Schema.org `ScholarlyArticle` JSON-LD + Dublin Core, with ORCID as the keystone author `@id`. See Appendix A of the spec. The metadata is emitted by `ScholarlyMeta.astro` from the matching `publications` entry; a build-time guard asserts the entry's `title` equals the post's rendered `<h1>` so `citation_title` can't silently drift from the heading.
 
 ## Communication preferences
 
