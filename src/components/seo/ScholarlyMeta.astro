@@ -1,34 +1,32 @@
 ---
-// Emits per-paper findability metadata for a blog post that declares a `paper`
-// frontmatter block: Layer 1 Highwire citation tags, Layer 2 ScholarlyArticle
-// JSON-LD, Layer 3 Dublin Core. Rendered via `slot="head"` so the <meta> tags
-// land in <head>. Caller guarantees `post.data.paper` exists.
+// Emits per-paper findability metadata for a post that has a matching
+// `publications` entry (entry.data.post === the post slug): Layer 1 Highwire
+// citation tags, Layer 2 ScholarlyArticle JSON-LD, Layer 3 Dublin Core.
+// Rendered via `slot="head"` so the <meta> tags land in <head>. The artifact is
+// self-contained (required title/doi/abstract/publicationDate), so no fallbacks
+// to the post are needed — the caller passes the publication, not the post.
 import type { CollectionEntry } from 'astro:content';
 import { AUTHOR } from '../../utils/identity';
 
 interface Props {
-  post: CollectionEntry<'blog'>;
+  publication: CollectionEntry<'publications'>;
 }
 
-const { post } = Astro.props;
-const paper = post.data.paper!;
+const p = Astro.props.publication.data;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const pubDate = paper.publicationDate ?? post.data.pubDate;
-const abstract = paper.abstract ?? post.data.description;
-const doiUrl = paper.doi ? `https://doi.org/${paper.doi}` : undefined;
-const pdfUrl = paper.pdf ? new URL(paper.pdf, Astro.site).toString() : undefined;
-const keywordList = paper.keywords.join('; ');
+const doiUrl = `https://doi.org/${p.doi}`;
+const pdfUrl = p.pdf ? new URL(p.pdf, Astro.site).toString() : undefined;
+const keywordList = p.keywords.join('; ');
 
 // Highwire dates are YYYY/MM/DD; Schema.org + Dublin Core use ISO YYYY-MM-DD.
-const hwDate = pubDate
-  ? `${pubDate.getUTCFullYear()}/${String(pubDate.getUTCMonth() + 1).padStart(2, '0')}/${String(pubDate.getUTCDate()).padStart(2, '0')}`
-  : undefined;
-const isoDate = pubDate ? pubDate.toISOString().slice(0, 10) : undefined;
+const d = p.publicationDate;
+const hwDate = `${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, '0')}/${String(d.getUTCDate()).padStart(2, '0')}`;
+const isoDate = d.toISOString().slice(0, 10);
 
 // The keystone author (name match) carries the ORCID @id + /about/ url;
 // co-authors get a plain Person.
-const authorLd = paper.authors.map((name) =>
+const authorLd = p.authors.map((name) =>
   name === AUTHOR.name
     ? { '@type': 'Person', '@id': AUTHOR.orcid, name, url: AUTHOR.aboutUrl }
     : { '@type': 'Person', name },
@@ -37,33 +35,33 @@ const authorLd = paper.authors.map((name) =>
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'ScholarlyArticle',
-  headline: post.data.title,
-  ...(isoDate && { datePublished: isoDate }),
+  headline: p.title,
+  datePublished: isoDate,
   author: authorLd,
   url: canonical,
-  ...(doiUrl && { identifier: doiUrl }),
-  abstract,
-  keywords: paper.keywords,
+  identifier: doiUrl,
+  abstract: p.abstract,
+  keywords: p.keywords,
 };
 ---
 {/* Layer 1 — Highwire Press citation tags (what Google Scholar parses) */}
-<meta name="citation_title" content={post.data.title} />
-{paper.authors.map((name) => <meta name="citation_author" content={name} />)}
-{hwDate && <meta name="citation_publication_date" content={hwDate} />}
+<meta name="citation_title" content={p.title} />
+{p.authors.map((name) => <meta name="citation_author" content={name} />)}
+<meta name="citation_publication_date" content={hwDate} />
 {pdfUrl && <meta name="citation_pdf_url" content={pdfUrl} />}
 <meta name="citation_abstract_html_url" content={canonical} />
-{paper.journalTitle && <meta name="citation_journal_title" content={paper.journalTitle} />}
-{paper.doi && <meta name="citation_doi" content={paper.doi} />}
+{p.journalTitle && <meta name="citation_journal_title" content={p.journalTitle} />}
+<meta name="citation_doi" content={p.doi} />
 {keywordList && <meta name="citation_keywords" content={keywordList} />}
 
 {/* Layer 2 — Schema.org ScholarlyArticle JSON-LD */}
 <script type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />
 
 {/* Layer 3 — Dublin Core */}
-<meta name="DC.title" content={post.data.title} />
-{paper.authors.map((name) => <meta name="DC.creator" content={name} />)}
-{isoDate && <meta name="DC.date" content={isoDate} />}
-{doiUrl && <meta name="DC.identifier" content={doiUrl} />}
+<meta name="DC.title" content={p.title} />
+{p.authors.map((name) => <meta name="DC.creator" content={name} />)}
+<meta name="DC.date" content={isoDate} />
+<meta name="DC.identifier" content={doiUrl} />
 {keywordList && <meta name="DC.subject" content={keywordList} />}
-<meta name="DC.description" content={abstract} />
+<meta name="DC.description" content={p.abstract} />
 <meta name="DC.type" content="Text" />

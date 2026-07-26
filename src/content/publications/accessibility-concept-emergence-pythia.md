@@ -10,4 +10,14 @@ publicationDate: 2026-05-24
 hostedAt: https://zenodo.org/records/20360788
 citedBy: 1
 post: accessibility-concept-emergence-pythia
+authors:
+- Trisha Salas
+pdf: /papers/accessibility-concept-emergence-pythia.pdf
+keywords:
+- mechanistic interpretability
+- accessibility
+- Pythia
+- emergence
+- WCAG
+- ARIA
 ---

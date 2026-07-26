@@ -24,12 +24,34 @@ const { Content } = await render(post);
 
 const formattedDate = dateLabel(post);
 const catSlug = categorySlug(post.data.category);
+
+// Scholarly metadata rides on a matching `publications` entry, not a frontmatter
+// `paper` block. Presence of the artifact is the on/off switch for citation tags.
+const artifact = (await getCollection('publications')).find(
+  (pub) => pub.data.post === post.id,
+);
+
+// Drift guard: citation_title (from the artifact) must equal the rendered <h1>
+// (from the post). Compare against the <h1>'s TEXT — emify wraps a substring in
+// <em>, so strip tags first or a mismatch hides behind the markup. This fails
+// the BUILD rather than silently shipping a citation_title that Scholar sees but
+// a reader never does.
+if (artifact) {
+  const h1Text = emify(post.data.title, post.data.titleEm).replace(/<[^>]+>/g, '');
+  if (h1Text !== artifact.data.title) {
+    throw new Error(
+      `citation_title / <h1> drift on "${post.id}":\n` +
+        `  <h1> renders: ${h1Text}\n` +
+        `  citation_title: ${artifact.data.title}`,
+    );
+  }
+}
 ---
 <Base
   title={`${post.data.title} — Trisha Salas`}
   description={post.data.description}
 >
-    {post.data.paper && <ScholarlyMeta slot="head" post={post} />}
+    {artifact && <ScholarlyMeta slot="head" publication={artifact} />}
     <Nav />
     <main>
       <article class="post-detail">
@@ -39,8 +61,8 @@ const catSlug = categorySlug(post.data.category);
             <a class="post-detail__tag" href={`/blog/${catSlug}/`}>{post.data.category}</a>
           </p>
           <h1 class="post-detail__title" set:html={emify(post.data.title, post.data.titleEm)}></h1>
-          {post.data.paper && (
-            <p class="post-detail__byline">By {post.data.paper.authors.join(', ')}</p>
+          {artifact && (
+            <p class="post-detail__byline">By {artifact.data.authors.join(', ')}</p>
           )}
         </header>
         <div class="post-detail__body">

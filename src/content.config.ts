@@ -22,22 +22,9 @@ const blog = defineCollection({
     ]),
     // Optional tags that accept any new string entry
     tags: z.array(z.string()).default([]),
-    // Optional scholarly metadata. Presence of this block (not the category)
-    // is the on/off switch for per-paper Highwire/Schema.org/Dublin Core tags.
-    paper: z.object({
-      authors: z.array(z.string()).default(['Trisha Salas']), // natural order
-      publicationDate: z.coerce.date().optional(),            // falls back to pubDate
-      doi: z.string().optional(),                             // bare "10.…/v2"; URL built downstream
-      pdf: z.string().optional(),                             // "/papers/<slug>.pdf" — self-hosted
-      venue: z.string().optional(),                           // the DOI's home (e.g. "Zenodo") — card display, NOT a journal tag
-      // citation_journal_title is emitted IFF this is set. Presence-driven: set it
-      // only when a journal/conference actually published the work. A repository
-      // deposit (Zenodo, etc.) has no journal, so this stays unset and no tag is
-      // emitted — rather than asserting the repository name as the journal.
-      journalTitle: z.string().optional(),
-      abstract: z.string().optional(),                        // falls back to description
-      keywords: z.array(z.string()).default([]),
-    }).optional(),
+    // Scholarly metadata no longer rides on the blog entry — it lives in the
+    // `publications` collection, and a post's citation tags switch on when a
+    // publication references it via `post`. See ScholarlyMeta + [slug].astro.
     draft: z.boolean().default(false),
   }),
 });
@@ -58,7 +45,7 @@ const publications = defineCollection({
     venue: z.string(),                  // the DOI's home (e.g. "Zenodo") — card display, NOT a journal tag
     // citation_journal_title is emitted IFF set. Presence-driven: only when a
     // journal/conference actually published the work. Repository deposits leave
-    // this unset (see the blog `paper` block for the same rule, shipped ahead of here).
+    // this unset rather than asserting the repository name as the journal.
     journalTitle: z.string().optional(),
     kind: z.enum(['article', 'software']),
     publicationDate: z.coerce.date(),
@@ -66,6 +53,11 @@ const publications = defineCollection({
     citedBy: z.number().optional(),
     scope: z.string().optional(),       // e.g. "Software · v1.0.0"
     post: z.string().optional(),        // slug of the write-up, if one exists
+    // Citation-facing fields — consumed by ScholarlyMeta when `post` is set.
+    // Self-contained here so the component needs no fallbacks to the post.
+    authors: z.array(z.string()).default(['Trisha Salas']),   // natural order
+    pdf: z.string().optional(),                               // "/papers/<slug>.pdf" — citation_pdf_url
+    keywords: z.array(z.string()).default([]),
   }).refine(
     (d) => !d.shortTitleEm || d.shortTitle.includes(d.shortTitleEm),
     { message: 'shortTitleEm must be a substring of shortTitle', path: ['shortTitleEm'] },
