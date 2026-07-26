@@ -50,7 +50,11 @@ test('paper page emits Highwire citation tags', async ({ page }) => {
   expect(await metaContent(page, 'citation_pdf_url')).toBe(
     'https://trishasalas.com/papers/accessibility-concept-emergence-pythia.pdf',
   );
-  expect(await metaContent(page, 'citation_journal_title')).toBe('Zenodo');
+  // No journal published this — it is a Zenodo deposit. Scholar reserves
+  // citation_journal_title for journal/conference papers; emitting the repository
+  // name here would falsely assert Zenodo is the journal. Assert ABSENCE so a
+  // later "the tag is missing, let me add it back" reintroduces the bug loudly.
+  expect(await page.locator('meta[name="citation_journal_title"]').count()).toBe(0);
   expect(await metaContent(page, 'citation_publication_date')).toMatch(/^\d{4}\/\d{2}\/\d{2}$/);
   expect(await metaContent(page, 'citation_keywords')).toContain('mechanistic interpretability');
 });

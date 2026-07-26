@@ -29,7 +29,12 @@ const blog = defineCollection({
       publicationDate: z.coerce.date().optional(),            // falls back to pubDate
       doi: z.string().optional(),                             // bare "10.…/v2"; URL built downstream
       pdf: z.string().optional(),                             // "/papers/<slug>.pdf" — self-hosted
-      venue: z.string().optional(),                           // citation_journal_title (DOI's home)
+      venue: z.string().optional(),                           // the DOI's home (e.g. "Zenodo") — card display, NOT a journal tag
+      // citation_journal_title is emitted IFF this is set. Presence-driven: set it
+      // only when a journal/conference actually published the work. A repository
+      // deposit (Zenodo, etc.) has no journal, so this stays unset and no tag is
+      // emitted — rather than asserting the repository name as the journal.
+      journalTitle: z.string().optional(),
       abstract: z.string().optional(),                        // falls back to description
       keywords: z.array(z.string()).default([]),
     }).optional(),
