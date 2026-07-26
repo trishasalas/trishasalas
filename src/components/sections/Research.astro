@@ -1,33 +1,30 @@
 ---
-const papers = [
-  {
-    status: 'Published · Zenodo',
-    statusKind: 'live' as const,
-    year: '2026',
-    title: 'Accessibility Concept Emergence in the Pythia Suite',
-    titleEm: 'Pythia',
-    abstract:
-      'A cross-scale analysis of how accessibility concepts — WCAG, ARIA, semantic HTML — become represented across the Pythia model family. Evidence for a three-tier statistical architecture of accessibility-related activations that replicates across GPT-2 XL and Pythia 2.8B.',
-    meta: ['DOI · 10.5281/zenodo.20360787', 'Cited in 1'],
-    href: '/blog/research/accessibility-concept-emergence-pythia/',
-  },
-  {
-    status: 'In progress · TACCESS',
-    statusKind: 'draft' as const,
-    year: '2026',
-    title: 'When ARIA is everywhere and alt-text is nowhere',
-    titleEm: 'ARIA is everywhere',
-    abstract:
-      'A short paper proposing a cross-model benchmark for accessible tab components, grounded in infini-gram training-data analysis. The declarative-evaluative gap is not a model failure — it is visible in the corpus itself.',
-    meta: ['Benchmark · 5 models', 'Drafting'],
-    href: null,
-  },
-];
+import { getPublications } from '../../utils/publications';
+// The optional-`em` emify: thatDangCircuit has no shortTitleEm, and the local
+// copy this replaces required `em`. Same function, one file over.
+import { emify } from '../../utils/posts';
 
-// Render the title with the italic emphasis word substituted as <em>.
-function emify(title: string, em: string) {
-  return title.replace(em, `<em>${em}</em>`);
-}
+// Derived from the `publications` collection — no inline artifact data lives
+// here anymore. Card strings (shortTitle, shortTitleEm, abstract) come from
+// frontmatter; this maps them onto the existing card shape, newest first.
+const papers = (await getPublications()).map((pub) => {
+  const d = pub.data;
+  const meta = [`DOI · ${d.doi}`];
+  if (d.citedBy != null) meta.push(`Cited in ${d.citedBy}`);
+  else if (d.scope) meta.push(d.scope);
+  return {
+    // Zenodo types thatDangCircuit as Software; the journal-voiced paper reads "Published".
+    status: d.kind === 'software' ? `Software · ${d.venue}` : `Published · ${d.venue}`,
+    statusKind: 'live' as const,
+    year: String(d.publicationDate.getUTCFullYear()),
+    title: d.shortTitle,
+    titleEm: d.shortTitleEm,
+    abstract: d.abstract,
+    meta,
+    // A write-up if one exists, else the external artifact. Plan C revisits this path.
+    href: d.post ? `/blog/research/${d.post}/` : d.hostedAt,
+  };
+});
 ---
 <section class="research" id="research">
   <header class="section-head">
