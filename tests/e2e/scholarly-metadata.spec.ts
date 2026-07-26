@@ -46,11 +46,11 @@ test('paper page emits Highwire citation tags', async ({ page }) => {
   expect(await metaContent(page, 'citation_author')).toBe('Trisha Salas');
   // Exactly one author tag — guards the multi-author .map() against duplicates/drift.
   expect(await page.locator('meta[name="citation_author"]').count()).toBe(1);
-  expect(await metaContent(page, 'citation_doi')).toBe('10.22541/au.177282002.24340653/v2');
+  expect(await metaContent(page, 'citation_doi')).toBe('10.5281/zenodo.20360787');
   expect(await metaContent(page, 'citation_pdf_url')).toBe(
     'https://trishasalas.com/papers/accessibility-concept-emergence-pythia.pdf',
   );
-  expect(await metaContent(page, 'citation_journal_title')).toBe('TechRxiv');
+  expect(await metaContent(page, 'citation_journal_title')).toBe('Zenodo');
   expect(await metaContent(page, 'citation_publication_date')).toMatch(/^\d{4}\/\d{2}\/\d{2}$/);
   expect(await metaContent(page, 'citation_keywords')).toContain('mechanistic interpretability');
 });
@@ -62,7 +62,7 @@ test('paper page emits ScholarlyArticle JSON-LD with ORCID author', async ({ pag
   expect(article, 'a ScholarlyArticle block exists').toBeTruthy();
   const trisha = article.author.find((a) => a.name === 'Trisha Salas');
   expect(trisha['@id']).toBe(ORCID);
-  expect(article.identifier).toBe('https://doi.org/10.22541/au.177282002.24340653/v2');
+  expect(article.identifier).toBe('https://doi.org/10.5281/zenodo.20360787');
 });
 
 test('paper page emits Dublin Core tags', async ({ page }) => {
