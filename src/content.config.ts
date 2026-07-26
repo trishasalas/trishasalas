@@ -42,4 +42,34 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Research artifacts: external, DOI'd, dated. No routes of their own — they
+// surface on the home Research section, and when `post` is set they lend
+// scholarly metadata to that post page. Deliberately NOT `research` (collides
+// with the `Research` blog category) and NOT a `paper` block on `blog` (an
+// artifact with no write-up, like thatDangCircuit, has no business being a post).
+const publications = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/publications" }),
+  schema: z.object({
+    title: z.string(),                  // full scholarly title — what gets cited
+    shortTitle: z.string(),             // running head — what the card displays
+    shortTitleEm: z.string().optional(),// substring of shortTitle for the rose-italic <em>
+    abstract: z.string(),               // scholarly prose (≠ a post's ~155-char description)
+    doi: z.string(),
+    venue: z.string(),                  // the DOI's home (e.g. "Zenodo") — card display, NOT a journal tag
+    // citation_journal_title is emitted IFF set. Presence-driven: only when a
+    // journal/conference actually published the work. Repository deposits leave
+    // this unset (see the blog `paper` block for the same rule, shipped ahead of here).
+    journalTitle: z.string().optional(),
+    kind: z.enum(['article', 'software']),
+    publicationDate: z.coerce.date(),
+    hostedAt: z.string().url(),
+    citedBy: z.number().optional(),
+    scope: z.string().optional(),       // e.g. "Software · v1.0.0"
+    post: z.string().optional(),        // slug of the write-up, if one exists
+  }).refine(
+    (d) => !d.shortTitleEm || d.shortTitle.includes(d.shortTitleEm),
+    { message: 'shortTitleEm must be a substring of shortTitle', path: ['shortTitleEm'] },
+  ),
+});
+
+export const collections = { blog, publications };
