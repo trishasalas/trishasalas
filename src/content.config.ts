@@ -8,7 +8,9 @@ const blog = defineCollection({
     // Substring of `title` to wrap in <em> for the rose-italic em treatment.
     // Matches the card pattern from the original hardcoded posts.
     titleEm: z.string().optional(),
-    description: z.string(),
+    // .min(1): an empty description becomes an empty <meta name="description">
+    // and og:description. Fail the build instead of shipping a blank tag.
+    description: z.string().min(1),
     // Optional so drafts without a confirmed publish date still validate.
     // Drafts render the "Drafting" date label instead of a formatted date.
     pubDate: z.coerce.date().optional(),
@@ -18,7 +20,6 @@ const blog = defineCollection({
       "Personal",
       "Process",
       "Claude-isms",
-      "The-Notes"
     ]),
     // Optional tags that accept any new string entry
     tags: z.array(z.string()).default([]),
@@ -26,7 +27,13 @@ const blog = defineCollection({
     // `publications` collection, and a post's citation tags switch on when a
     // publication references it via `post`. See ScholarlyMeta + [slug].astro.
     draft: z.boolean().default(false),
-  }),
+  }).refine(
+    // Mirrors the shortTitleEm guard on publications: if titleEm isn't a
+    // substring of title, emify's .replace() is a silent no-op and the rose
+    // italic just vanishes. Catch it at build time.
+    (d) => !d.titleEm || d.title.includes(d.titleEm),
+    { message: 'titleEm must be a substring of title', path: ['titleEm'] },
+  ),
 });
 
 // Research artifacts: external, DOI'd, dated. No routes of their own — they

@@ -10,7 +10,6 @@ export const CATEGORIES = [
   'Personal',
   'Process',
   'Claude-isms',
-  'The-Notes',
 ] as const satisfies readonly Category[];
 
 /** URL slug form of a category enum value (e.g. "Claude-isms" → "claude-isms"). */
