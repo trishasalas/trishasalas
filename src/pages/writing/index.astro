@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { getPublishedPosts, dateLabel, emify, postHref, categorySlug, type BlogPost } from '../../utils/posts';
+import { getPublishedPosts, dateLabel, emify, postHref, categorySlug } from '../../utils/posts';
 const posts = await getPublishedPosts();
 ---
 <Base

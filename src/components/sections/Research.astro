@@ -15,7 +15,6 @@ const papers = (await getPublications()).map((pub) => {
   return {
     // Zenodo types thatDangCircuit as Software; the journal-voiced paper reads "Published".
     status: d.kind === 'software' ? `Software · ${d.venue}` : `Published · ${d.venue}`,
-    statusKind: 'live' as const,
     year: String(d.publicationDate.getUTCFullYear()),
     title: d.shortTitle,
     titleEm: d.shortTitleEm,
@@ -38,7 +37,7 @@ const papers = (await getPublications()).map((pub) => {
       <article class="paper">
         <header class="paper__status">
           <span>
-            <span class:list={['paper__dot', p.statusKind === 'draft' && 'paper__dot--draft']}></span>
+            <span class="paper__dot"></span>
             {p.status}
           </span>
           <span>{p.year}</span>
