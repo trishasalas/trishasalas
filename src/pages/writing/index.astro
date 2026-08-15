@@ -16,10 +16,10 @@ const posts = await getPublishedPosts();
           <p class="eyebrow">The Writing</p>
           <h1 class="blog-index__title">Notes from the <em>margin</em>.</h1>
           <p class="blog-index__lede">
-            Everything written here, grouped by what it is. Research papers and
-            preprints alongside essays, process notes, and the occasional
-            personal thread. Some sections are denser than others; drafts sit
-            at the bottom of theirs. <em>Not everything is finished — that's sort of the point.</em>
+            Everything written here, grouped by what it is: essays, notes,
+            process writing, Claude-isms, and the occasional personal thread.
+            Some sections are denser than others; drafts sit at the bottom of
+            theirs. <em>Not everything is finished — that's sort of the point.</em>
           </p>
         </header>
         <ul class="blog-index__list">
@@ -35,7 +35,7 @@ const posts = await getPublishedPosts();
                   ) : (
                       <span />
                   )}
-                  <a class="post-card__tag" href={`/blog/${categorySlug(post.data.category)}/`}>{post.data.category}</a>
+                  <a class="post-card__tag" href={`/writing/${categorySlug(post.data.category)}/`}>{post.data.category}</a>
                 </div>
                 <h3 class="post-card__title">
                   <a

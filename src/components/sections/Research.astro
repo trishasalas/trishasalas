@@ -22,7 +22,7 @@ const papers = (await getPublications()).map((pub) => {
     abstract: d.abstract,
     meta,
     // A write-up if one exists, else the external artifact. Plan C revisits this path.
-    href: d.post ? `/blog/research/${d.post}/` : d.hostedAt,
+    href: `https://research.trishasalas.com/publications/${pub.id}/`,
   };
 });
 ---

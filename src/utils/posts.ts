@@ -5,11 +5,11 @@ export type Category = BlogPost['data']['category'];
 
 /** All category values, in display order. Mirrors the enum in src/content/config.ts. */
 export const CATEGORIES = [
-  'Research',
   'Essay',
   'Personal',
   'Process',
   'Claude-isms',
+  'Notes',
 ] as const satisfies readonly Category[];
 
 /** URL slug form of a category enum value (e.g. "Claude-isms" → "claude-isms"). */
@@ -19,7 +19,7 @@ export function categorySlug(category: Category): string {
 
 /** Permalink for a post under its category. */
 export function postHref(post: BlogPost): string {
-  return `/blog/${categorySlug(post.data.category)}/${post.id}/`;
+  return `/writing/${categorySlug(post.data.category)}/${post.id}/`;
 }
 
 /**

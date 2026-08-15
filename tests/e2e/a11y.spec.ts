@@ -29,8 +29,8 @@ test('all images have alt attribute', async ({ page }) => {
   }
 });
 
-test('/blog/ has no detectable a11y violations', async ({ page }) => {
-  await page.goto('/blog/');
+test('/writing/ has no detectable a11y violations', async ({ page }) => {
+  await page.goto('/writing/');
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
     .analyze();

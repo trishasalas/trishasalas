@@ -73,9 +73,9 @@ const posts = allPosts.filter((p) => p.data.category === category);
       <h2 class="category-nav__label">Categories</h2>
       <ul>
         {CATEGORIES.filter((c) => c !== category).map((c) => (
-            <li><a href={`/blog/${categorySlug(c)}/`}>{c}</a></li>
+            <li><a href={`/writing/${categorySlug(c)}/`}>{c}</a></li>
         ))}
-        <li><a href="/blog/">All writing</a></li>
+        <li><a href="/writing/">All writing</a></li>
       </ul>
     </nav>
   </aside>

@@ -1,15 +1,27 @@
-# Netlify redirects. Preserve inbound links and published citations from the
-# v1 /posts/ URL structure. v2 moved posts to /blog/<category>/<slug>/ AND
-# changed some slugs, so each old URL needs an explicit 301 — a /posts/* splat
-# would mis-map (the slugs differ, e.g. -across-pythia-model-sizes -> -pythia).
+# Netlify redirects. Specific research moves precede the general Writing rules
+# so every published URL reaches its final destination in one hop.
 
 # Cited by Dung et al. (2026). This is the precursor article to the formal
 # "Concept Emergence in the Pythia Suite" paper; the 301 resolves to the same
 # article's current home (not the paper) so the citation lands on what was cited.
 # Both trailing-slash variants listed so the exact cited URL (with slash) matches.
-/posts/testing-accessibility-knowledge-across-pythia-model-sizes/   /blog/research/testing-accessibility-knowledge-pythia/   301
-/posts/testing-accessibility-knowledge-across-pythia-model-sizes    /blog/research/testing-accessibility-knowledge-pythia/   301
+/posts/testing-accessibility-knowledge-across-pythia-model-sizes/   /writing/notes/testing-accessibility-knowledge-pythia/   301!
+/posts/testing-accessibility-knowledge-across-pythia-model-sizes    /writing/notes/testing-accessibility-knowledge-pythia/   301!
+
+/blog/research/accessibility-concept-emergence-pythia/  https://research.trishasalas.com/publications/accessibility-concept-emergence-pythia/  301!
+/blog/research/accessibility-concept-emergence-pythia   https://research.trishasalas.com/publications/accessibility-concept-emergence-pythia/  301!
+/blog/research/testing-accessibility-knowledge-pythia/  /writing/notes/testing-accessibility-knowledge-pythia/  301!
+/blog/research/testing-accessibility-knowledge-pythia   /writing/notes/testing-accessibility-knowledge-pythia/  301!
+/blog/research/  https://research.trishasalas.com/  301!
+/blog/research   https://research.trishasalas.com/  301!
+
+/blog/essay/*        /writing/essay/:splat        301!
+/blog/personal/*     /writing/personal/:splat     301!
+/blog/process/*      /writing/process/:splat      301!
+/blog/claude-isms/*  /writing/claude-isms/:splat  301!
 
 ## Found in a Google search
-/posts/  /blog/  301
-/posts  /blog  301
+/posts/  /writing/  301!
+/posts   /writing/  301!
+/blog/   /writing/  301!
+/blog    /writing/  301!

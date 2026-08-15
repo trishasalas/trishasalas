@@ -15,7 +15,7 @@ const blog = defineCollection({
     // Drafts render the "Drafting" date label instead of a formatted date.
     pubDate: z.coerce.date().optional(),
     category: z.enum([
-      "Research",
+      "Notes",
       "Essay",
       "Personal",
       "Process",
@@ -23,9 +23,6 @@ const blog = defineCollection({
     ]),
     // Optional tags that accept any new string entry
     tags: z.array(z.string()).default([]),
-    // Scholarly metadata no longer rides on the blog entry — it lives in the
-    // `publications` collection, and a post's citation tags switch on when a
-    // publication references it via `post`. See ScholarlyMeta + [slug].astro.
     draft: z.boolean().default(false),
   }).refine(
     // Mirrors the shortTitleEm guard on publications: if titleEm isn't a
@@ -36,11 +33,8 @@ const blog = defineCollection({
   ),
 });
 
-// Research artifacts: external, DOI'd, dated. No routes of their own — they
-// surface on the home Research section, and when `post` is set they lend
-// scholarly metadata to that post page. Deliberately NOT `research` (collides
-// with the `Research` blog category) and NOT a `paper` block on `blog` (an
-// artifact with no write-up, like thatDangCircuit, has no business being a post).
+// Research artifacts retained as a small main-site feed for homepage cards.
+// Their canonical landing pages live on research.trishasalas.com.
 const publications = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/publications" }),
   schema: z.object({
@@ -60,8 +54,6 @@ const publications = defineCollection({
     citedBy: z.number().optional(),
     scope: z.string().optional(),       // e.g. "Software · v1.0.0"
     post: z.string().optional(),        // slug of the write-up, if one exists
-    // Citation-facing fields — consumed by ScholarlyMeta when `post` is set.
-    // Self-contained here so the component needs no fallbacks to the post.
     authors: z.array(z.string()).default(['Trisha Salas']),   // natural order
     pdf: z.string().optional(),                               // "/papers/<slug>.pdf" — citation_pdf_url
     keywords: z.array(z.string()).default([]),
