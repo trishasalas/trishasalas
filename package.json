@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "stop": "astro stop",
     "test:e2e": "playwright test"
   },
   "dependencies": {
