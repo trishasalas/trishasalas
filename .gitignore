@@ -26,6 +26,7 @@ public/pagefind
 
 # Claude Code local user settings
 .claude/settings.local.json
+.claude/
 
 # astro
 .astro/
