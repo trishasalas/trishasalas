@@ -217,3 +217,28 @@ button:focus-visible em::after {
     padding-left: 0;
   }
 }
+
+.post-detail__body table {
+  border-collapse: collapse;
+    width: 100%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: 1rem;
+    line-height: 1.71429;
+}
+
+.post-detail__body table th,
+.post-detail__body table td {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.post-detail__body th {
+  border-bottom: 2px double var(--rose-deep);
+  font-size: 1.25rem;
+}
+
+.post-detail__body td{
+  border-bottom: 1px solid var(--rose-deep);
+
+}

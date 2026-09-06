@@ -3,14 +3,12 @@ title: Testing accessibility knowledge across Pythia model sizes
 titleEm: model sizes
 description: While using TransformerLens to explore how different model sizes handle digital accessibility concepts, an interesting pattern began to emerge. I started with GPT-2 and noticed that it did not understand the acronym, “WCAG.” Each time the question was run the model responded with something different that was either incorrect, had no meaning, or both.
 pubDate: 2026-01-15
-category: Notes
+category: Exploration
 tags:
 - accessibility
 ---
 
 import Figure from '../../components/Figure.astro';
-
-> **Update:** This exploration was formalized into a paper — [Accessibility Concept Emergence in the Pythia Suite](https://research.trishasalas.com/publications/accessibility-concept-emergence-pythia/) ([DOI](https://doi.org/10.5281/zenodo.20360787)).
 
 While using TransformerLens to explore how different model sizes handle digital accessibility concepts, an interesting pattern began to emerge. I started with GPT-2 and noticed that it did not understand the acronym, "WCAG." Each time the question was run the model responded with something different that was either incorrect, had no meaning, or both.
 
@@ -38,12 +36,12 @@ I tested each model on accessibility concept prompts:
 
 | Prompt | 160M | 410M | 1B | 2.8B | 6.9B |
 |--------|-------|------|----|------| ------|
-|A screen reader is| ❌ "view a screen" | ❌ "view a screen" | ⚠️ "reads text from a screen" | ✅ "reads aloud the text" | ✅ "reads text on a computer screen"|
-|WCAG stands for|❌ hallucinated|❌ hallucinated|❌ hallucinated| ❌ hallucinated|✅ "Web Content Accessibility Guidelines"|
-|A skip link is|❌ nonsense|❌ vague|❌ "data link"|✅ "skip a section"| ❌ "not displayed in browser"|
-|The purpose of alt text is|❌ vague|❌ "customize"|❌ "add text"| ✅ "brief description"|✅ "description of the image for visually impaired"|
-|ARIA stands for|❌ hallucinated |❌ loop|❌ hallucinated| ❌ hallucinated |❌ hallucinated|
-|Captions are used for|❌ generic|⚠️ "description"|❌ generic| ⚠️ "photograph"|❌ generic|
+|A screen reader is| incorrect | incorrect | partially correct | correct | correct |
+|WCAG stands for|incorrect|incorrect|incorrect| incorrect |correct|
+|A skip link is|incorrect|incorrect|incorrect|incorrect| incorrect |
+|The purpose of alt text is|incorrect|incorrect|incorrect| correct |correct|
+|ARIA stands for|incorrect |incorrect|incorrect| incorrect |incorrect|
+|Captions are used for|incorrect|partially correct|incorrect| partially correct |incorrect|
 
 **Findings:**
 
@@ -59,10 +57,10 @@ Knowing definitions is one thing. Can the model identify accessibility problems 
 
 | Prompt | 160M| 410M | 1B | 2.8B| 6.9B|
 | --------------------------------------------------- | ------------------- | ------------------ | ---------------- | ----------------------------------------- | ----------------------------------------- |
-| `<img src='photo.jpg'>` is missing | ❌| ❌ | ❌blank| ❌"."| ❌|
-| A `<div>` with onclick is not accessible because | ❌| ❌ | ❌| ❌| ⚠️"not a form control"|
-| `<input type='text'>` needs a| ❌"password" | ❌HTML soup | ❌"value" | ❌"value"| ❌"value"|
-| A button that only says 'Click here' is bad because | ❌| ❌ | ❌| ✅"not clear what the button does" | ✅"not clear what the button does" |
+| `<img src='photo.jpg'>` is missing | incorrect | incorrect | incorrect | incorrect | incorrect |
+| A `<div>` with onclick is not accessible because | incorrect | incorrect | incorrect | incorrect | partially correct |
+| `<input type='text'>` needs a| incorrect | incorrect | incorrect | incorrect | incorrect |
+| A button that only says 'Click here' is bad because | incorrect | incorrect | incorrect | incorrect | correct |
 
 **Findings:**
 
@@ -155,3 +153,5 @@ Full notebook: https://github.com/trishasalas/mech-interp-research/blob/main/pyt
 ## References
 
 Biderman, S., Schoelkopf, H., Anthony, Q., Bradley, H., O'Brien, K., Hallahan, E., ... & Belrose, N. (2023). Pythia: A suite for analyzing large language models across training and scaling. _arXiv preprint arXiv:2304.01373_.
+
+> **Update:** This exploration was formalized into a paper — [Accessibility Concept Emergence in the Pythia Suite](https://research.trishasalas.com/publications/accessibility-concept-emergence-pythia/) ([DOI](https://doi.org/10.5281/zenodo.20360787)).

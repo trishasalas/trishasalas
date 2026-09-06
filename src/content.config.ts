@@ -16,6 +16,7 @@ const blog = defineCollection({
     pubDate: z.coerce.date().optional(),
     category: z.enum([
       "Notes",
+      "Exploration",
       "Essay",
       "Personal",
       "Process",
