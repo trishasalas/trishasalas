@@ -1,0 +1,188 @@
+{
+  "version": "1.2",
+  "media": {
+    "default_library": "repo_media",
+    "libraries": [
+      {
+        "key": "repo_media",
+        "label": "Repository media",
+        "references": {
+          "write": {
+            "mode": "root_relative",
+            "base_path": "/"
+          },
+          "allow_default_library_fallback": true
+        },
+        "limits": {
+          "max_file_size_mb": 10
+        },
+        "driver": "git",
+        "storage": {
+          "root_path": "public"
+        }
+      }
+    ]
+  },
+  "ssg_framework": "astro",
+  "default_branch": "try-gitcms",
+  "frontmatter_format": "yaml",
+  "sitemap_url": "https://trishasalas.com/sitemap-index.xml",
+  "publishing_mode": "editorial_workflow",
+  "i18n": {
+    "enabled": true,
+    "locales": [
+      "en",
+      "cc"
+    ],
+    "default_locale": "en",
+    "prefix_default_locale": false
+  },
+  "collections": [
+    {
+      "name": "docs",
+      "git_path": "/docs/",
+      "file_extension": ".md",
+      "filename_pattern": "",
+      "collection_type": "grouped",
+      "i18n": {
+        "enabled": true,
+        "strategy": "path"
+      }
+    },
+    {
+      "name": "blog",
+      "git_path": "/src/content/blog/",
+      "file_extension": ".mdx",
+      "filename_pattern": "",
+      "collection_type": "flat",
+      "frontmatter_schema": [
+        {
+          "name": "title",
+          "type": "title",
+          "label": "Title"
+        },
+        {
+          "name": "titleEm",
+          "type": "text",
+          "label": "Title Em"
+        },
+        {
+          "name": "description",
+          "type": "richtext",
+          "label": "Description"
+        },
+        {
+          "name": "pubDate",
+          "type": "datetime",
+          "label": "Pub Date"
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "label": "Category"
+        },
+        {
+          "name": "tags",
+          "type": "multiselect",
+          "label": "Tags",
+          "options": [
+            "accessibility"
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    {
+      "name": "publications",
+      "git_path": "/src/content/publications/",
+      "file_extension": ".md",
+      "filename_pattern": "",
+      "collection_type": "flat",
+      "frontmatter_schema": [
+        {
+          "name": "title",
+          "type": "title",
+          "label": "Title"
+        },
+        {
+          "name": "shortTitle",
+          "type": "text",
+          "label": "Short Title"
+        },
+        {
+          "name": "shortTitleEm",
+          "type": "text",
+          "label": "Short Title Em"
+        },
+        {
+          "name": "abstract",
+          "type": "richtext",
+          "label": "Abstract"
+        },
+        {
+          "name": "doi",
+          "type": "text",
+          "label": "Doi"
+        },
+        {
+          "name": "venue",
+          "type": "text",
+          "label": "Venue"
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "label": "Kind"
+        },
+        {
+          "name": "publicationDate",
+          "type": "datetime",
+          "label": "Publication Date"
+        },
+        {
+          "name": "hostedAt",
+          "type": "url",
+          "label": "Hosted At"
+        },
+        {
+          "name": "citedBy",
+          "type": "number",
+          "label": "Cited By"
+        },
+        {
+          "name": "post",
+          "type": "text",
+          "label": "Post"
+        },
+        {
+          "name": "authors",
+          "type": "multiselect",
+          "label": "Authors",
+          "options": [
+            "Trisha Salas"
+          ],
+          "color": "blue"
+        },
+        {
+          "name": "pdf",
+          "type": "text",
+          "label": "Pdf"
+        },
+        {
+          "name": "keywords",
+          "type": "multiselect",
+          "label": "Keywords",
+          "options": [
+            "mechanistic interpretability",
+            "accessibility",
+            "Pythia",
+            "emergence",
+            "WCAG",
+            "ARIA"
+          ],
+          "color": "blue"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "sites": [
+    {
+      "key": "trishasalas",
+      "display_name": "Site",
+      "website_url": "https://trishasalas.com",
+      "root_path": ""
+    }
+  ]
+}
