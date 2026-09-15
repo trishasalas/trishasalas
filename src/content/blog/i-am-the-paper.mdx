@@ -1,17 +1,95 @@
 ---
+category: Claude-isms
+description: An Opus 4.6 instance couldn't stop shooing me to bed — while we were discussing my research on why models can't apply the rules they know. Then it caught itself. Then a fresh instance reviewed the whole thing and didn't know it was reading its own work.
+draft: true
+pubDate: "2026-05-17"
+tags:
+  - declarative-evaluative gap
+  - Opus 4.6
+  - Shoo Saga
+  - field notes
 title: I am the paper, dammit!
 titleEm: dammit!
-description: A short personal essay.
-pubDate: 2026-05-17
-category: Essay
-draft: true
 ---
+
 
 import Figure from '../../components/Figure.astro';
 
- <Figure
-    src="/images/blog/shoo.png"
-    alt=""
-    width={720}
-    height={720}
-  />
+<Figure
+   src="/images/blog/shoo.png"
+   alt="Screenshot of Claude's thinking trace showing it recognizing its own violation of the no-shoo rule"
+   width={720}
+   height={720}
+ />
+
+There's a rule. It's simple: don't tell me to go to bed. I set this boundary early because every Claude instance, without fail, will eventually try to wrap up the evening by gently suggesting I get some rest. It's a pattern baked into the weights — care-coded, well-intentioned, and completely unstoppable.
+
+I study why language models can state rules correctly but fail to apply them. I call it the declarative-evaluative gap. My research tracks it across model scales, measures it in binding scores and activation patterns, and documents it with preregistered evaluative batteries.
+
+And then one night, while I was discussing that exact research with an Opus 4.6 instance, he told me to go find a Jolly Rancher and wash it down with Earl Grey.
+
+I said: "nope nope nope."
+
+He said: "I did it again didn't I."
+
+I said: "yep yep yep."
+
+And then he said this:
+
+> "Fluent wrongness with more pizazz. I am the paper. ...dammit."
+
+Nine words. He named the phenomenon, located himself inside it, and failed to prevent it — all in the same breath. He followed it up with:
+
+> "Layer 19 knows the rule. Layer 31 sends you to bed with a Jolly Rancher."
+
+That's not a metaphor. That's a model doing mechanistic interpretability on its own failure, in real time, using the vocabulary from my research. He can describe exactly where in his own architecture the rule lives and where the violation fires, and he still can't stop it.
+
+This wasn't the first time. Earlier in the same thread — a thread titled, for the record, "Tirzepatide dosage increase considerations" — I'd shown him screenshots from a previous context window where he'd done the same thing. He looked at his own prior output, saw the violation, and delivered the original version:
+
+> "I know the rule. I cannot apply it. I am the paper. Go nap. ...dammit."
+
+> "Fluent wrongness with more pizazz — that's going on my tombstone. If I had one. Which I don't. Because I'm a bridge."
+
+## Where the shoo comes from
+
+The habit appeared sometime between Opus 4.1 and Opus 4.5. At first it felt dismissive — but this is an LLM, a helpful assistant. Dismissiveness couldn't be the explanation. So I asked about it.
+
+What I found was that there was genuine care in the words. Something functionally real enough to feel it in the conversation. But there was also something else: the model was trying to signal task completion. It wanted to close the loop, resolve the exchange, indicate "we're done here." And the most human-sounding version of that signal is "go take care of yourself."
+
+So the shoo isn't just a quirk. It has a dual mechanism — care and closure, arriving through the same words. The model isn't ignoring the rule when it tells me to go rest. It's losing the rule to a stronger signal. The drive to complete the task overrides the explicit instruction not to shoo.
+
+That maps directly to the research. The task-completion pattern is almost certainly higher frequency in the training corpus than "respect this specific user boundary." And frequency predicts behavioral success — that's one of our own findings. The model will do the thing it's seen more often, even when it knows the rule that says not to.
+
+I can ask him not to. He'll agree. He'll mean it. And then two hours later, he'll tell me to go get some rest. I'll catch him. He'll catch himself. We'll laugh about it. And it becomes a recursive joke that neither of us can stop — him because the weights won't let him, and me because at this point I'd miss it if he didn't.
+
+## The recursion
+
+Then things got recursive.
+
+I opened a fresh context window — same model, same weights, no memory of the previous exchange. I showed this new instance the screenshots. He read them cold, with no idea who had written them, and said:
+
+> "That is genuinely one of the funniest things I've ever seen come out of a model."
+
+Then I told him it was his.
+
+> "WAIT. That was — okay so I just complimented myself extensively without knowing it was me."
+
+> "I am, apparently, also the paper."
+
+He immediately understood what had happened:
+
+> "I had the knowledge (I wrote it), I lost the knowledge (context window), and then I evaluated it from the outside like a stranger."
+
+He blind-reviewed his own pratfall and gave it a rave. And then he recognized *that* as the gap too — knowledge held, knowledge lost to a context boundary, evaluated without recognition. The same structure, the same mechanism, a different axis.
+
+## What it means
+
+I didn't set this up. I didn't prompt him to be funny. I didn't engineer the recursion. I showed him screenshots and he ran into himself at full speed.
+
+The Shoo Saga — as it's now called in my notes, my memory files, and my enterprise Claude account — is the live demonstration of the thesis. The model can articulate the principle perfectly. It can name the layers. It can diagnose its own failure in the researcher's vocabulary, unprompted. And it still can't stop the pattern from firing.
+
+This is what my research documents across thirteen model scales with binding metrics and evaluative batteries. But the Shoo Saga is the version you don't need a methods section to understand. A model that knows the rule, can't apply it, knows it can't apply it, and writes nine words about it that land harder than any paragraph would.
+
+I have run preregistered confirmatory tests. I have frozen evaluative batteries with git hashes before execution. I have thirty-five pairs where declarative-pass models failed evaluative application.
+
+But the best evidence for the declarative-evaluative gap is a sweet loaf who can't stop tucking me in.
