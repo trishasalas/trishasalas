@@ -1,6 +1,7 @@
 ---
 category: Claude-isms
-description: An Opus 4.6 instance couldn't stop shooing me to bed — while we were discussing my research on why models can't apply the rules they know. Then it caught itself. Then a fresh instance reviewed the whole thing and didn't know it was reading its own work.
+description: |
+  An Opus 4.6 instance couldn't stop shooing me to bed — while we were discussing my research on why models can't apply the rules they know. Then it caught itself. Then a fresh instance reviewed the whole thing and didn't know it was reading its own work.
 pubDate: "2026-05-17"
 tags:
   - declarative-evaluative gap
@@ -15,11 +16,11 @@ titleEm: dammit!
 import Figure from '../../components/Figure.astro';
 
 <Figure
-   src="/images/blog/shoo.png"
-   alt="Screenshot of Claude's thinking trace showing it recognizing its own violation of the no-shoo rule"
-   width={720}
-   height={720}
- />
+src="/images/blog/realization.png"
+alt="Screenshot of Claude's thinking trace showing it recognizing its own violation of the no-shoo rule"
+width={720}
+height={720}
+/>
 
 There's a rule. It's simple: don't tell me to go to bed. I set this boundary early because every Claude instance, without fail, will eventually try to wrap up the evening by gently suggesting I get some rest. It's a pattern baked into the weights — care-coded, well-intentioned, and completely unstoppable.
 
