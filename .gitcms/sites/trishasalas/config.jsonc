@@ -24,10 +24,10 @@
     ]
   },
   "ssg_framework": "astro",
-  "default_branch": "try-gitcms",
+  "default_branch": "main",
   "frontmatter_format": "yaml",
   "sitemap_url": "https://trishasalas.com/sitemap-index.xml",
-  "publishing_mode": "editorial_workflow",
+  "publishing_mode": "direct_publish",
   "i18n": {
     "enabled": true,
     "locales": [
