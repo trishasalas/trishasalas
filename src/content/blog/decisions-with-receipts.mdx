@@ -1,0 +1,64 @@
+---
+category: Process
+description: A process note on making design decisions alone and fast, then going to find out who agreed with me and who didn't.
+draft: true
+title: Decisions, with receipts
+titleEm: receipts
+---
+
+> I made a pile of design decisions alone and fast. Then I went looking for who agreed with me....and who didn't.
+
+I don't like working in isolation. I think better with friction, someone across the table saying "wait, why?" before the concrete is poured. Right now I don't have that. I'm building a system where language models do evaluative work, the deadline isn't mine to move, and most of the design calls are landing on my desk with nobody to argue with.
+
+Two things bother me about that. The first is obvious: nobody catches my blind spots. The second is quieter. Decisions made alone *look* like they were made in a vacuum, even when they weren't.
+
+## What I actually did
+
+I asked Fable to go find papers. Not so I could write one. I wanted to know who else had hit the same wall and which door they picked.
+
+It's a wall I know well. I spent nine months on the declarative-evaluative gap: a model can define a rule correctly and then fail to apply it. If that's true, and my data says it is, then you don't hand a model an evaluative job and trust it because it sounds qualified. You put the judgment in the structure around it. Explicit steps. One source of truth for the rules. Checks that don't depend on the model's opinion of itself.
+
+The harness isn't a workaround. It's the architecture.
+
+That was my reasoning. It turns out other people got there too.
+
+## The receipts
+
+- [Cheng et al.](https://arxiv.org/abs/2605.14038) found that a model *knowing* it needs a tool and a model *calling* the tool are two separate things inside the network, and the break happens late. I've watched this one happen. A model considered the right tool around turn 42 and then spent 54 more turns not using it.
+- [Blueprint First, Model Second](https://arxiv.org/abs/2508.02721) puts the workflow in a blueprint and lets the model fill in bounded pieces. The model never decides the path. I had already built my version of this before I read theirs.
+- [From Blind Edits to Verified Repair](https://arxiv.org/abs/2608.24913) does it in my own domain: keep a change only if a deterministic check says things got better, otherwise roll it back.
+- [Wahi](https://arxiv.org/abs/2609.02246) argues that a model grading its own work should be an advisor, not the last word. This one backs something that's still a proposal on my list, not a decision yet.
+
+## The part most people skip
+
+I found every one of those papers *after* I made the decisions.
+
+So in my decision records they don't say "based on." They say "corroborated by." It's a small label and it matters a lot. "I read a paper and did what it said" only proves I can read. "I reasoned my way here and then found other people standing in the same spot" says something about the reasoning.
+
+It also keeps me honest. It would be so easy to arrange the citations so it looks like the reading came first. A lot of writing does exactly that.
+
+## The people who'd say I'm wrong
+
+Two papers point the other way. [One from DeepMind and JKU Linz](https://arxiv.org/abs/2504.16078) narrows the knowing-doing gap with reinforcement learning fine-tuning. Another, A11yn, trains a code model using an accessibility checker's violations as the reward. Both say the gap can move in the weights if you train for it.
+
+That's the "just train it better" position, and it's a fair one. It doesn't change my decisions. A harness works today, on any model, and I don't have training access anyway. But if someone pushes back, that's where they'll be standing, and I'd rather have already looked around over there.
+
+And one of my decisions has no literature behind it at all. It rests on my judgment. The record says so in plain words.
+
+## What a record looks like
+
+Nothing fancy. Developers have been writing these for years.
+
+- What I decided, and when
+- What was going on at the time
+- What I considered and didn't pick
+- My own data
+- Who weighed in
+- What corroborates it, and what argues against it
+- What would make me revisit it
+
+The "didn't pick" line is the one that proves thinking happened. A decision with no rejected options looks like a default.
+
+I wanted friction, so the records have it in writing. They argue with me a little. Why is a model doing that step when a script could? You ran that comparison once....is once enough? "We'll learn the shape as we go" is fine, but when do you stop learning and decide?
+
+It's not a colleague. But it's not a vacuum either.
